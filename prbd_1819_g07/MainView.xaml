@@ -8,7 +8,17 @@
         xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
         mc:Ignorable="d"
         Title="EPFC Library" Height="450" Width="800">
-    <ContentControl>
-        <local:BooksView/>
-    </ContentControl>
+    <TabControl x:Name="tabControl" Margin="10" Grid.Row="1">
+
+        <TabItem x:Name="booksTab" Header="Books">
+
+            <ContentControl>
+
+                <local:BooksView/>
+
+            </ContentControl>
+
+        </TabItem>
+
+    </TabControl>
 </f:WindowBase>

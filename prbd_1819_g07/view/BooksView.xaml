@@ -6,18 +6,86 @@
              xmlns:local="clr-namespace:prbd_1819_g07"
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBox Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" Width="150"/>
-            <Button Content="Clear" Command="{Binding ClearFilter}"/>
-        </StackPanel>
-        <ListView ItemsSource="{Binding Books}">
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+
+        <BitmapImage x:Key="UnknownBook" UriSource="/images/unknown-user.jpg"/>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="40"/>
+
+            <RowDefinition Height="1*"/>
+
+            <RowDefinition Height="40"/>
+
+        </Grid.RowDefinitions>
+
+        <Grid Margin="10">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="auto"/>
+
+            </Grid.ColumnDefinitions>
+
+            <TextBox Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" FontSize="14"/>
+
+            <Button Content="Clear" Command="{Binding ClearFilter}" Grid.Column="1"  Margin="5,0,0,0"/>
+
+
+        </Grid>
+
+        <ListView ItemsSource="{Binding Books}" Grid.Row="1"  BorderBrush="Transparent" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+            <ListView.ItemsPanel>
+
+                <ItemsPanelTemplate>
+
+                    <WrapPanel/>
+
+                </ItemsPanelTemplate>
+
+            </ListView.ItemsPanel>
+
             <ListView.ItemTemplate>
+
                 <DataTemplate>
-                    <TextBlock Text="{Binding Title}"/>
+
+                    <Border CornerRadius="3" BorderBrush="Gray"  BorderThickness="1" DockPanel.Dock="Top">
+
+                        <StackPanel >
+
+                            <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Isbn}"  LineHeight="20" />
+
+                            <TextBlock FontSize="13" FontWeight="Bold" Width="80" TextAlignment="Center" Text="{Binding Title}" TextWrapping="Wrap" LineHeight="20" />
+
+                            <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Author}" />
+
+                            <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Editor, StringFormat='( \{0\} )' }" />
+
+                            <Image Width="80" Height="80" Source="{Binding AbsolutePicturePath, TargetNullValue={StaticResource UnknownBook}}" RenderOptions.BitmapScalingMode="Fant" Stretch="UniformToFill" />
+
+                            <TextBlock FontSize="11" FontWeight="DemiBold" Width="100" TextAlignment="Center" Text="{Binding NumAvailableCopies, StringFormat= '\{0\} copies available'}" TextWrapping="Wrap" LineHeight="20"/>
+
+                            <Button Content="Add to Basket" Command="{Binding AddToBasket}"/>
+
+                        </StackPanel>
+
+                    </Border>
+
                 </DataTemplate>
+
             </ListView.ItemTemplate>
+
         </ListView>
-    </StackPanel>
+
+        <Button x:Name="btnNew" Content="New Book" Command="{Binding NewBook}" HorizontalAlignment="Left" Margin="10,10" Grid.Row="2" Padding="5,1"/>
+
+
+    </Grid>
 </f:UserControlBase>

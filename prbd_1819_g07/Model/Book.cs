@@ -24,7 +24,18 @@ namespace prbd_1819_g07
                 return (from b in Model.BookCopies where b.Book.BookId == BookId select b ).Count();
 
             } }
+
+        [NotMapped]
+
+        public string AbsolutePicturePath
+        {
+
+            get { return PicturePath != null ? App.IMAGE_PATH + "\\" + PicturePath : null; }
+
+        }
+
         public virtual ICollection<BookCopy> Copies { get; set; } = new HashSet<BookCopy>();
+
         public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
 
         public BookCopy CreateBookCopy(DateTime aquisitionDate, Book book)

@@ -4,16 +4,16 @@
 exe
 C#
 .cs
-V:\prbd_1819_g07\prbd_1819_g07\obj\Debug\
+C:\Users\remy\Desktop\prbd_1819_g07\prbd_1819_g07\obj\Debug\
 prbd_1819_gXX
 none
 false
 TRACE;DEBUG;MSSQL
-V:\prbd_1819_g07\prbd_1819_g07\App.xaml
+C:\Users\remy\Desktop\prbd_1819_g07\prbd_1819_g07\App.xaml
 21431531093
 
-18-50341214
-28-848918890
+182125926987
+28-685215938
 MainView.xaml;view\BooksView.xaml;
 
 True
