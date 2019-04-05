@@ -1,0 +1,15 @@
+V:\prbd_1819_gXX\PRBD_Framework\bin\Debug\PRBD_Framework.dll.config
+V:\prbd_1819_gXX\PRBD_Framework\bin\Debug\PRBD_Framework.dll
+V:\prbd_1819_gXX\PRBD_Framework\bin\Debug\PRBD_Framework.pdb
+V:\prbd_1819_gXX\PRBD_Framework\bin\Debug\EntityFramework.dll
+V:\prbd_1819_gXX\PRBD_Framework\bin\Debug\EntityFramework.SqlServer.dll
+V:\prbd_1819_gXX\PRBD_Framework\bin\Debug\EntityFramework.xml
+V:\prbd_1819_gXX\PRBD_Framework\bin\Debug\EntityFramework.SqlServer.xml
+V:\prbd_1819_gXX\PRBD_Framework\obj\Debug\ErrorMessages.baml
+V:\prbd_1819_gXX\PRBD_Framework\obj\Debug\ErrorMessages.g.cs
+V:\prbd_1819_gXX\PRBD_Framework\obj\Debug\PRBD_Framework_MarkupCompile.cache
+V:\prbd_1819_gXX\PRBD_Framework\obj\Debug\PRBD_Framework.g.resources
+V:\prbd_1819_gXX\PRBD_Framework\obj\Debug\PRBD_Framework.csproj.CoreCompileInputs.cache
+V:\prbd_1819_gXX\PRBD_Framework\obj\Debug\PRBD_Framework.csproj.CopyComplete
+V:\prbd_1819_gXX\PRBD_Framework\obj\Debug\PRBD_Framework.dll
+V:\prbd_1819_gXX\PRBD_Framework\obj\Debug\PRBD_Framework.pdb
