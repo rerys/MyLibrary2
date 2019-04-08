@@ -13,34 +13,36 @@
 
     </UserControl.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            
+            <ColumnDefinition Width="auto" MinWidth="112"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+            
+        </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
-
-            <RowDefinition Height="40"/>
-
-            <RowDefinition Height="1*"/>
-
-            <RowDefinition Height="40"/>
-
+            <RowDefinition Height="62"/>
+            
+            <RowDefinition Height="43"/>
+            
+            <RowDefinition Height="263*"/>
+            
+            <RowDefinition Height="51"/>
+            
         </Grid.RowDefinitions>
+        
+        <Label Content="Text Filter:"  HorizontalAlignment="Left" Margin="23,23,0,0"  Height="26" Grid.ColumnSpan="2"/>
 
-        <Grid Margin="10">
+        <TextBox Margin="0,28,10,0" Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" FontSize="14" TextWrapping="Wrap" Height="26"  Grid.Column="1" VerticalAlignment="Top"/>
 
-            <Grid.ColumnDefinitions>
+        <Button Content="Clear" Command="{Binding ClearFilter}" Margin="4,27,10,0" VerticalAlignment="Top" Height="20" Grid.Column="2" />
+        
+        <Label Content="Category Filter:" HorizontalAlignment="Left" Margin="23,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.001,-0.249" Width="100" Grid.Row="1" Height="26" Grid.ColumnSpan="2"/>
 
-                <ColumnDefinition Width="*"/>
+        <ComboBox Margin="0,0,10,8" Grid.Row="1" Grid.Column="1"  Height="26" VerticalAlignment="Bottom" />
 
-                <ColumnDefinition Width="auto"/>
-
-            </Grid.ColumnDefinitions>
-
-            <TextBox Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" FontSize="14"/>
-
-            <Button Content="Clear" Command="{Binding ClearFilter}" Grid.Column="1"  Margin="5,0,0,0"/>
-
-
-        </Grid>
-
-        <ListView ItemsSource="{Binding Books}" Grid.Row="1"  BorderBrush="Transparent" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListView ItemsSource="{Binding Books}" BorderBrush="Transparent" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="23,0,10,11"  Grid.Row="2" Grid.ColumnSpan="3">
 
             <ListView.ItemsPanel>
 
@@ -53,6 +55,7 @@
             </ListView.ItemsPanel>
 
             <ListView.ItemTemplate>
+                
 
                 <DataTemplate>
 
@@ -81,11 +84,9 @@
                 </DataTemplate>
 
             </ListView.ItemTemplate>
-
         </ListView>
 
-        <Button x:Name="btnNew" Content="New Book" Command="{Binding NewBook}" HorizontalAlignment="Left" Margin="10,10" Grid.Row="2" Padding="5,1"/>
-
+        <Button Content="New Book" Command="{Binding NewBook}" HorizontalAlignment="Left" Margin="23,10,0,0" VerticalAlignment="Top" Width="75" Grid.Row="3" Height="20"/>
 
     </Grid>
 </f:UserControlBase>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PRBD_Framework;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,8 +14,15 @@ namespace prbd_1819_g07
     /// <summary>
     /// Logique d'interaction pour App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : ApplicationBase
     {
+
+        public enum AppMessages
+        {
+
+            MSG_NEW_BOOK
+
+        }
 
         public static readonly string IMAGE_PATH = Path.GetFullPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/../../images");
         public App()

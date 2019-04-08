@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PRBD_Framework;
+using static prbd_1819_g07.App;
 
 namespace prbd_1819_g07
 {
@@ -23,18 +24,7 @@ namespace prbd_1819_g07
     public partial class MainView : WindowBase
     {
 
-        public ICommand ClearFilter { get; set; }
-
-        private ObservableCollection<Book> books;
-
-        public ObservableCollection<Book> Books {
-
-            get => books;
-
-            set => SetProperty<ObservableCollection<Book>>(ref books, value, () => {
-            });
-
-        }
+  
 
         public MainView()
         {
@@ -42,34 +32,28 @@ namespace prbd_1819_g07
 
             var model = Model.CreateModel(DbType.MsSQL);
 
-            Books = new ObservableCollection<Book>(model.Books);
+            App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
 
-            ClearFilter = new RelayCommand(() => Filter = "");
+                var tab = new TabItem()
+                {
+
+                    Header = "<new book>"
+
+                };
+
+                tabControl.Items.Add(tab);
+
+                Dispatcher.InvokeAsync(() => tab.Focus());
+
+            });
 
             InitializeComponent();
         }
 
         
 
-        private string filter;
 
-        public string Filter
-        {
-            get => filter;
 
-            set => SetProperty<string>(ref filter, value, ApplyFilterAction);
-        }
 
-        private void ApplyFilterAction()
-        {
-            var model = Model.CreateModel(DbType.MsSQL);
-
-            var query = from m in model.Books
-                        where
-                            m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter)
-                        select m;
-
-            Books = new ObservableCollection<Book>(query);
-        }
     }
 }

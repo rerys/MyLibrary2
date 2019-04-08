@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PRBD_Framework;
+using static prbd_1819_g07.App;
 
 namespace prbd_1819_g07
 {
@@ -23,6 +24,8 @@ namespace prbd_1819_g07
     /// </summary>
     public partial class BooksView : UserControlBase
     {
+        public ICommand NewBook { get; set; }
+
         public BooksView()
         {
 
@@ -38,6 +41,12 @@ namespace prbd_1819_g07
             Books = new ObservableCollection<Book>(model.Books);
 
             ClearFilter = new RelayCommand(() => Filter = "");
+
+            NewBook = new RelayCommand(() => {
+
+                App.NotifyColleagues(AppMessages.MSG_NEW_BOOK);
+
+            });
 
         }
 
