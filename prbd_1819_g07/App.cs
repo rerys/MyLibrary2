@@ -24,6 +24,10 @@ namespace prbd_1819_g07
 
         }
 
+        public static User CurrentUser { get; set; }
+
+       // public static Model Model { get; private set; } = new Model();
+
         public static readonly string IMAGE_PATH = Path.GetFullPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/../../images");
         public App()
         {
@@ -32,11 +36,12 @@ namespace prbd_1819_g07
 #else
             var type = DbType.MySQL;
 #endif
-            //using (var model = Model.CreateModel(type)) {
-            // model.ClearDatabase();
+            using (var model = Model.CreateModel(type))
+            {
+                model.ClearDatabase();
 
-            // model.CreateTestData();
-            // }
+                model.CreateTestData();
+            }
 
             var test = new TestDatas(type);
             test.Run();

@@ -70,6 +70,13 @@ namespace prbd_1819_g07
     {
         protected Model(string name) : base(name) { }
 
+        public Model() : base("prbd_1819_g07")
+        {
+            Database.SetInitializer<Model>(
+                new DropCreateDatabaseIfModelChanges<Model>()
+            );
+        }
+
         public static Model CreateModel(DbType type, EFDatabaseInitMode initMode = EFDatabaseInitMode.DropCreateIfChanges)
         {
             switch (type)
@@ -83,7 +90,7 @@ namespace prbd_1819_g07
             }
         }
 
-        public DbSet<User> Users { get; set; }
+        public static DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -96,7 +103,7 @@ namespace prbd_1819_g07
             Users.RemoveRange(Users);
             Books.RemoveRange(Books);
             Categories.RemoveRange(Categories);
-            
+
             SaveChanges();
 
             Reseed(nameof(Categories));
@@ -137,8 +144,8 @@ namespace prbd_1819_g07
             user.Email = email;
             user.BirthDate = birthDate;
             user.Role = role;
-            Users.Add( user );
-            SaveChanges();
+            Users.Add(user);
+           // SaveChanges();
             return user;
         }
 
@@ -153,7 +160,7 @@ namespace prbd_1819_g07
             SaveChanges();
             for (int i = 0; i < numCopies; ++i)
             {
-                book.CreateBookCopy(DateTime.Now,book);
+                book.CreateBookCopy(DateTime.Now, book);
             }
             return book;
         }
@@ -169,8 +176,9 @@ namespace prbd_1819_g07
 
         public List<Book> FindBooksByText(string key)
         {
-            return (from b in Books where b.Title.StartsWith(key) || b.Author.StartsWith(key)
-                    || b.Isbn.StartsWith(key) || b.Editor.StartsWith(key)
+            return (from b in Books
+                    where b.Title.StartsWith(key) || b.Author.StartsWith(key)
+    || b.Isbn.StartsWith(key) || b.Editor.StartsWith(key)
                     select b).ToList();
         }
 
@@ -179,6 +187,6 @@ namespace prbd_1819_g07
             return (from r in RentalItems where r.ReturnDate == null select r).ToList();
         }
 
-        
+
     }
 }

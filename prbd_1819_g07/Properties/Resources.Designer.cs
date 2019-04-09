@@ -61,6 +61,78 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à does not exist.
+        /// </summary>
+        public static string Error_DoesNotExist {
+            get {
+                return ResourceManager.GetString("Error_DoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à length must be &gt;=3.
+        /// </summary>
+        public static string Error_LengthGreaterEqual3 {
+            get {
+                return ResourceManager.GetString("Error_LengthGreaterEqual3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à must match confirm password.
+        /// </summary>
+        public static string Error_MustMatchConfirmPassword {
+            get {
+                return ResourceManager.GetString("Error_MustMatchConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à must match password.
+        /// </summary>
+        public static string Error_MustMatchPassword {
+            get {
+                return ResourceManager.GetString("Error_MustMatchPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à not available.
+        /// </summary>
+        public static string Error_NotAvailable {
+            get {
+                return ResourceManager.GetString("Error_NotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Passwords don&apos;t match..
+        /// </summary>
+        public static string Error_PasswordDontMatch {
+            get {
+                return ResourceManager.GetString("Error_PasswordDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à required.
+        /// </summary>
+        public static string Error_Required {
+            get {
+                return ResourceManager.GetString("Error_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à wrong password.
+        /// </summary>
+        public static string Error_WrongPassword {
+            get {
+                return ResourceManager.GetString("Error_WrongPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Cancel.
         /// </summary>
         public static string LoginView_Cancel {
