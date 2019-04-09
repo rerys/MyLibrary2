@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace prbd_1819_g07.view
+namespace prbd_1819_g07
 {
     /// <summary>
     /// Logique d'interaction pour LoginView.xaml
