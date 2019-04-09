@@ -22,7 +22,7 @@ namespace prbd_1819_g07.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace prbd_1819_g07.Properties {
         ///   Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("prbd_1819_g07.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace prbd_1819_g07.Properties {
         ///   les recherches de ressources à l'aide de cette classe de ressource fortement typée.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace prbd_1819_g07.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Cancel.
         /// </summary>
-        internal static string LoginView_Cancel {
+        public static string LoginView_Cancel {
             get {
                 return ResourceManager.GetString("LoginView_Cancel", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace prbd_1819_g07.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Login.
         /// </summary>
-        internal static string LoginView_Login {
+        public static string LoginView_Login {
             get {
                 return ResourceManager.GetString("LoginView_Login", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace prbd_1819_g07.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à If your don&apos;t have a login and a password, click.
         /// </summary>
-        internal static string LoginView_Message_1 {
+        public static string LoginView_Message_1 {
             get {
                 return ResourceManager.GetString("LoginView_Message_1", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace prbd_1819_g07.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à here.
         /// </summary>
-        internal static string LoginView_Message_2 {
+        public static string LoginView_Message_2 {
             get {
                 return ResourceManager.GetString("LoginView_Message_2", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace prbd_1819_g07.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à to sign-up..
         /// </summary>
-        internal static string LoginView_Message_3 {
+        public static string LoginView_Message_3 {
             get {
                 return ResourceManager.GetString("LoginView_Message_3", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace prbd_1819_g07.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Password:.
         /// </summary>
-        internal static string LoginView_Password {
+        public static string LoginView_Password {
             get {
                 return ResourceManager.GetString("LoginView_Password", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace prbd_1819_g07.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Pseudo:.
         /// </summary>
-        internal static string LoginView_Pseudo {
+        public static string LoginView_Pseudo {
             get {
                 return ResourceManager.GetString("LoginView_Pseudo", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace prbd_1819_g07.Properties {
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Login.
         /// </summary>
-        internal static string LoginView_Title {
+        public static string LoginView_Title {
             get {
                 return ResourceManager.GetString("LoginView_Title", resourceCulture);
             }

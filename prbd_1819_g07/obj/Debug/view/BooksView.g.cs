@@ -53,7 +53,7 @@ namespace prbd_1819_g07 {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/prbd_1819_gXX;component/view/booksview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/prbd_1819_g07;component/view/booksview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\view\BooksView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
