@@ -60,7 +60,7 @@ namespace prbd_1819_g07
         {
             if (Validate())
             { // si aucune erreurs
-                var user = Model.Users.Find(Pseudo); // on recherche le membre 
+                var user = App.Model.Users.Where(u => u.UserName == Pseudo).SingleOrDefault(); // on recherche le membre 
                 App.CurrentUser = user; // le membre connecté devient le membre courant
                 ShowMainView(); // ouverture de la fenêtre principale
                 Close(); // fermeture de la fenêtre de login
@@ -76,7 +76,7 @@ namespace prbd_1819_g07
         public override bool Validate()
         {
             ClearErrors();
-            var member = Model.Users.Find(Pseudo);
+            var member = App.Model.Users.Where(u => u.UserName == Pseudo).SingleOrDefault();
             if (string.IsNullOrEmpty(Pseudo))
             {
                 AddError("Pseudo", Properties.Resources.Error_Required);

@@ -55,7 +55,7 @@ namespace prbd_1819_g07.view
                 //User user1 = Model.CreateUser(userName, password, fullName, email, birthDate, role);
                 //Model.Users.Add(user1);
                 //Model.SaveChanges();
-                var member = Model.Users.Find(UserName); // on recherche le membre 
+                var member = App.Model.Users.Find(UserName); // on recherche le membre 
                 App.CurrentUser = member; // le membre connecté devient le membre courant
                 ShowMainView(); // ouverture de la fenêtre principale
                 Close();
@@ -159,7 +159,7 @@ namespace prbd_1819_g07.view
         public override bool Validate()
         {
             ClearErrors();
-            var member = Model.Users.Find(UserName);
+            var member = App.Model.Users.Find(UserName);
             if (string.IsNullOrEmpty(UserName))
             {
                 AddError("Pseudo", Properties.Resources.Error_Required);

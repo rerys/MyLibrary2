@@ -26,7 +26,7 @@ namespace prbd_1819_g07
 
         public static User CurrentUser { get; set; }
 
-       // public static Model Model { get; private set; } = new Model();
+        public static Model Model { get; private set; } = Model.CreateModel(DbType.MsSQL);
 
         public static readonly string IMAGE_PATH = Path.GetFullPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/../../images");
         public App()

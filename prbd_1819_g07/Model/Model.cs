@@ -70,12 +70,12 @@ namespace prbd_1819_g07
     {
         protected Model(string name) : base(name) { }
 
-        public Model() : base("prbd_1819_g07")
-        {
-            Database.SetInitializer<Model>(
-                new DropCreateDatabaseIfModelChanges<Model>()
-            );
-        }
+        //public Model() : base("prbd_1819_g07")
+        //{
+        //    Database.SetInitializer<Model>(
+        //        new DropCreateDatabaseIfModelChanges<Model>()
+        //    );
+        //}
 
         public static Model CreateModel(DbType type, EFDatabaseInitMode initMode = EFDatabaseInitMode.DropCreateIfChanges)
         {
@@ -90,7 +90,7 @@ namespace prbd_1819_g07
             }
         }
 
-        public static DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Category> Categories { get; set; }
