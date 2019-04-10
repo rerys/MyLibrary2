@@ -141,8 +141,20 @@
   <data name="Error_WrongPassword" xml:space="preserve">
     <value>mauvais mot de passe</value>
   </data>
+  <data name="LoginView_birthdate" xml:space="preserve">
+    <value>Date de naissance:</value>
+  </data>
   <data name="LoginView_Cancel" xml:space="preserve">
     <value>Annuler</value>
+  </data>
+  <data name="LoginView_Conf_Password" xml:space="preserve">
+    <value>Confirmation mot de passe :</value>
+  </data>
+  <data name="LoginView_email" xml:space="preserve">
+    <value>Email:</value>
+  </data>
+  <data name="LoginView_fullname" xml:space="preserve">
+    <value>Nom complet:</value>
   </data>
   <data name="LoginView_Login" xml:space="preserve">
     <value>Se connecter</value>
@@ -162,7 +174,19 @@
   <data name="LoginView_Pseudo" xml:space="preserve">
     <value>Pseudonyme :</value>
   </data>
+  <data name="LoginView_Signup" xml:space="preserve">
+    <value>S'inscrire:</value>
+  </data>
   <data name="LoginView_Title" xml:space="preserve">
     <value>Connexion</value>
+  </data>
+  <data name="SignupView_Message_1" xml:space="preserve">
+    <value>Si vous avez un pseudo et mot de passe, cliquez</value>
+  </data>
+  <data name="SignupView_Message_2" xml:space="preserve">
+    <value>ici</value>
+  </data>
+  <data name="SignupView_Message_3" xml:space="preserve">
+    <value>pour vous connecter</value>
   </data>
 </root>

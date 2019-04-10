@@ -133,11 +133,47 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Birthdate:.
+        /// </summary>
+        public static string LoginView_birthdate {
+            get {
+                return ResourceManager.GetString("LoginView_birthdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Cancel.
         /// </summary>
         public static string LoginView_Cancel {
             get {
                 return ResourceManager.GetString("LoginView_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Password confirmation:.
+        /// </summary>
+        public static string LoginView_Conf_Password {
+            get {
+                return ResourceManager.GetString("LoginView_Conf_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Email:.
+        /// </summary>
+        public static string LoginView_email {
+            get {
+                return ResourceManager.GetString("LoginView_email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Full name:.
+        /// </summary>
+        public static string LoginView_fullname {
+            get {
+                return ResourceManager.GetString("LoginView_fullname", resourceCulture);
             }
         }
         
@@ -196,11 +232,47 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Signup:.
+        /// </summary>
+        public static string LoginView_Signup {
+            get {
+                return ResourceManager.GetString("LoginView_Signup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Login.
         /// </summary>
         public static string LoginView_Title {
             get {
                 return ResourceManager.GetString("LoginView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à If you  have a login and a password, click.
+        /// </summary>
+        public static string SignupView_Message_1 {
+            get {
+                return ResourceManager.GetString("SignupView_Message_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à here.
+        /// </summary>
+        public static string SignupView_Message_2 {
+            get {
+                return ResourceManager.GetString("SignupView_Message_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à to login..
+        /// </summary>
+        public static string SignupView_Message_3 {
+            get {
+                return ResourceManager.GetString("SignupView_Message_3", resourceCulture);
             }
         }
     }

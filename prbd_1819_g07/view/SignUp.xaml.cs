@@ -12,8 +12,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using prbd_1819_g07;
 
-namespace prbd_1819_g07.view
+
+namespace prbd_1819_g07
 {
     /// <summary>
     /// Logique d'interaction pour SignUp.xaml
@@ -33,7 +35,7 @@ namespace prbd_1819_g07.view
 
         public SignUp()
         {
-            //InitializeComponent();
+            InitializeComponent();
             DataContext = this;
             Save = new RelayCommand(SaveAction, CanSaveOrCancelAction);
             //Cancel = new RelayCommand(CancelAction);

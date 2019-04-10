@@ -141,8 +141,20 @@
   <data name="Error_WrongPassword" xml:space="preserve">
     <value>wrong password</value>
   </data>
+  <data name="LoginView_birthdate" xml:space="preserve">
+    <value>Birthdate:</value>
+  </data>
   <data name="LoginView_Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="LoginView_Conf_Password" xml:space="preserve">
+    <value>Password confirmation:</value>
+  </data>
+  <data name="LoginView_email" xml:space="preserve">
+    <value>Email:</value>
+  </data>
+  <data name="LoginView_fullname" xml:space="preserve">
+    <value>Full name:</value>
   </data>
   <data name="LoginView_Login" xml:space="preserve">
     <value>Login</value>
@@ -162,7 +174,19 @@
   <data name="LoginView_Pseudo" xml:space="preserve">
     <value>Pseudo:</value>
   </data>
+  <data name="LoginView_Signup" xml:space="preserve">
+    <value>Signup:</value>
+  </data>
   <data name="LoginView_Title" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="SignupView_Message_1" xml:space="preserve">
+    <value>If you  have a login and a password, click</value>
+  </data>
+  <data name="SignupView_Message_2" xml:space="preserve">
+    <value>here</value>
+  </data>
+  <data name="SignupView_Message_3" xml:space="preserve">
+    <value>to login.</value>
   </data>
 </root>

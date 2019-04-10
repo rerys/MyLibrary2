@@ -1,5 +1,4 @@
 ﻿using prbd_1819_g07;
-using prbd_1819_g07.view;
 using PRBD_Framework;
 using System;
 using System.Collections.Generic;
@@ -45,6 +44,7 @@ namespace prbd_1819_g07
         private void SignUpAction()
         {
             ShowSignUp();
+            Close();
 
         }
 
