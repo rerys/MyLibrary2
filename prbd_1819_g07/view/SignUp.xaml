@@ -46,40 +46,30 @@
             <Label Content="SIGNUP" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="105,58,100,0" Foreground="Gray" FontSize="18" Grid.ColumnSpan="2" Width="75"/>
             <StackPanel  Margin="15,105,15,-52" Grid.ColumnSpan="2">
 
-                <f:ValidatedField>
-                    <TextBox Margin="0,10" materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_Pseudo}" 
+                <TextBox Margin="0,10" materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_Pseudo}" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18"
                              Text="{Binding Pseudo, UpdateSourceTrigger=PropertyChanged}"/>
-                </f:ValidatedField>
 
-                <f:ValidatedField>
-                    <TextBox Margin="0,10" materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_fullname}" 
+                <TextBox Margin="0,10" materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_fullname}" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18"
                              Text="{Binding Pseudo, UpdateSourceTrigger=PropertyChanged}"/>
-                </f:ValidatedField>
 
-                <f:ValidatedField>
-                    <PasswordBox  x:Name="txtPassword" 
+                <PasswordBox  x:Name="txtPassword" 
                                   Margin="0,10" materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_Password}" 
                                   Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" 
                                   FontFamily="Champagne &amp; Limousines" FontSize="18"
                                   f:PasswordHelper.Attach="True"
                                   f:PasswordHelper.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
-                </f:ValidatedField>
-                <f:ValidatedField>
-                    <PasswordBox  
+                <PasswordBox  
                                   Margin="0,10" materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_Conf_Password}" 
                                   Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" 
                                   FontFamily="Champagne &amp; Limousines" FontSize="18"
                                   f:PasswordHelper.Attach="True"
                                   f:PasswordHelper.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
-                </f:ValidatedField>
 
-                <f:ValidatedField>
-                    <TextBox Margin="0,10" materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_email}" 
+                <TextBox Margin="0,10" materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_email}" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18"
                              Text="{Binding Pseudo, UpdateSourceTrigger=PropertyChanged}"/>
-                </f:ValidatedField>
 
                 <DatePicker 
                     VerticalAlignment="Center"
