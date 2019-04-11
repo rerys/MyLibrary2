@@ -32,25 +32,60 @@ namespace prbd_1819_g07
 
             var model = Model.CreateModel(DbType.MsSQL);
 
-            App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
+           // App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
 
-                var tab = new TabItem()
-                {
+              //  var tab = new TabItem()
+              //  {
 
-                    Header = "<new book>"
+              //      Header = "<new book>"
 
-                };
+              //  };
 
-                tabControl.Items.Add(tab);
+                //tabControl.Items.Add(tab);
 
-                Dispatcher.InvokeAsync(() => tab.Focus());
+              //  Dispatcher.InvokeAsync(() => tab.Focus());
 
-            });
+           // });
 
             InitializeComponent();
         }
 
-        
+        private void ButtonFechar_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
+
+        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = ListViewMenu.SelectedIndex;
+            MoveCursorMenu(index);
+
+            switch (index)
+            {
+                case 0:
+                    GridPrincipal.Children.Clear();
+                    //GridPrincipal.Children.Add(new BooksView());
+                    break;
+                case 1:
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new BooksView());
+                    // GridPrincipal.Children.Add(new UserControlEscolha());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void MoveCursorMenu(int index)
+        {
+            TrainsitionigContentSlide.OnApplyTemplate();
+            GridCursor.Margin = new Thickness(0, (190 + (60 * index)), 0, 0);
+        }
 
 
 

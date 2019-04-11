@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:prbd_1819_g07"
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             >
     <UserControl.Resources>
 
         <BitmapImage x:Key="UnknownBook" UriSource="/images/unknown-user.jpg"/>
