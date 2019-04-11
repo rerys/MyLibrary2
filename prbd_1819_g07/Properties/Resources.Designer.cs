@@ -250,6 +250,60 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Basket.
+        /// </summary>
+        public static string MainView_Basket {
+            get {
+                return ResourceManager.GetString("MainView_Basket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Books.
+        /// </summary>
+        public static string MainView_Books {
+            get {
+                return ResourceManager.GetString("MainView_Books", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Categories.
+        /// </summary>
+        public static string MainView_Categories {
+            get {
+                return ResourceManager.GetString("MainView_Categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Home page.
+        /// </summary>
+        public static string MainView_Home {
+            get {
+                return ResourceManager.GetString("MainView_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Rentals.
+        /// </summary>
+        public static string MainView_Rentals {
+            get {
+                return ResourceManager.GetString("MainView_Rentals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Users.
+        /// </summary>
+        public static string MainView_Users {
+            get {
+                return ResourceManager.GetString("MainView_Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à If you  have a login and a password, click.
         /// </summary>
         public static string SignupView_Message_1 {

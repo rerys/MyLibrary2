@@ -25,6 +25,16 @@ namespace prbd_1819_g07
     {
 
   
+        public string currentUserPseudo { get
+            {
+                return App.CurrentUser.UserName;
+            } }
+
+        public Role currentUserRole
+        {
+            get { return App.CurrentUser.Role; }
+        }
+        
 
         public MainView()
         {

@@ -189,4 +189,22 @@
   <data name="SignupView_Message_3" xml:space="preserve">
     <value>to login.</value>
   </data>
+  <data name="MainView_Basket" xml:space="preserve">
+    <value>Basket</value>
+  </data>
+  <data name="MainView_Books" xml:space="preserve">
+    <value>Books</value>
+  </data>
+  <data name="MainView_Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="MainView_Home" xml:space="preserve">
+    <value>Home page</value>
+  </data>
+  <data name="MainView_Rentals" xml:space="preserve">
+    <value>Rentals</value>
+  </data>
+  <data name="MainView_Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
 </root>
