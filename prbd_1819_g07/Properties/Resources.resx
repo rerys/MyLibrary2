@@ -207,4 +207,16 @@
   <data name="MainView_Users" xml:space="preserve">
     <value>Users</value>
   </data>
+  <data name="BookView_CategoryFilter" xml:space="preserve">
+    <value>Category Filter</value>
+  </data>
+  <data name="BookView_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="BookView_NewBook" xml:space="preserve">
+    <value>New book</value>
+  </data>
+  <data name="BookView_TextFilter" xml:space="preserve">
+    <value>Text Filter</value>
+  </data>
 </root>

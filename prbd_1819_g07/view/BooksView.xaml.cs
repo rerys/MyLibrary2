@@ -40,6 +40,8 @@ namespace prbd_1819_g07
 
             Books = new ObservableCollection<Book>(model.Books);
 
+            Categories = new ObservableCollection<Category>(model.Categories);
+
             ClearFilter = new RelayCommand(() => Filter = "");
 
             NewBook = new RelayCommand(() => {
@@ -64,6 +66,20 @@ namespace prbd_1819_g07
 
         }
 
+        private ObservableCollection<Category> categories;
+
+        public ObservableCollection<Category> Categories
+        {
+
+            get => categories;
+
+            set => SetProperty<ObservableCollection<Category>>(ref categories, value, () => {
+            });
+
+        }
+
+
+
 
 
 
@@ -76,16 +92,24 @@ namespace prbd_1819_g07
             set => SetProperty<string>(ref filter, value, ApplyFilterAction);
         }
 
+        private string filterCat;
+        public string FilterCat
+        {
+            get => filterCat;
+            set => SetProperty<string>(ref filterCat, value, ApplyFilterAction);
+        }
+
         private void ApplyFilterAction()
         {
             var model = Model.CreateModel(DbType.MsSQL);
 
             var query = from m in model.Books
                         where
-                            m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter)
+                            m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter) 
                         select m;
 
             Books = new ObservableCollection<Book>(query);
+            //Console.WriteLine("filter categories" + FilterCat + " /// filter text " + Filter);
         }
     }
 }

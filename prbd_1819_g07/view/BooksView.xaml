@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:prbd_1819_g07"
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:p="clr-namespace:prbd_1819_g07.Properties"
              mc:Ignorable="d" 
              >
     <UserControl.Resources>
@@ -13,80 +15,80 @@
 
     </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            
-            <ColumnDefinition Width="auto" MinWidth="112"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="auto"/>
-            
-        </Grid.ColumnDefinitions>
-        
         <Grid.RowDefinitions>
-            <RowDefinition Height="62"/>
-            
-            <RowDefinition Height="43"/>
-            
-            <RowDefinition Height="263*"/>
-            
-            <RowDefinition Height="51"/>
-            
+
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="250*"/>
+            <RowDefinition Height="40"/>
+
         </Grid.RowDefinitions>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.BookView_TextFilter}"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" Width="660"
+                              Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" />
+
+                <Button Content="{x:Static p:Resources.BookView_Clear}" Command="{Binding ClearFilter}" HorizontalAlignment="Right" Height="22" FontSize="10"/>
+
+            </StackPanel>
+
+            <ComboBox materialDesign:HintAssist.Hint="{x:Static p:Resources.BookView_CategoryFilter}" 
+                Margin="10,0,0,0" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="660" ItemsSource="{Binding Categories}"
+                       SelectedValue="{Binding FilterCat,UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+
+        <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}" Grid.Row="1">
+
+            <ListView Grid.Row="1" ItemsSource="{Binding Books}" BorderBrush="Transparent"  SelectionMode="Single"   ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="23,0,10,11">
+
+                    <ListView.ItemsPanel >
+
+                        <ItemsPanelTemplate>
+
+                            <WrapPanel/>
+
+                        </ItemsPanelTemplate>
+
+                    </ListView.ItemsPanel>
+
+                    <ListView.ItemTemplate>
+
+
+                        <DataTemplate>
+
+                            <Border CornerRadius="3" BorderBrush="Gray"  BorderThickness="1" DockPanel.Dock="Top">
+
+                                <StackPanel Width="200">
+                                    <TextBlock Margin="10" FontFamily="Showcard Gothic" FontSize="12" Text="{Binding Isbn}" Foreground="#FFC00000"/>
+                                    <Image Source="{Binding AbsolutePicturePath, TargetNullValue={StaticResource UnknownBook}}" Width="200" Height="150" Stretch="UniformToFill" />
+                                    <TextBlock FontSize="13" FontWeight="Bold" Width="80" TextAlignment="Center" Text="{Binding Title}" TextWrapping="Wrap" LineHeight="20" />
+                                    <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Author}" />
+                                    <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Editor, StringFormat='( \{0\} )' }" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock Text="{Binding NumAvailableCopies, StringFormat= '\{0\} copies available'}" TextWrapping="Wrap"  VerticalAlignment="Center" Margin="10" FontSize="10" FontFamily="Champagne &amp; Limousines"/>
+                                        <Button Width="100" Content="Add to Basket" Command="{Binding AddToBasket}" FontFamily="Champagne &amp; Limousines" Margin="10" FontSize="10"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+
+                            </Border>
+
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
         
-        <Label Content="Text Filter:"  HorizontalAlignment="Left" Margin="23,23,0,0"  Height="26" Grid.ColumnSpan="2"/>
 
-        <TextBox Margin="0,28,10,0" Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" FontSize="14" TextWrapping="Wrap" Height="26"  Grid.Column="1" VerticalAlignment="Top"/>
 
-        <Button Content="Clear" Command="{Binding ClearFilter}" Margin="4,27,10,0" VerticalAlignment="Top" Height="20" Grid.Column="2" />
-        
-        <Label Content="Category Filter:" HorizontalAlignment="Left" Margin="23,9,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.001,-0.249" Width="100" Grid.Row="1" Height="26" Grid.ColumnSpan="2"/>
 
-        <ComboBox Margin="0,0,10,8" Grid.Row="1" Grid.Column="1"  Height="26" VerticalAlignment="Bottom" />
+            
+        </materialDesign:TransitioningContent>
 
-        <ListView ItemsSource="{Binding Books}" BorderBrush="Transparent" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="23,0,10,11"  Grid.Row="2" Grid.ColumnSpan="3">
 
-            <ListView.ItemsPanel>
-
-                <ItemsPanelTemplate>
-
-                    <WrapPanel/>
-
-                </ItemsPanelTemplate>
-
-            </ListView.ItemsPanel>
-
-            <ListView.ItemTemplate>
-                
-
-                <DataTemplate>
-
-                    <Border CornerRadius="3" BorderBrush="Gray"  BorderThickness="1" DockPanel.Dock="Top">
-
-                        <StackPanel >
-
-                            <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Isbn}"  LineHeight="20" />
-
-                            <TextBlock FontSize="13" FontWeight="Bold" Width="80" TextAlignment="Center" Text="{Binding Title}" TextWrapping="Wrap" LineHeight="20" />
-
-                            <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Author}" />
-
-                            <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Editor, StringFormat='( \{0\} )' }" />
-
-                            <Image Width="80" Height="80" Source="{Binding AbsolutePicturePath, TargetNullValue={StaticResource UnknownBook}}" RenderOptions.BitmapScalingMode="Fant" Stretch="UniformToFill" />
-
-                            <TextBlock FontSize="11" FontWeight="DemiBold" Width="100" TextAlignment="Center" Text="{Binding NumAvailableCopies, StringFormat= '\{0\} copies available'}" TextWrapping="Wrap" LineHeight="20"/>
-
-                            <Button Content="Add to Basket" Command="{Binding AddToBasket}"/>
-
-                        </StackPanel>
-
-                    </Border>
-
-                </DataTemplate>
-
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <Button Content="New Book" Command="{Binding NewBook}" HorizontalAlignment="Left" Margin="23,10,0,0" VerticalAlignment="Top" Width="75" Grid.Row="3" Height="20"/>
+        <Button Content="{x:Static p:Resources.BookView_NewBook}" Command="{Binding NewBook}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Grid.Row="2" FontSize="12"/>
 
     </Grid>
 </f:UserControlBase>

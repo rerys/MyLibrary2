@@ -61,6 +61,42 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Category Filter.
+        /// </summary>
+        public static string BookView_CategoryFilter {
+            get {
+                return ResourceManager.GetString("BookView_CategoryFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Clear.
+        /// </summary>
+        public static string BookView_Clear {
+            get {
+                return ResourceManager.GetString("BookView_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à New book.
+        /// </summary>
+        public static string BookView_NewBook {
+            get {
+                return ResourceManager.GetString("BookView_NewBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Text Filter.
+        /// </summary>
+        public static string BookView_TextFilter {
+            get {
+                return ResourceManager.GetString("BookView_TextFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à does not exist.
         /// </summary>
         public static string Error_DoesNotExist {

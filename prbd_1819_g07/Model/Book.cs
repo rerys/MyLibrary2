@@ -21,7 +21,8 @@ namespace prbd_1819_g07
         public string PicturePath { get; set; }
         [NotMapped]
         public int NumAvailableCopies { get {
-                return (from b in Model.BookCopies where b.Book.BookId == BookId select b ).Count();
+                return (from b in Model.BookCopies where b.Book.BookId == BookId select b  ).Count();
+                         
 
             } }
 
