@@ -23,7 +23,6 @@ namespace prbd_1819_g07
     public partial class SignUp : WindowBase
     {
         public User User { get; set; }
-        private ImageHelper imageHelper;
 
 
         public ICommand Save { get; set; }
@@ -90,10 +89,10 @@ namespace prbd_1819_g07
             get { return userName; }
             set
             {
-                userName = value;
-                RaisePropertyChanged(nameof(UserName));
+                SetProperty<string>(ref userName, value, () => Validate());
             }
         }
+
 
         private string fullName;
         public string FullName
@@ -101,8 +100,7 @@ namespace prbd_1819_g07
             get { return fullName; }
             set
             {
-                fullName = value;
-                RaisePropertyChanged(nameof(FullName));
+                SetProperty<string>(ref fullName, value, () => Validate());
             }
         }
 
@@ -113,8 +111,7 @@ namespace prbd_1819_g07
             get { return password; }
             set
             {
-                password = value;
-                RaisePropertyChanged(nameof(Password));
+                SetProperty<string>(ref password, value, () => Validate());
             }
         }
 
@@ -124,8 +121,7 @@ namespace prbd_1819_g07
             get { return confirmPassword; }
             set
             {
-                confirmPassword = value;
-                RaisePropertyChanged(nameof(confirmPassword));
+                SetProperty<string>(ref confirmPassword, value, () => Validate());
             }
         }
         private string email;
@@ -134,8 +130,7 @@ namespace prbd_1819_g07
             get { return email; }
             set
             {
-                email = value;
-                RaisePropertyChanged(nameof(email));
+                SetProperty<string>(ref email, value, () => Validate());
             }
         }
 
