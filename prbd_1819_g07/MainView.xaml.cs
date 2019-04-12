@@ -79,12 +79,11 @@ namespace prbd_1819_g07
             {
                 case 0:
                     GridPrincipal.Children.Clear();
-                    //GridPrincipal.Children.Add(new BooksView());
+                    GridPrincipal.Children.Add(new HomeView());
                     break;
                 case 1:
                     GridPrincipal.Children.Clear();
                     GridPrincipal.Children.Add(new BooksView());
-                    // GridPrincipal.Children.Add(new UserControlEscolha());
                     break;
                 default:
                     break;
