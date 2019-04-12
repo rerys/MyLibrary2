@@ -28,9 +28,10 @@ namespace prbd_1819_g07
 
         public ICommand Save { get; set; }
         public ICommand Cancel { get; set; }
-        public ICommand ClearImage { get; set; }
-        public ICommand Delete { get; set; }
-        public ICommand LoadImage { get; set; }
+        public ICommand CancelApp { get; set; }
+        //public ICommand ClearImage { get; set; }
+        //public ICommand Delete { get; set; }
+        //public ICommand LoadImage { get; set; }
 
 
         public SignUp()
@@ -38,7 +39,8 @@ namespace prbd_1819_g07
             InitializeComponent();
             DataContext = this;
             Save = new RelayCommand(SaveAction, CanSaveOrCancelAction);
-            //Cancel = new RelayCommand(CancelAction);
+            Cancel = new RelayCommand(CancelAction);
+            CancelApp = new RelayCommand(() => Close());
             //ClearImage = new RelayCommand(ClearImageAction);
             //Delete = new RelayCommand(DeleteAction);
             //LoadImage = new RelayCommand(LoadImageAction);
@@ -48,18 +50,28 @@ namespace prbd_1819_g07
             return !string.IsNullOrEmpty(UserName) && !HasErrors;
         }
 
+        private void CancelAction()
+        {
+            ShowLogIn();
+            Close();
+        }
+        private void ShowLogIn()
+        {
+            var loginview = new LoginView();
+            loginview.Show();
+            Application.Current.MainWindow = loginview;
+        }
 
         private void SaveAction()
         {
             if (Validate())
             {
-                //Static pas static fuuck
-                //User user1 = Model.CreateUser(userName, password, fullName, email, birthDate, role);
-                //Model.Users.Add(user1);
-                //Model.SaveChanges();
-                var member = App.Model.Users.Find(UserName); // on recherche le membre 
-                App.CurrentUser = member; // le membre connecté devient le membre courant
-                ShowMainView(); // ouverture de la fenêtre principale
+                User user1 = App.Model.CreateUser(userName, password, fullName, email, birthDate, role);
+                App.Model.Users.Add(user1);
+                App.Model.SaveChanges();
+                var member = App.Model.Users.Where(u => u.UserName == UserName).SingleOrDefault();
+                App.CurrentUser = member;
+                ShowMainView();
                 Close();
             }
 
@@ -94,16 +106,6 @@ namespace prbd_1819_g07
             }
         }
 
-        private string absolutePicturePath;
-        public string AbsolutePicturePath
-        {
-            get { return absolutePicturePath; }
-            set
-            {
-                absolutePicturePath = value;
-                RaisePropertyChanged(nameof(AbsolutePicturePath));
-            }
-        }
 
         private string password;
         public string Password
@@ -137,8 +139,8 @@ namespace prbd_1819_g07
             }
         }
 
-        private DateTime birthDate;
-        public DateTime BirthDate
+        private Nullable<DateTime> birthDate;
+        public Nullable<DateTime> BirthDate
         {
             get { return birthDate; }
             set
@@ -161,16 +163,16 @@ namespace prbd_1819_g07
         public override bool Validate()
         {
             ClearErrors();
-            var member = App.Model.Users.Find(UserName);
+            var member = App.Model.Users.Where(u => u.UserName == UserName).SingleOrDefault();
             if (string.IsNullOrEmpty(UserName))
             {
-                AddError("Pseudo", Properties.Resources.Error_Required);
+                AddError("UserName", Properties.Resources.Error_Required);
             }
             else
             {
                 if (UserName.Length < 3)
                 {
-                    AddError("Pseudo", Properties.Resources.Error_LengthGreaterEqual3);
+                    AddError("UserName", Properties.Resources.Error_LengthGreaterEqual3);
                 }
             }
 
@@ -182,7 +184,14 @@ namespace prbd_1819_g07
             {
                 AddError("ConfirmPassword", Properties.Resources.Error_PasswordDontMatch);
             }
-
+            if (string.IsNullOrEmpty(FullName))
+            {
+                AddError("FullName", Properties.Resources.Error_Required);
+            }
+            if (string.IsNullOrEmpty(Email))
+            {
+                AddError("Email", Properties.Resources.Error_Required);
+            }
             RaiseErrors();
             return !HasErrors;
         }
