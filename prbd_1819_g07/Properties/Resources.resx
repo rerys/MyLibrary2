@@ -219,4 +219,34 @@
   <data name="BookView_TextFilter" xml:space="preserve">
     <value>Text Filter</value>
   </data>
+  <data name="DetailBook_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="DetailBook_Author" xml:space="preserve">
+    <value>Author:</value>
+  </data>
+  <data name="DetailBook_Categories" xml:space="preserve">
+    <value>Categories:</value>
+  </data>
+  <data name="DetailBook_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="DetailBook_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DetailBook_Editor" xml:space="preserve">
+    <value>Editor:</value>
+  </data>
+  <data name="DetailBook_ISBN" xml:space="preserve">
+    <value>ISBN:</value>
+  </data>
+  <data name="DetailBook_Load" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="DetailBook_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="DetailBook_Title" xml:space="preserve">
+    <value>Title:</value>
+  </data>
 </root>

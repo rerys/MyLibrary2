@@ -20,8 +20,8 @@ namespace prbd_1819_g07
         public enum AppMessages
         {
 
-            MSG_NEW_BOOK
-
+            MSG_NEW_BOOK,
+            MSG_CANCEL_VIEWDETAIL_BOOK
         }
 
         public static User CurrentUser { get; set; }

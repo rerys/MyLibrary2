@@ -34,6 +34,20 @@ namespace prbd_1819_g07
         {
             get { return App.CurrentUser.Role; }
         }
+
+        private BooksView books;
+        public BooksView Books
+        {
+            get
+            {
+                if (books == null)
+                {
+                    books = new BooksView();
+                }
+                return books;
+            }
+        }
+
         
 
         public MainView()
@@ -42,20 +56,20 @@ namespace prbd_1819_g07
 
             var model = Model.CreateModel(DbType.MsSQL);
 
-           // App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
+             App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
 
-              //  var tab = new TabItem()
-              //  {
+                 GridPrincipal.Children.Clear();
+                 GridPrincipal.Children.Add(new BookDetailsView());
 
-              //      Header = "<new book>"
 
-              //  };
+             });
 
-                //tabControl.Items.Add(tab);
+            App.Register(this, AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK, () => {
+                GridPrincipal.Children.Clear();
+                GridPrincipal.Children.Add(Books);
 
-              //  Dispatcher.InvokeAsync(() => tab.Focus());
 
-           // });
+            });
 
             InitializeComponent();
         }
@@ -83,7 +97,7 @@ namespace prbd_1819_g07
                     break;
                 case 1:
                     GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new BooksView());
+                    GridPrincipal.Children.Add(Books);
                     break;
                 default:
                     break;

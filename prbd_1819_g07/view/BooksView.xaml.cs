@@ -92,11 +92,11 @@ namespace prbd_1819_g07
             set => SetProperty<string>(ref filter, value, ApplyFilterAction);
         }
 
-        private string filterCat;
-        public string FilterCat
+        private Category filterCat;
+        public Category FilterCat
         {
             get => filterCat;
-            set => SetProperty<string>(ref filterCat, value, ApplyFilterAction);
+            set => SetProperty<Category>(ref filterCat, value, ApplyFilterAction);
         }
 
         private void ApplyFilterAction()
@@ -104,8 +104,11 @@ namespace prbd_1819_g07
             var model = Model.CreateModel(DbType.MsSQL);
 
             var query = from m in model.Books
-                        where
-                            m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter) 
+
+                        let text = m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter)
+                        //let cat = m.Categories.Contains(filterCat)
+                        where text 
+
                         select m;
 
             Books = new ObservableCollection<Book>(query);

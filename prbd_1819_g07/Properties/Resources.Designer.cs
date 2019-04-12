@@ -97,6 +97,96 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Add.
+        /// </summary>
+        public static string DetailBook_Add {
+            get {
+                return ResourceManager.GetString("DetailBook_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Author:.
+        /// </summary>
+        public static string DetailBook_Author {
+            get {
+                return ResourceManager.GetString("DetailBook_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Categories:.
+        /// </summary>
+        public static string DetailBook_Categories {
+            get {
+                return ResourceManager.GetString("DetailBook_Categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Clear.
+        /// </summary>
+        public static string DetailBook_Clear {
+            get {
+                return ResourceManager.GetString("DetailBook_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Delete.
+        /// </summary>
+        public static string DetailBook_Delete {
+            get {
+                return ResourceManager.GetString("DetailBook_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Editor:.
+        /// </summary>
+        public static string DetailBook_Editor {
+            get {
+                return ResourceManager.GetString("DetailBook_Editor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à ISBN:.
+        /// </summary>
+        public static string DetailBook_ISBN {
+            get {
+                return ResourceManager.GetString("DetailBook_ISBN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Load.
+        /// </summary>
+        public static string DetailBook_Load {
+            get {
+                return ResourceManager.GetString("DetailBook_Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Save.
+        /// </summary>
+        public static string DetailBook_Save {
+            get {
+                return ResourceManager.GetString("DetailBook_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Title:.
+        /// </summary>
+        public static string DetailBook_Title {
+            get {
+                return ResourceManager.GetString("DetailBook_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à does not exist.
         /// </summary>
         public static string Error_DoesNotExist {

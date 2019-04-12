@@ -85,6 +85,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -114,6 +115,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.fr.resx</DependentUpon>
     </Compile>
+    <Compile Include="view\BookDetailsView.xaml.cs">
+      <DependentUpon>BookDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\BooksView.xaml.cs">
       <DependentUpon>BooksView.xaml</DependentUpon>
     </Compile>
@@ -134,6 +138,10 @@
       <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="view\BookDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\BooksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -221,6 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\unknown-user.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
