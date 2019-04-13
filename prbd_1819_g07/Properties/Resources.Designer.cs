@@ -455,5 +455,59 @@ namespace prbd_1819_g07.Properties {
                 return ResourceManager.GetString("SignupView_Message_3", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Birthdate.
+        /// </summary>
+        public static string UsersView_Birthdate {
+            get {
+                return ResourceManager.GetString("UsersView_Birthdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Clear.
+        /// </summary>
+        public static string UsersView_Clear {
+            get {
+                return ResourceManager.GetString("UsersView_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à E-mail.
+        /// </summary>
+        public static string UsersView_Email {
+            get {
+                return ResourceManager.GetString("UsersView_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Fullname.
+        /// </summary>
+        public static string UsersView_FullName {
+            get {
+                return ResourceManager.GetString("UsersView_FullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Role.
+        /// </summary>
+        public static string UsersView_Role {
+            get {
+                return ResourceManager.GetString("UsersView_Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Username.
+        /// </summary>
+        public static string UsersView_UserName {
+            get {
+                return ResourceManager.GetString("UsersView_UserName", resourceCulture);
+            }
+        }
     }
 }

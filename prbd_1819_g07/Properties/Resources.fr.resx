@@ -246,4 +246,22 @@
   <data name="DetailBook_Title" xml:space="preserve">
     <value>Titre:</value>
   </data>
+  <data name="UsersView_Birthdate" xml:space="preserve">
+    <value>Anniversaire</value>
+  </data>
+  <data name="UsersView_Clear" xml:space="preserve">
+    <value>Effacer</value>
+  </data>
+  <data name="UsersView_Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="UsersView_FullName" xml:space="preserve">
+    <value>Nom complet</value>
+  </data>
+  <data name="UsersView_Role" xml:space="preserve">
+    <value>Rôle</value>
+  </data>
+  <data name="UsersView_UserName" xml:space="preserve">
+    <value>Pseudo</value>
+  </data>
 </root>

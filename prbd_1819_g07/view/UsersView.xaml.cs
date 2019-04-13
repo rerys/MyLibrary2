@@ -24,6 +24,7 @@ namespace prbd_1819_g07
     public partial class UsersView : UserControlBase
     {
         public ICommand NewUser { get; set; }
+        public ICommand ClearFilter { get; set; }
 
         public UsersView()
         {
@@ -34,6 +35,7 @@ namespace prbd_1819_g07
 
             DataContext = this;
             Users = new ObservableCollection<User>(App.Model.Users);
+            ClearFilter = new RelayCommand(() => Filter = "");
         }
 
         private ObservableCollection<User> users;
@@ -48,7 +50,30 @@ namespace prbd_1819_g07
 
         }
 
+        private string filter;
 
+        public string Filter
+        {
+            get => filter;
+
+            set => SetProperty<string>(ref filter, value, ApplyFilterAction);
+        }
+
+        private void ApplyFilterAction()
+        {
+            var model = Model.CreateModel(DbType.MsSQL);
+
+            var query = from u in model.Users
+                        let text = u.UserName.Contains(Filter) || u.FullName.Contains(Filter) || u.Email.Contains(Filter)
+                       // ||u.Birthdate.Contains(Filter) || u.Role.Contains(Filter) 
+                        where text
+                        select u;
+
+            Users = new ObservableCollection<User>(query);
+        }
+
+
+        //A modifier
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int index = ListView.SelectedIndex;

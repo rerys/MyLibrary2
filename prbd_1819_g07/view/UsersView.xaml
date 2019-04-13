@@ -22,19 +22,19 @@
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" Width="660"
                               Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" />
 
-                <Button Content="{x:Static p:Resources.BookView_Clear}" Command="{Binding ClearFilter}" HorizontalAlignment="Right" Height="22" FontSize="10"/>
+                <Button Content="{x:Static p:Resources.UsersView_Clear}" Command="{Binding ClearFilter}" HorizontalAlignment="Right" Height="22" FontSize="10"/>
 
             </StackPanel>
         </StackPanel>
         <ListView x:Name="ListView" ItemsSource="{Binding Users}" Height="220" Margin="19,19,0,0" Grid.Row="1" VerticalAlignment="Top" SelectionChanged="ListViewMenu_SelectionChanged" SelectedIndex="0" HorizontalAlignment="Left" Width="689">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding UserName}" Header="Nom" Width="100"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding FullName}" Header="NomComplet" Width="150"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Email}" Header="Email" Width="100"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding BirthDate}" Header="Anniversaire" Width="150"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Role}" Header="Rôle" Width="100"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding JspEncore}" Header="Actions" Width="100"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding UserName}" Header="{x:Static p:Resources.UsersView_UserName}" ></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding FullName}" Header="{x:Static p:Resources.UsersView_FullName}"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Email}" Header="{x:Static p:Resources.UsersView_Email}"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding BirthDate}" Header="{x:Static p:Resources.UsersView_Birthdate}"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Role}" Header="{x:Static p:Resources.UsersView_Role}" ></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding JspEncore}" Header="Actions"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
