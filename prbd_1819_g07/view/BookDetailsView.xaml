@@ -7,6 +7,7 @@
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:p="clr-namespace:prbd_1819_g07.Properties"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              >
     <UserControl.Resources>
@@ -22,11 +23,11 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="30*"/>
-            
+
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10 0"  Grid.Row="0" >
-            <Button x:Name="back" Width="30" Height="30" Background="Red" BorderBrush="{x:Null}" Padding="0" Foreground="Gray" Command="{Binding Cancel}">
+            <Button x:Name="back" Width="30" Height="30" Background="Red" BorderBrush="{x:Null}" Padding="0" Foreground="Gray" Command="{Binding Exit}">
                 <materialDesign:PackIcon Kind="PageFirst"/>
             </Button>
 
@@ -42,19 +43,19 @@
             <StackPanel>
                 <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_ISBN}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="10" Width="330"
-                              Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" />
+                              Text="{Binding Isbn,UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_Title}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="12" Width="330"
-                              Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" />
+                              Text="{Binding Title,UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_Author}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="12" Width="330"
-                              Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" />
+                              Text="{Binding Author,UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_Editor}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="12" Width="330"
-                              Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" />
+                              Text="{Binding Editor,UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_Categories}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="12" Width="330"
@@ -62,31 +63,44 @@
             </StackPanel>
 
             <StackPanel  Grid.Column="1" Margin="130,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image Source="/Assets/home.png"  Height="150" Width="150"/>
+                <Image Source="{Binding PicturePath, Converter={f:UriToCachedImageConverter}, FallbackValue={StaticResource UnknownBook}, TargetNullValue={StaticResource UnknownBook}}"  Height="150" Width="150"/>
                 <StackPanel HorizontalAlignment="center" Orientation="Horizontal" Margin="0,15,0,0">
-                    <Button Content="{x:Static p:Resources.DetailBook_Load}" Command="{Binding NewBook}"   FontSize="12" Margin="10,0,5,0"/>
-                    <Button Content="{x:Static p:Resources.DetailBook_Clear}" Command="{Binding NewBook}"  FontSize="12" Margin="5,0,0,0"/>
+                    <Button Content="{x:Static p:Resources.DetailBook_Load}" Command="{Binding LoadImage}"   FontSize="12" Margin="10,0,5,0"/>
+                    <Button Content="{x:Static p:Resources.DetailBook_Clear}" Command="{Binding ClearImage}"  FontSize="12" Margin="5,0,0,0"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Center" Margin="0,10,0,0" Width="350">
-            <Label Content="Book Copies" FontWeight="Bold" VerticalAlignment="center" />
+            <Label Content="Book Copies" FontWeight="Bold" VerticalAlignment="center"  HorizontalContentAlignment="Center" />
             <ListView Width="350" Height="150">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding ID}" Header="ID" />
+                        <GridViewColumn DisplayMemberBinding="{Binding AquisitionDate}" Header="Aquisition Date"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding RentedBy}" Header="Rented By"/>
+
+                    </GridView>
+                </ListView.View>
 
 
             </ListView>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Date:" Margin="10,3,0,0" />
-                <Label Content="Qty:" Margin="34,3,0,0" />
-                <Button Content="{x:Static p:Resources.DetailBook_Add}" Margin="0,6,10,0" FontSize="12" HorizontalAlignment="Right"/>
+                <DatePicker VerticalAlignment="Stretch"/>
+                
+                <Label Content="Qty:" />
+
+                <Button Content="{x:Static p:Resources.DetailBook_Add}"  Margin="165,0,0,0" FontSize="12" />
+                
 
             </StackPanel>
         </StackPanel >
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="3">
-            <Button Content="{x:Static p:Resources.DetailBook_Save}" Command="{Binding NewBook}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
-            <Button Content="{x:Static p:Resources.DetailBook_Delete}" Command="{Binding NewBook}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,0,0" FontSize="12"/>
+            <Button Content="Annuler" Command="{Binding Cancel}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
+            <Button Content="{x:Static p:Resources.DetailBook_Save}" Command="{Binding Save}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
+            <Button Content="{x:Static p:Resources.DetailBook_Delete}" Command="{Binding Delete}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,0,0" FontSize="12"/>
         </StackPanel>
 
 

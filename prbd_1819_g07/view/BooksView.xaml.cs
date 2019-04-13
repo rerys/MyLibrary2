@@ -25,6 +25,7 @@ namespace prbd_1819_g07
     public partial class BooksView : UserControlBase
     {
         public ICommand NewBook { get; set; }
+        public ICommand DisplayBookDetails { get; set; }
 
         public BooksView()
         {
@@ -50,6 +51,11 @@ namespace prbd_1819_g07
 
             });
 
+            DisplayBookDetails = new RelayCommand<Book>(book => {
+                App.NotifyColleagues(AppMessages.MSG_DISPLAY_BOOK, book);
+            });
+
+            App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, book => { ApplyFilterAction();});
         }
 
         public ICommand ClearFilter { get; set; }
@@ -61,9 +67,7 @@ namespace prbd_1819_g07
 
             get => books;
 
-            set => SetProperty<ObservableCollection<Book>>(ref books, value, () => {
-            });
-
+            set => SetProperty<ObservableCollection<Book>>(ref books, value);
         }
 
         private ObservableCollection<Category> categories;
@@ -84,7 +88,6 @@ namespace prbd_1819_g07
 
 
         private string filter;
-
         public string Filter
         {
             get => filter;
@@ -101,18 +104,16 @@ namespace prbd_1819_g07
 
         private void ApplyFilterAction()
         {
-            var model = Model.CreateModel(DbType.MsSQL);
-
-            var query = from m in model.Books
-
+            IEnumerable<Book> query = App.Model.Books;
+            if (!string.IsNullOrEmpty(Filter))
+                query = from m in App.Model.Books
                         let text = m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter)
                         //let cat = m.Categories.Contains(filterCat)
-                        where text 
-
+                        where text
                         select m;
 
             Books = new ObservableCollection<Book>(query);
-            //Console.WriteLine("filter categories" + FilterCat + " /// filter text " + Filter);
+
         }
     }
 }

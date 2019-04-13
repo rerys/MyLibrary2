@@ -24,7 +24,6 @@ namespace prbd_1819_g07
     public partial class MainView : WindowBase
     {
 
-  
         public string currentUserPseudo { get
             {
                 return App.CurrentUser.UserName;
@@ -58,8 +57,10 @@ namespace prbd_1819_g07
 
              App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
 
+                 var book = App.Model.Books.Create();
+                 App.Model.Books.Add(book);
                  GridPrincipal.Children.Clear();
-                 GridPrincipal.Children.Add(new BookDetailsView());
+                 GridPrincipal.Children.Add(new BookDetailsView(book,true));
 
 
              });
@@ -69,6 +70,14 @@ namespace prbd_1819_g07
                 GridPrincipal.Children.Add(Books);
 
 
+            });
+
+            App.Register<Book>(this, AppMessages.MSG_DISPLAY_BOOK, book => {
+                if (book != null)
+                {
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new BookDetailsView(book, false));
+                }
             });
 
             InitializeComponent();

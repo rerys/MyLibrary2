@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:prbd_1819_g07"
              xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:p="clr-namespace:prbd_1819_g07.Properties"
              mc:Ignorable="d" 
              >
@@ -40,9 +41,17 @@
 
         <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}" Grid.Row="1">
 
-            <ListView Grid.Row="1" ItemsSource="{Binding Books}" BorderBrush="Transparent"  SelectionMode="Single"   ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="23,0,10,11">
+            <ListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding Books}" BorderBrush="Transparent"  SelectionMode="Single"   ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="23,0,10,11">
 
-                    <ListView.ItemsPanel >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding DisplayBookDetails}"
+                                   CommandParameter="{Binding ElementName=listView, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                
+                
+                <ListView.ItemsPanel >
 
                         <ItemsPanelTemplate>
 
