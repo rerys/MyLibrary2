@@ -50,5 +50,12 @@ namespace prbd_1819_g07
             test.Run();
 
         }
+
+        //public static void CancelChanges()
+        //{
+        //    Model.Dispose(); // Retire de la mémoire le modèle actuel
+        //    Model = new Model(); // Recréation d'un nouveau modèle à partir de la DB
+        //                         //Model.Database.Log = m => Console.Write(m);
+        //}
     }
 }

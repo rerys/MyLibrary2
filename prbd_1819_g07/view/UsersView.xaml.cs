@@ -41,13 +41,13 @@ namespace prbd_1819_g07
         private ObservableCollection<User> users;
         public ObservableCollection<User> Users
         {
-
-            get => users;
-
-            set => SetProperty<ObservableCollection<User>>(ref users, value, () =>
+            get { return users; }
+            set
             {
-            });
-
+                users = value;
+                RaisePropertyChanged(nameof(Users));
+                RaisePropertyChanged(nameof(UsersView));
+            }
         }
 
         private string filter;
@@ -71,19 +71,103 @@ namespace prbd_1819_g07
 
             Users = new ObservableCollection<User>(query);
         }
-
-
-        //A modifier
-        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        User selectedUser;
+        public User SelectedUser
         {
-            int index = ListView.SelectedIndex;
-            switch (index)
+            get { return selectedUser; }
+            set
             {
-                case 0:
-
-
-                    break;
+                selectedUser = value;
+                RaisePropertyChanged(nameof(SelectedUser));
+                NotifyAllFields();
+                Console.WriteLine(selectedUser);
             }
         }
+        private void NotifyAllFields()
+        {
+            RaisePropertyChanged(nameof(Email));
+            RaisePropertyChanged(nameof(UserName));
+            RaisePropertyChanged(nameof(FullName));
+            //RaisePropertyChanged(nameof(BirthDate));
+            //RaisePropertyChanged(nameof(Role));
+        }
+
+
+        private bool editMode = false;
+        public bool EditMode
+        {
+            get { return editMode; }
+            set
+            {
+                editMode = value;
+                RaisePropertyChanged(nameof(EditMode));
+                RaisePropertyChanged(nameof(ReadMode));
+            }
+        }
+        public bool ReadMode
+        {
+            get { return !EditMode; }
+            set { EditMode = !value; }
+        }
+
+        public string UserName
+        {
+            get { return SelectedUser?.UserName; }
+            set
+            {
+                SelectedUser.UserName = value;
+                EditMode = true;
+                RaisePropertyChanged(nameof(UserName));
+                Validate();
+            }
+        }
+
+        public string FullName
+        {
+            get { return SelectedUser?.FullName; }
+            set
+            {
+                SelectedUser.FullName = value;
+                EditMode = true;
+                RaisePropertyChanged(nameof(FullName));
+                Validate();
+            }
+        }
+
+        public string Email
+        {
+            get { return SelectedUser?.Email; }
+            set
+            {
+                SelectedUser.Email = value;
+                EditMode = true;
+                RaisePropertyChanged(nameof(Email));
+                Validate();
+            }
+        }
+
+        //public DateTime BirthDate
+        //{
+        //    get { return SelectedUser?.BirthDate; }
+        //    set
+        //    {
+        //        SelectedUser.BirthDate = value;
+        //        EditMode = true;
+        //        RaisePropertyChanged(nameof(BirthDate));
+        //        Validate();
+        //    }
+        //}
+
+        //public Role Role
+        //{
+        //    get { return SelectedUser?.Role; }
+        //    set
+        //    {
+        //        SelectedUser.Role = value;
+        //        EditMode = true;
+        //        RaisePropertyChanged(nameof(Role));
+        //        Validate();
+        //    }
+        //}
     }
 }
