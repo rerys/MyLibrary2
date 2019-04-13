@@ -267,4 +267,10 @@
   <data name="UsersView_UserName" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="CategoryView_Book" xml:space="preserve">
+    <value>#Books</value>
+  </data>
+  <data name="CategoryView_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
 </root>

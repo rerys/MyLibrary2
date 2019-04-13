@@ -43,7 +43,9 @@ namespace prbd_1819_g07
 
             Categories = new ObservableCollection<Category>(model.Categories);
 
-            ClearFilter = new RelayCommand(() => Filter = "");
+            ClearFilter = new RelayCommand(() => { Filter = "";
+                
+            });
 
             NewBook = new RelayCommand(() => {
 
@@ -81,11 +83,6 @@ namespace prbd_1819_g07
             });
 
         }
-
-
-
-
-
 
         private string filter;
         public string Filter

@@ -264,4 +264,10 @@
   <data name="UsersView_UserName" xml:space="preserve">
     <value>Pseudo</value>
   </data>
+  <data name="CategoryView_Book" xml:space="preserve">
+    <value>#Livres</value>
+  </data>
+  <data name="CategoryView_Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
 </root>

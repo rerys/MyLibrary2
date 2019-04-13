@@ -20,6 +20,7 @@ using Microsoft.Win32;
 using System.Data.Entity;
 using System.IO;
 
+
 namespace prbd_1819_g07
 {
     /// <summary>
@@ -42,11 +43,18 @@ namespace prbd_1819_g07
         public BookDetailsView(Book book, bool isNew)
         {
             InitializeComponent();
+
+            if (DesignerProperties.GetIsInDesignMode(this))
+                return;
+
             DataContext = this;
+            var model = Model.CreateModel(DbType.MsSQL);
 
             Book = book;
             IsNew = isNew;
 
+            Categories = new ObservableCollection<Category>(model.Categories);
+            BookCopies = new ObservableCollection<BookCopy>(model.BookCopies);
             imageHelper = new ImageHelper(App.IMAGE_PATH, Book.PicturePath);
 
             Save = new RelayCommand(SaveAction, CanSaveOrCancelAction);
@@ -62,6 +70,34 @@ namespace prbd_1819_g07
 
             });
 
+        }
+
+
+        private ObservableCollection<BookCopy> bookCopies;
+
+        public ObservableCollection<BookCopy> BookCopies
+        {
+
+            get => bookCopies;
+
+            set => SetProperty<ObservableCollection<BookCopy>>(ref bookCopies, value);
+        }
+
+        private string viewName;
+        public string ViewName
+        {
+            get
+            {
+                if (IsNew)
+                {
+                    viewName = "New Book";
+                }
+                else {
+                    viewName = Isbn;
+                }
+
+                return viewName;
+            }
         }
 
         private bool isNew;
@@ -136,17 +172,29 @@ namespace prbd_1819_g07
             }
         }
 
+        private ObservableCollection<Category> categories;
+
+        public ObservableCollection<Category> Categories
+        {
+
+            get => categories;
+
+            set => SetProperty<ObservableCollection<Category>>(ref categories, value, () => {
+            });
+
+        }
+
         private void DeleteAction()
         {
             this.CancelAction();
             if (File.Exists(PicturePath))
             {
-                File.Delete(PicturePath);
+                //File.Delete(PicturePath);
             }
             Book.Delete();
             App.Model.SaveChanges();
             App.NotifyColleagues(AppMessages.MSG_BOOK_CHANGED, Book);
-            App.NotifyColleagues(AppMessages.MSG_CLOSE_BOOKVIEW, this);
+            App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
         }
 
         private void LoadImageAction()

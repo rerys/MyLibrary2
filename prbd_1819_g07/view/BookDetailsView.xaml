@@ -21,6 +21,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="30*"/>
 
@@ -31,7 +32,7 @@
                 <materialDesign:PackIcon Kind="PageFirst"/>
             </Button>
 
-            <Label Content="New Book" FontWeight="Bold" FontFamily="Champagne &amp; Limousines" FontSize="12" Margin="10,0,0,0" HorizontalAlignment="Center" />
+            <Label Content="{Binding ViewName}" FontWeight="Bold" FontFamily="Champagne &amp; Limousines" FontSize="12" Margin="10,0,0,0" HorizontalAlignment="Center" />
         </StackPanel>
 
 
@@ -57,9 +58,7 @@
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="12" Width="330"
                               Text="{Binding Editor,UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_Categories}"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="12" Width="330"
-                              Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged}" />
+               
             </StackPanel>
 
             <StackPanel  Grid.Column="1" Margin="130,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -71,36 +70,66 @@
             </StackPanel>
         </Grid>
 
-        <StackPanel Grid.Row="2" HorizontalAlignment="Center" Margin="0,10,0,0" Width="350">
-            <Label Content="Book Copies" FontWeight="Bold" VerticalAlignment="center"  HorizontalContentAlignment="Center" />
-            <ListView Width="350" Height="150">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding ID}" Header="ID" />
-                        <GridViewColumn DisplayMemberBinding="{Binding AquisitionDate}" Header="Aquisition Date"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding RentedBy}" Header="Rented By"/>
+        <ListBox Grid.Row="2" ItemsSource="{Binding Categories}" BorderBrush="Transparent"  SelectionMode="Single"   ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
-                    </GridView>
-                </ListView.View>
-
-
-            </ListView>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Date:" Margin="10,3,0,0" />
-                <DatePicker VerticalAlignment="Stretch"/>
+            <ListBox.ItemsPanel >
                 
-                <Label Content="Qty:" />
+                <ItemsPanelTemplate>
 
-                <Button Content="{x:Static p:Resources.DetailBook_Add}"  Margin="165,0,0,0" FontSize="12" />
-                
+                    <WrapPanel/>
 
-            </StackPanel>
+                </ItemsPanelTemplate>
+
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+
+                    <CheckBox  Content="{Binding Name}" IsChecked="{Binding CheckCategory}"/>
+                    
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Border CornerRadius="3" Grid.Row="3" BorderBrush="Gray"  BorderThickness="1" Width="350" Margin="0,10,0,10">
+            <StackPanel Grid.Row="3" HorizontalAlignment="Center" Margin="0,10,0,0" Width="350">
+                <Label Content="Book Copies" FontWeight="Bold" VerticalAlignment="center"  HorizontalContentAlignment="Center" />
+
+
+                <ListView Width="350" Height="150" ItemsSource="{Binding BookCopies}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding BookCopyId}" Header="ID" />
+                            <GridViewColumn DisplayMemberBinding="{Binding AcquisitionDate}" Header="Aquisition Date"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding RentedBy}" Header="Rented By"/>
+
+                        </GridView>
+                    </ListView.View>
+
+
+                </ListView>
+
+
+                <StackPanel Orientation="Horizontal" Width="300" HorizontalAlignment="Center" >
+                    <Label Content="Date:" Margin="10,3,0,0" />
+                    <DatePicker VerticalAlignment="Stretch" Width="70" Margin="10,0,0,0"/>
+                    <Label Content="Qty:" Margin="5,0,0,0"/>
+                    <TextBox Width="50" Margin="5,0,0,0"/>
+                    <Button Content="{x:Static p:Resources.DetailBook_Add}"  Margin="10,0,0,0" FontSize="12" />
+
+
+                </StackPanel>
+            
+
         </StackPanel >
+        </Border>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="3">
+
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="4">
             <Button Content="Annuler" Command="{Binding Cancel}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
             <Button Content="{x:Static p:Resources.DetailBook_Save}" Command="{Binding Save}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
-            <Button Content="{x:Static p:Resources.DetailBook_Delete}" Command="{Binding Delete}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,0,0" FontSize="12"/>
+            <Button Content="{x:Static p:Resources.DetailBook_Delete}" Command="{Binding Delete}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,0,0" FontSize="12" />
         </StackPanel>
 
 

@@ -97,6 +97,24 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à #Books.
+        /// </summary>
+        public static string CategoryView_Book {
+            get {
+                return ResourceManager.GetString("CategoryView_Book", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Name.
+        /// </summary>
+        public static string CategoryView_Name {
+            get {
+                return ResourceManager.GetString("CategoryView_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Add.
         /// </summary>
         public static string DetailBook_Add {

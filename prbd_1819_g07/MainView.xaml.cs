@@ -108,6 +108,10 @@ namespace prbd_1819_g07
                     GridPrincipal.Children.Clear();
                     GridPrincipal.Children.Add(Books);
                     break;
+                case 2:
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new CategoriesView());
+                    break;
                 case 5:
                     GridPrincipal.Children.Clear();
                     GridPrincipal.Children.Add(new UsersView());
