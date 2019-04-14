@@ -1,0 +1,22 @@
+[BookView]
+
+-filtre category: méthode ApplyFilterAction() à adapter pour la categorie
+-filtre category:  td, clear filtre 
+-liste des livres: td, ajouter livre dans le panier 
+-liste des livres: td, ajouter à la fiche des livres les liens hyperText des categories
+
+
+[BookDetailView]
+
+-categories: td, selection par défaut des categories d'un livre sélectionné 
+		   + ajout du livre dans les catégories sélectionnées (si confirmation) 
+
+-Book Copies: actuellement retourne toutes les copies et non celles du livre visualisé (idem pour new book)
+-Book Copies: td, ajout de copies dans la liste de copies d'un livre   
+
+
+[CategoriesView]
+
+-td, gestion des erreurs + validation d'une catégorie pour l'ajout ou la modification 
+-update, modifier requête linq pour le calcul du nombre de livres dans une categorie 
+	(requête dans Model Category "NumBooksCategory")  

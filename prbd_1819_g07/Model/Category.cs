@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,14 @@ namespace prbd_1819_g07
         public int CategoryId { get; set; }
         public string Name { get; set; }
         public virtual ICollection<Book> Books { get; set; } = new HashSet<Book>();
+        [NotMapped]
+        public int NumBooksCategory
+        {
+            get
+            {
+                return (from b in Model.Categories where b.CategoryId == CategoryId select b.Books).Count();
+            }
+        }
 
 
         public bool HasBook(Book book)
