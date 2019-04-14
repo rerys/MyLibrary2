@@ -181,6 +181,7 @@ namespace prbd_1819_g07
 
             DataContext = this;
             Users = new ObservableCollection<User>(App.Model.Users);
+           // Roles = new ObservableCollection<Role>();
             NewUser = new RelayCommand(() => {
 
                 App.NotifyColleagues(AppMessages.MSG_NEW_USER);

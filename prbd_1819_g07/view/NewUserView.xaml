@@ -10,19 +10,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="649.6"/>
-            <RowDefinition Height="30*"/>
-
+            <RowDefinition Height="676.8"/>
         </Grid.RowDefinitions>
 
-        <Label Content="Ajouter un nouvel utilisateur" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="50,10,415,0" Foreground="Gray" FontSize="24" Width="335" Height="54"/>
+        <Label Content="{x:Static p:Resources.NewUserView_Title}"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="110,10,355,0" Foreground="Gray" FontSize="24" Width="335" Height="54"/>
         <Image Source="/prbd_1819_g07;component/Assets/adduser.jpg" Height="147" VerticalAlignment="Top" Margin="500,0,-30,0"/>
 
-        <StackPanel  Margin="35,95,270,249.6" RenderTransformOrigin="0.469,0.548">
+        <StackPanel  Margin="35,95,270,289.8" RenderTransformOrigin="0.469,0.548">
             <TextBox Margin="0,10" materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_Pseudo}" 
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18"
                              Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
@@ -36,13 +31,13 @@
                     VerticalAlignment="Center"
                     Text="{Binding Birthdate, UpdateSourceTrigger=PropertyChanged}"
                     materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_birthdate}"
-              Margin="0,0,54.4,0" Height="48"
+              Margin="0,0,60.2,0" Height="33"
               />
             <Label Content="Role :" VerticalAlignment="Center" Margin="0,0,0.4,0" />
             <ComboBox ItemsSource="{Binding Roles}" DisplayMemberPath="Role" SelectedValue="{Binding Role}" HorizontalAlignment="Left" Margin="10,3.2,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.673,1.307"/>
 
         </StackPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="-10,0,24,199.6">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="229,0,-215,199.8">
             <Button Content="Annuler" Command="{Binding Cancel}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
             <Button Content="{x:Static p:Resources.DetailBook_Save}" Command="{Binding Save}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
             <Button Content="{x:Static p:Resources.DetailBook_Delete}" Command="{Binding Delete}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,0,0" FontSize="12" />

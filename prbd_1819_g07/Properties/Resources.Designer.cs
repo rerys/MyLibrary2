@@ -448,6 +448,15 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Add a new user : .
+        /// </summary>
+        public static string NewUserView_Title {
+            get {
+                return ResourceManager.GetString("NewUserView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à If you  have a login and a password, click.
         /// </summary>
         public static string SignupView_Message_1 {

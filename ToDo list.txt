@@ -29,8 +29,9 @@
 
 -update, ajout fonction pour gerer modif d'un user et du role. 
 -filtre birthdate: pas pris en compte pour l'instant, modifier ApplyFilterAction()
--affichage birthdate et role lors de selecteduser, ajout Enum.Parse<Role>.
--filtre role: ajouter radiobutton
+-affichage birthdate et role lors de selecteduser, (ajout Enum.Parse<Role>.)
+-filtre role: td, ajouter radiobutton
 
 [NewUserView]
--continuer register mainview
+-Affichage combobox roles
+-configurer l'ajout de birthdate
