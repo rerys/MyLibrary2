@@ -135,7 +135,7 @@ namespace prbd_1819_g07
             get { return SelectedUser?.BirthDate; }
             set
             {
-                SelectedUser.BirthDate = value;
+                SelectedUser.BirthDate = value ?? System.DateTime.Now;
                 EditMode = true;
                 RaisePropertyChanged(nameof(Birthdate));
                 Validate();
