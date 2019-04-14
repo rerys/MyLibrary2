@@ -19,7 +19,9 @@ namespace prbd_1819_g07
 
         public enum AppMessages
         {
-
+            MSG_NEW_USER,
+            MSG_CANCEL_NEWUSER,
+            MSG_USER_CHANGED,
             MSG_NEW_BOOK,
             MSG_CANCEL_VIEWDETAIL_BOOK,
             MSG_BOOK_CHANGED,
@@ -52,11 +54,10 @@ namespace prbd_1819_g07
 
         }
 
-        //public static void CancelChanges()
-        //{
-        //    Model.Dispose(); // Retire de la mémoire le modèle actuel
-        //    Model = new Model(); // Recréation d'un nouveau modèle à partir de la DB
-        //                         //Model.Database.Log = m => Console.Write(m);
-        //}
+        public static void CancelChanges()
+        {
+            Model.Dispose();
+            Model = Model.CreateModel(DbType.MsSQL);
+        }
     }
 }

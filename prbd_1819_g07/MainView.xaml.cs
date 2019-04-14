@@ -55,7 +55,15 @@ namespace prbd_1819_g07
 
             var model = Model.CreateModel(DbType.MsSQL);
 
-             App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
+
+            //App.Register(this, AppMessages.MSG_NEW_USER, () =>
+            //{
+            //    var user = App.Model.Users.Create();
+            //    GridPrincipal.Children.Clear();
+            //    GridPrincipal.Children.Add(new AddUserView(user));
+            //});
+
+            App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
 
                  var book = App.Model.Books.Create();
                  App.Model.Books.Add(book);

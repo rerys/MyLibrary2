@@ -26,14 +26,14 @@
         <DataGrid x:Name="dataGrid" ItemsSource="{Binding Users}" Margin="9,71,10.2,35" 
                       SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding ReadMode}" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_UserName}" Binding="{Binding UserName}" SortDirection="Descending"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_FullName}" Binding="{Binding FullName}" />
-                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_Email}" Binding="{Binding Email}" />
-                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_Birthdate}" Binding="{Binding BirthDate, StringFormat=\{0:dd/MM/yyyy HH:mm:ss\}}" SortDirection="Descending" />
-                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_Role}" Binding="{Binding Role}" />
+                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_UserName}" Binding="{Binding Path=UserName}" SortDirection="Descending"/>
+                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_FullName}" Binding="{Binding Path=FullName}" />
+                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_Email}" Binding="{Binding Path=Email}" />
+                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_Birthdate}" Binding="{Binding Path=BirthDate, StringFormat=\{0:dd/MM/yyyy HH:mm:ss\}}" SortDirection="Descending" />
+                <DataGridTextColumn Header="{x:Static p:Resources.UsersView_Role}" Binding="{Binding Path=Role}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Delete" Margin="0,0,108.2,3" VerticalAlignment="Bottom" Command="{Binding DeleteCommand}" HorizontalAlignment="Right" Width="75"/>
+        <Button Content="Delete" Margin="0,0,108.2,3" VerticalAlignment="Bottom" Command="{Binding DeleteUser}" HorizontalAlignment="Right" Width="75"/>
         <Button Content="Reload" Margin="0,0,10.2,3" VerticalAlignment="Bottom" Command="{Binding RefreshCommand}" HorizontalAlignment="Right" Width="75"/>
         <Button Content="Nouvel utilisateur" Command="{Binding NewUser}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" FontSize="12" Margin="420,0,0,3" Width="129"/>
         <Grid Height="174" Margin="10,20.8,0,0" VerticalAlignment="Top" IsEnabled="{Binding SelectedUser, Converter={f:NullToBoolValueConverter}}" HorizontalAlignment="Left" Width="424" Grid.Row="1">
@@ -49,14 +49,16 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Content="UserName :" VerticalAlignment="Center" Grid.Row="0" />
-            <TextBox Text="{Binding UserName}" IsReadOnly="True" Grid.Row="0" Grid.Column="1" Margin="5" />
+            <TextBox Text="{Binding UserName}"  Grid.Row="0" Grid.Column="1" Margin="5" />
             <Label Content="FullName :" VerticalAlignment="Center" Grid.Row="1" />
-            <TextBox Text="{Binding FullName}" IsReadOnly="True" Grid.Row="1" Grid.Column="1" Margin="5,3.8,5,5.4" />
+            <TextBox Text="{Binding FullName}" Grid.Row="1" Grid.Column="1" Margin="5,3.8,5,5.4" />
             <Label Content="E-mail :" VerticalAlignment="Center" Grid.Row="2" />
-            <TextBox Text="{Binding Email}" IsReadOnly="True" Grid.Row="2" Grid.Column="1" Margin="5,4.6,5,3.8" />
+            <TextBox Text="{Binding Email}"  Grid.Row="2" Grid.Column="1" Margin="5,4.6,5,3.8" />
             <Label Content="Birthdate :" VerticalAlignment="Center" Grid.Row="3" />
+            <TextBox Text="{Binding Birhtdate}" Grid.Row="3" Grid.Column="1" Margin="5,4.2,5,5" />
             <Label Content="Role :" VerticalAlignment="Center" Grid.Row="4" />
-            <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="10,3.2,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120"/>
+            <ComboBox ItemsSource="{Binding Roles}" DisplayMemberPath="Role" SelectedValue="{Binding Role}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,3.2,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120"/>
+
         </Grid>
         <Button Content="Save" Margin="0,0,195.2,171.8" VerticalAlignment="Bottom" Command="{Binding SaveOneCommand}" HorizontalAlignment="Right" Width="75" Grid.Row="1"/>
         <Button Content="Cancel" Margin="0,0,195.2,124.8" VerticalAlignment="Bottom" Command="{Binding CancelCommand}" HorizontalAlignment="Right" Width="75" Grid.Row="1"/>
