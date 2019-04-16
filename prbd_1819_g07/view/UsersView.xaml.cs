@@ -32,7 +32,7 @@ namespace prbd_1819_g07
             {
                 users = value;
                 RaisePropertyChanged(nameof(Users));
-                RaisePropertyChanged(nameof(UsersView));
+                RaisePropertyChanged(nameof(UsersListView));
             }
         }
 
@@ -141,28 +141,67 @@ namespace prbd_1819_g07
                 Validate();
             }
         }
-        private ObservableCollection<Role> roles;
-        public ObservableCollection<Role> Roles
+
+        //public IList<Role> Roles
+        //{
+        //    get
+        //    {
+        //        // Will result in a list like {"Tester", "Engineer"}
+        //        return Enum.GetValues(typeof(Role)).Cast<Role>().ToList<Role>();
+        //    }
+        //}
+        //private ObservableCollection<Role> roles;
+        //public ObservableCollection<Role> Roles
+        //{
+        //    get { return roles; }
+        //    set
+        //    {
+        //        roles = value;
+        //        RaisePropertyChanged(nameof(Roles));
+        //    }
+        //}
+
+        private Role? role;
+        public Role? Role
         {
-            get { return roles; }
+            get
+            {
+                return SelectedUser?.Role;
+
+            }
             set
             {
-                roles = value;
-                RaisePropertyChanged(nameof(Roles));
+               // SelectedUser.Role = role;
+                EditMode = true;
+                RaisePropertyChanged(nameof(Role));
+                Validate();
             }
         }
 
-        //public string Role
-        //{
-        //    get { return (SelectedUsery != null) ? SelectedUser.Role : Role; }
-        //    set
-        //    {
-        //        SelectedUser.Role = value;
-        //        EditMode = true;
-        //        RaisePropertyChanged(nameof(Role));
-        //        Validate();
-        //    }
-        //}
+        // Validations métier sur le message en cours d'édition (SelectedUser)
+        public override bool Validate()
+        {
+            ClearErrors();
+            if (SelectedUser != null)
+            {
+                SelectedUser.Validate();
+                this.errors.SetErrors(selectedUser.GetErrors());
+            }
+            NotifyAllFields();
+            return HasErrors;
+        }
+
+        private CollectionView usersView = null;
+        public CollectionView UsersListView
+        {
+            get
+            {
+                usersView = (CollectionView)CollectionViewSource.GetDefaultView(users);
+                if (usersView != null && usersView.SortDescriptions.Count == 0)
+                    usersView.SortDescriptions.Add(new SortDescription("Birthdate", ListSortDirection.Descending));
+                return usersView;
+            }
+        }
 
         public ICommand NewUser { get; set; }
         public ICommand ClearFilter { get; set; }
@@ -181,8 +220,9 @@ namespace prbd_1819_g07
 
             DataContext = this;
             Users = new ObservableCollection<User>(App.Model.Users);
-           // Roles = new ObservableCollection<Role>();
-            NewUser = new RelayCommand(() => {
+            // Roles = new ObservableCollection<Role>();
+            NewUser = new RelayCommand(() =>
+            {
 
                 App.NotifyColleagues(AppMessages.MSG_NEW_USER);
 
@@ -200,7 +240,7 @@ namespace prbd_1819_g07
             {
                 var UserID = selectedUser.UserId;
                 App.Model.SaveChanges();
-                RaisePropertyChanged(nameof(UsersView));
+                RaisePropertyChanged(nameof(UsersListView));
                 RefreshGrid();
                 EditMode = false;
                 SelectedUser = (from u in Users where u.UserId == UserID select u).SingleOrDefault();
@@ -217,7 +257,7 @@ namespace prbd_1819_g07
             {
                 var UserID = SelectedUser.UserId;
                 App.CancelChanges();
-                RaisePropertyChanged(nameof(UsersView));
+                RaisePropertyChanged(nameof(UsersListView));
                 RefreshGrid();
                 EditMode = false;
                 Users = new ObservableCollection<User>(App.Model.Users);
@@ -235,7 +275,7 @@ namespace prbd_1819_g07
             Users.RefreshFromModel(App.Model.Users);
             if (SelectedUser != null)
                 SelectedUser = (from m in Users where m.UserId == UserID select m).FirstOrDefault();
-            RaisePropertyChanged(nameof(UsersView));
+            RaisePropertyChanged(nameof(UsersListView));
         }
     }
 }

@@ -23,7 +23,7 @@
 
             </StackPanel>
         </StackPanel>
-        <DataGrid x:Name="dataGrid" ItemsSource="{Binding Users}" Margin="9,71,10.2,35" 
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding UsersListView}" Margin="9,71,10.2,35" 
                       SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding ReadMode}" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static p:Resources.UsersView_UserName}" Binding="{Binding Path=UserName}" SortDirection="Descending"/>
@@ -49,16 +49,25 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Content="UserName :" VerticalAlignment="Center" Grid.Row="0" />
-            <TextBox Text="{Binding UserName}"  Grid.Row="0" Grid.Column="1" Margin="5" />
+            <f:ValidatedField  Grid.Row="0" Grid.Column="1" Margin="5" >
+                <TextBox Text="{Binding UserName}" />
+            </f:ValidatedField>
             <Label Content="FullName :" VerticalAlignment="Center" Grid.Row="1" />
-            <TextBox Text="{Binding FullName}" Grid.Row="1" Grid.Column="1" Margin="5,3.8,5,5.4" />
+            <f:ValidatedField Grid.Row="1" Grid.Column="1" Margin="5,3.8,5,5.4">
+                <TextBox Text="{Binding FullName}"  />
+            </f:ValidatedField>
             <Label Content="E-mail :" VerticalAlignment="Center" Grid.Row="2" />
-            <TextBox Text="{Binding Email}"  Grid.Row="2" Grid.Column="1" Margin="5,4.6,5,3.8" />
+            <f:ValidatedField Grid.Row="2" Grid.Column="1" Margin="5,4.6,5,3.8">
+                <TextBox Text="{Binding Email}"/>
+            </f:ValidatedField>
             <Label Content="Birthdate :" VerticalAlignment="Center" Grid.Row="3" />
-            <TextBox Text="{Binding Birhtdate}" Grid.Row="3" Grid.Column="1" Margin="5,4.2,5,5" />
+            <f:ValidatedField Grid.Row="3" Grid.Column="1" Margin="5,4.2,5,5">
+                <TextBox Text="{Binding Birhtdate}"  />
+            </f:ValidatedField>
             <Label Content="Role :" VerticalAlignment="Center" Grid.Row="4" />
-            <ComboBox ItemsSource="{Binding Roles}" DisplayMemberPath="Role" SelectedValue="{Binding Role}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,3.2,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120"/>
-
+            <f:ValidatedField  Grid.Column="1" HorizontalAlignment="Left" Margin="10,3.2,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120">
+                <ComboBox ItemsSource="{Binding Users}" DisplayMemberPath="Role" SelectedItem="{Binding Role}"/>
+            </f:ValidatedField>
         </Grid>
         <Button Content="Save" Margin="0,0,195.2,171.8" VerticalAlignment="Bottom" Command="{Binding SaveOneCommand}" HorizontalAlignment="Right" Width="75" Grid.Row="1"/>
         <Button Content="Cancel" Margin="0,0,195.2,124.8" VerticalAlignment="Bottom" Command="{Binding CancelCommand}" HorizontalAlignment="Right" Width="75" Grid.Row="1"/>
