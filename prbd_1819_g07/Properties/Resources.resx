@@ -276,4 +276,22 @@
   <data name="NewUserView_Title" xml:space="preserve">
     <value>Add a new user : </value>
   </data>
+  <data name="BasketView_Label" xml:space="preserve">
+    <value>This basket is for : </value>
+  </data>
+  <data name="BasketView_Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="BasketView_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="BasketView_Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="BasketView_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="BasketView_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
 </root>

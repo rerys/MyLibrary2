@@ -35,3 +35,6 @@
 [NewUserView]
 -Affichage combobox roles
 -configurer l'ajout de birthdate
+
+[BasketView]
+-Toujours GROS SOUCIS avec affichage combobox....

@@ -61,6 +61,60 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Action.
+        /// </summary>
+        public static string BasketView_Action {
+            get {
+                return ResourceManager.GetString("BasketView_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Author.
+        /// </summary>
+        public static string BasketView_Author {
+            get {
+                return ResourceManager.GetString("BasketView_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Clear.
+        /// </summary>
+        public static string BasketView_Clear {
+            get {
+                return ResourceManager.GetString("BasketView_Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Confirm.
+        /// </summary>
+        public static string BasketView_Confirm {
+            get {
+                return ResourceManager.GetString("BasketView_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à This basket is for : .
+        /// </summary>
+        public static string BasketView_Label {
+            get {
+                return ResourceManager.GetString("BasketView_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Title.
+        /// </summary>
+        public static string BasketView_Title {
+            get {
+                return ResourceManager.GetString("BasketView_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Category Filter.
         /// </summary>
         public static string BookView_CategoryFilter {

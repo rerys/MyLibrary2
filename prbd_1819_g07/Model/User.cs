@@ -93,5 +93,32 @@ namespace prbd_1819_g07
         }
 
         public Rental Basket { get => GetBasket(); }
+
+        public override bool Validate()
+        {
+            ClearErrors();
+            var member = App.Model.Users.Where(u => u.UserName == UserName).SingleOrDefault();
+            if (string.IsNullOrEmpty(UserName))
+            {
+                AddError("UserName", Properties.Resources.Error_Required);
+            }
+            else
+            {
+                if (UserName.Length < 3)
+                {
+                    AddError("UserName", Properties.Resources.Error_LengthGreaterEqual3);
+                }
+            }
+            if (string.IsNullOrEmpty(FullName))
+            {
+                AddError("FullName", Properties.Resources.Error_Required);
+            }
+            if (string.IsNullOrEmpty(Email))
+            {
+                AddError("Email", Properties.Resources.Error_Required);
+            }
+            RaiseErrors();
+            return !HasErrors;
+        }
     }
 }
