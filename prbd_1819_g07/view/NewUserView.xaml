@@ -34,13 +34,12 @@
               Margin="0,0,60.2,0" Height="33"
               />
             <Label Content="Role :" VerticalAlignment="Center" Margin="0,0,0.4,0" />
-            <ComboBox ItemsSource="{Binding Roles}" DisplayMemberPath="Role" SelectedValue="{Binding Role}" HorizontalAlignment="Left" Margin="10,3.2,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.673,1.307"/>
+            <ComboBox ItemsSource="{Binding Users}" DisplayMemberPath="Role" SelectedValue="{Binding Role}" HorizontalAlignment="Left" Margin="10,3.2,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.673,1.307"/>
 
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="229,0,-215,199.8">
             <Button Content="Cancel" Command="{Binding Cancel}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
             <Button Content="{x:Static p:Resources.DetailBook_Save}" Command="{Binding Save}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
-            <Button Content="{x:Static p:Resources.DetailBook_Delete}" Command="{Binding Delete}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,0,0" FontSize="12" />
         </StackPanel>
 
     </Grid>

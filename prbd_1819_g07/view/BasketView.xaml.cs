@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,68 @@ namespace prbd_1819_g07
                 RaisePropertyChanged(nameof(Users));
                 // RaisePropertyChanged(nameof(BasketListView));
             }
+        }
+
+        private CollectionView basketView = null;
+        public CollectionView BasketOfUserView
+        {
+            get
+            {
+                basketView = (CollectionView)CollectionViewSource.GetDefaultView(users);
+                if (basketView != null && basketView.SortDescriptions.Count == 0)
+                    basketView.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Descending));
+                return basketView;
+            }
+        }
+
+        public Rental Title
+        {
+            get { return App.CurrentUser.Basket; }
+            set
+            {
+                RaisePropertyChanged(nameof(Title));
+                Validate();
+            }
+        }
+
+        //public string Author
+        //{
+        //    get { return App.CurrentUser.Basket; }
+        //    set
+        //    {
+        //        RaisePropertyChanged(nameof(Title));
+        //        Validate();
+        //    }
+        //}
+        User selectedUser;
+        public User SelectedUser
+        {
+            get { return selectedUser; }
+            set
+            {
+                selectedUser = value;
+                RaisePropertyChanged(nameof(SelectedUser));
+                NotifyAllFields();
+                Console.WriteLine(selectedUser);
+            }
+        }
+
+        public override bool Validate()
+        {
+            ClearErrors();
+            if (SelectedUser != null)
+            {
+                SelectedUser.Validate();
+                this.errors.SetErrors(selectedUser.GetErrors());
+            }
+            NotifyAllFields();
+            return HasErrors;
+        }
+
+        private void NotifyAllFields()
+        {
+            RaisePropertyChanged(nameof(Title));
+           // RaisePropertyChanged(nameof(Author));
         }
 
         public ICommand ConfirmBasket { get; set; }

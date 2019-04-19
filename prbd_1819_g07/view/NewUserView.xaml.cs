@@ -1,6 +1,7 @@
 ﻿using PRBD_Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,17 @@ namespace prbd_1819_g07
     public partial class NewUserView : UserControlBase
     {
         public User User { get; set; }
+
+        private ObservableCollection<User> users;
+        public ObservableCollection<User> Users
+        {
+            get { return users; }
+            set
+            {
+                users = value;
+                RaisePropertyChanged(nameof(Users));
+            }
+        }
 
         private string userName;
         public string UserName
@@ -71,7 +83,7 @@ namespace prbd_1819_g07
             get { return role; }
             set
             {
-                role = Role.Member;
+                role = value;
                 RaisePropertyChanged(nameof(role));
             }
         }
@@ -111,14 +123,20 @@ namespace prbd_1819_g07
             InitializeComponent();
             DataContext = this;
             Save = new RelayCommand(SaveAction);
+            Cancel = new RelayCommand(CancelAction);
         }
 
+        private void CancelAction()
+        {
+
+            App.NotifyColleagues(AppMessages.MSG_CANCEL_NEWUSER);
+        }
 
         private void SaveAction()
         {
             if (Validate())
             {
-                User user1 = App.Model.CreateUser(userName, userName, fullName, email, birthDate, role);
+                User user1 = App.Model.CreateUser(userName, userName, fullName, email, birthDate, Role.Member);
                 App.Model.Users.Add(user1);
                 App.Model.SaveChanges();
                 var member = App.Model.Users.Where(u => u.UserName == UserName).SingleOrDefault();

@@ -63,6 +63,12 @@ namespace prbd_1819_g07
                 GridPrincipal.Children.Add(new NewUserView(user));
             });
 
+            App.Register(this, AppMessages.MSG_CANCEL_NEWUSER, () =>
+              {
+                  GridPrincipal.Children.Clear();
+                  GridPrincipal.Children.Add(new UsersView());
+              });
+
             App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
 
                  var book = App.Model.Books.Create();
