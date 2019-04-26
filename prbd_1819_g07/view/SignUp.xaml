@@ -73,7 +73,7 @@
 
                 <DatePicker 
                     VerticalAlignment="Center"
-                    Text="{Binding Birthdate, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedDate="{Binding Birthdate, UpdateSourceTrigger=PropertyChanged}"
                     materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_birthdate}"
               />
 

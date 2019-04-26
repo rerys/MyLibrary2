@@ -1,7 +1,5 @@
 [BookView]
 
--filtre category: méthode ApplyFilterAction() à adapter pour la categorie
--filtre category:  td, clear filtre 
 -liste des livres: td, ajouter livre dans le panier 
 -liste des livres: td, ajouter à la fiche des livres les liens hyperText des categories
 
@@ -21,9 +19,6 @@
 -update, modifier requête linq pour le calcul du nombre de livres dans une categorie 
 	(requête dans Model Category "NumBooksCategory")  
 
-[SignUp]
-
--Configurer l'ajout de birthdate
 
 [UsersView]
 
