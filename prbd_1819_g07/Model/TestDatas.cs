@@ -184,11 +184,11 @@ namespace prbd_1819_g07
                 printList("Rental Items du panier de ben", ben.Basket.Items);
                 Console.WriteLine("Suppression d'un élément du panier de ben - ben.RemoveFromBasket(rentalItemBook3)");
                 explicationRemoveFromBasket();
-                ben.RemoveFromBasket(rentalItemBook3);
+                //ben.RemoveFromBasket(rentalItemBook3);
                 printList("Rental Items du panier de ben", ben.Basket.Items);
                 Console.WriteLine("Confirmation du panier de ben - basket.Confirm()");
                 explicationConfirm();
-                ben.Basket.Confirm();
+                //ben.Basket.Confirm();
                 Console.WriteLine(ben.Basket);
                 Console.WriteLine("Re-Création du panier de ben essayant d'ajouter des copies de book1, book2, book3");
                 Console.WriteLine("");
@@ -199,7 +199,7 @@ namespace prbd_1819_g07
                 Console.WriteLine(ben.Basket);
                 printList("Rental Items du panier de ben", ben.Basket.Items);
                 Console.WriteLine("Vidage du panier de ben - ben.ClearBasket()");
-                ben.ClearBasket();
+                //ben.ClearBasket();
                 Console.WriteLine(ben.Basket);
             });
         }

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using prbd_1819_g07;
 using static prbd_1819_g07.App;
 
 namespace prbd_1819_g07
@@ -150,33 +151,37 @@ namespace prbd_1819_g07
         //        return Enum.GetValues(typeof(Role)).Cast<Role>().ToList<Role>();
         //    }
         //}
-        //private ObservableCollection<Role> roles;
-        //public ObservableCollection<Role> Roles
-        //{
-        //    get { return roles; }
-        //    set
-        //    {
-        //        roles = value;
-        //        RaisePropertyChanged(nameof(Roles));
-        //    }
-        //}
 
-        private Role? role;
-        public Role? Role
+        private Role[] roles;
+        public Role[] Roles
         {
             get
             {
-                return SelectedUser?.Role;
-
+                Role[] roles = { Role.Admin, Role.Manager, Role.Member };
+                return roles;
             }
             set
             {
-               // SelectedUser.Role = role;
-                EditMode = true;
-                RaisePropertyChanged(nameof(Role));
-                Validate();
+                RaisePropertyChanged(nameof(Roles));
             }
         }
+
+        //private Role? role;
+        //public Role? RoleUser
+        //{
+        //    get
+        //    {
+        //        return SelectedUser?.Role;
+
+        //    }
+        //    set
+        //    {
+        //       // SelectedUser.Role = role;
+        //        EditMode = true;
+        //        RaisePropertyChanged(nameof(RoleUser));
+        //        Validate();
+        //    }
+        //}
 
         // Validations métier sur le message en cours d'édition (SelectedUser)
         public override bool Validate()
@@ -198,7 +203,7 @@ namespace prbd_1819_g07
             {
                 usersView = (CollectionView)CollectionViewSource.GetDefaultView(users);
                 if (usersView != null && usersView.SortDescriptions.Count == 0)
-                    usersView.SortDescriptions.Add(new SortDescription("Birthdate", ListSortDirection.Descending));
+                    usersView.SortDescriptions.Add(new SortDescription("UserName", ListSortDirection.Ascending));
                 return usersView;
             }
         }
@@ -220,7 +225,6 @@ namespace prbd_1819_g07
 
             DataContext = this;
             Users = new ObservableCollection<User>(App.Model.Users);
-            // Roles = new ObservableCollection<Role>();
             NewUser = new RelayCommand(() =>
             {
 

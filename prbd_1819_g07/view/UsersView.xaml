@@ -66,7 +66,7 @@
             </f:ValidatedField>
             <Label Content="Role :" VerticalAlignment="Center" Grid.Row="4" />
             <f:ValidatedField  Grid.Column="1" HorizontalAlignment="Left" Margin="10,3.2,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120">
-                <ComboBox ItemsSource="{Binding Users}" DisplayMemberPath="Role" SelectedItem="{Binding Role}"/>
+                <ComboBox ItemsSource="{Binding Roles}" SelectedItem="{Binding Role}"/>
             </f:ValidatedField>
         </Grid>
         <Button Content="Save" Margin="0,0,195.2,171.8" VerticalAlignment="Bottom" Command="{Binding SaveOneCommand}" HorizontalAlignment="Right" Width="75" Grid.Row="1"/>

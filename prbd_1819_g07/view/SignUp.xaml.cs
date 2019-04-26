@@ -171,9 +171,13 @@ namespace prbd_1819_g07
                 }
             }
 
-            if (string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(ConfirmPassword))
+            if (string.IsNullOrEmpty(Password))
             {
                 AddError("Password", Properties.Resources.Error_Required);
+            }
+            if (string.IsNullOrEmpty(ConfirmPassword))
+            {
+                AddError("ConfirmPassword", Properties.Resources.Error_Required);
             }
             if (ConfirmPassword != Password)
             {

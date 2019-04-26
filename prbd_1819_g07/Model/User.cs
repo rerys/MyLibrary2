@@ -87,9 +87,14 @@ namespace prbd_1819_g07
         }
         public Rental GetBasket()
         {
-            return (from r in Model.Rentals
+            var query = (from r in Model.Rentals
                     where r.User.UserId == UserId && r.RentalDate == null 
                     select r).FirstOrDefault();
+            if(query == null)
+            {
+                CreateBasket();
+            }
+            return query;
         }
 
         public Rental Basket { get => GetBasket(); }

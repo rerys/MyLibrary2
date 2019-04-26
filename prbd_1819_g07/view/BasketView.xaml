@@ -11,9 +11,9 @@
     <Grid>
         <Label Content="{x:Static p:Resources.BasketView_Label}" HorizontalAlignment="Left" Margin="195,37,0,0" VerticalAlignment="Top" Width="135"/>
         <f:ValidatedField HorizontalAlignment="Left" Margin="380,34,0,0" VerticalAlignment="Top" Width="120">
-            <ComboBox ItemsSource="{Binding Users}" DisplayMemberPath="UserName" SelectedItem="{Binding UserSelected}" />
+            <ComboBox ItemsSource="{Binding Users}" DisplayMemberPath="UserName" SelectedItem="{Binding SelectedUser}" />
         </f:ValidatedField>
-        <DataGrid x:Name="dataGrid" ItemsSource="{Binding BasketListView}" Margin="195,101,215,149.6" 
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding Basket}" Margin="195,101,215,149.6" 
                       SelectedItem="{Binding SelectedBook}" AutoGenerateColumns="False" IsReadOnly="True" IsEnabled="{Binding ReadMode}" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static p:Resources.BasketView_Title}" Binding="{Binding Path=Title}" SortDirection="Descending"/>

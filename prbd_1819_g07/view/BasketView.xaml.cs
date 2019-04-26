@@ -26,57 +26,19 @@ namespace prbd_1819_g07
         private ObservableCollection<User> users;
         public ObservableCollection<User> Users
         {
-            get { return users; }
-            set
+            get => users;
+
+            set => SetProperty<ObservableCollection<User>>(ref users, value, () =>
             {
-                users = value;
-                RaisePropertyChanged(nameof(Users));
-                // RaisePropertyChanged(nameof(BasketListView));
-            }
+            });
+
         }
 
-        private CollectionView basketView = null;
-        public CollectionView BasketOfUserView
-        {
-            get
-            {
-                basketView = (CollectionView)CollectionViewSource.GetDefaultView(users);
-                if (basketView != null && basketView.SortDescriptions.Count == 0)
-                    basketView.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Descending));
-                return basketView;
-            }
-        }
-
-        public Rental Title
-        {
-            get { return App.CurrentUser.Basket; }
-            set
-            {
-                RaisePropertyChanged(nameof(Title));
-                Validate();
-            }
-        }
-
-        //public string Author
-        //{
-        //    get { return App.CurrentUser.Basket; }
-        //    set
-        //    {
-        //        RaisePropertyChanged(nameof(Title));
-        //        Validate();
-        //    }
-        //}
         User selectedUser;
         public User SelectedUser
         {
-            get { return selectedUser; }
-            set
-            {
-                selectedUser = value;
-                RaisePropertyChanged(nameof(SelectedUser));
-                NotifyAllFields();
-                Console.WriteLine(selectedUser);
-            }
+            get => selectedUser;
+            set => SetProperty<User>(ref selectedUser, value);
         }
 
         public override bool Validate()
@@ -93,8 +55,7 @@ namespace prbd_1819_g07
 
         private void NotifyAllFields()
         {
-            RaisePropertyChanged(nameof(Title));
-           // RaisePropertyChanged(nameof(Author));
+            RaisePropertyChanged(nameof(Basket));
         }
 
         public ICommand ConfirmBasket { get; set; }
@@ -104,6 +65,22 @@ namespace prbd_1819_g07
         public BasketView()
         {
             InitializeComponent();
+
+            DataContext = this;
+
+            var model = Model.CreateModel(DbType.MsSQL);
+            Users = new ObservableCollection<User>(model.Users);
+            SelectedUser = App.Model.Users.Where(u => u.UserName.Contains(App.CurrentUser.UserName)).SingleOrDefault();
         }
+
+        public ObservableCollection<Book> Basket
+        {
+            get
+            {
+                var query = from b in SelectedUser.Basket.Items select b.BookCopy.Book;
+                return new ObservableCollection<Book>(query);
+            }
+        }
+
     }
 }
