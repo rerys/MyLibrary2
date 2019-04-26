@@ -28,6 +28,16 @@ namespace prbd_1819_g07
     /// </summary>
     public partial class BookDetailsView : UserControlBase
     {
+
+        public class CheckedCategory
+        {
+            public int IdCategory { get; set; }
+            public string Name { get; set; }
+            public bool IsChecked { get; set; }
+        }
+
+
+
         public Book Book { get; set; }
         private ImageHelper imageHelper;
 
@@ -39,6 +49,7 @@ namespace prbd_1819_g07
         public ICommand LoadImage { get; set; }
         public ICommand ClearImage { get; set; }
         public ICommand Exit { get; set; }
+
 
         public BookDetailsView(Book book, bool isNew)
         {
@@ -53,7 +64,6 @@ namespace prbd_1819_g07
             Book = book;
             IsNew = isNew;
 
-            Categories = new ObservableCollection<Category>(model.Categories);
             BookCopies = new ObservableCollection<BookCopy>(model.BookCopies);
             imageHelper = new ImageHelper(App.IMAGE_PATH, Book.PicturePath);
 
@@ -92,7 +102,8 @@ namespace prbd_1819_g07
                 {
                     viewName = "New Book";
                 }
-                else {
+                else
+                {
                     viewName = Isbn;
                 }
 
@@ -172,17 +183,32 @@ namespace prbd_1819_g07
             }
         }
 
-        private ObservableCollection<Category> categories;
+        private ObservableCollection<CheckedCategory> categories;
 
-        public ObservableCollection<Category> Categories
+        public ObservableCollection<CheckedCategory> Categories
         {
 
-            get => categories;
+            get
+            {
+                if (categories == null)
+                {
+                    categories = new ObservableCollection<CheckedCategory>(
 
-            set => SetProperty<ObservableCollection<Category>>(ref categories, value, () => {
-            });
-
+                        from c in App.Model.Categories
+                        orderby c.Name
+                        select new CheckedCategory
+                        {
+                            IdCategory = c.CategoryId,
+                            Name = c.Name,
+                            IsChecked = (from b in App.Model.Books
+                                         where b.BookId == Book.BookId && b.Categories.Contains(c)
+                                         select b).Count() > 0
+                        });
+                }
+                return categories;
+            }
         }
+    
 
         private void DeleteAction()
         {
@@ -233,7 +259,11 @@ namespace prbd_1819_g07
                 App.Model.Books.Add(Book);
                 IsNew = false;
             }
-            imageHelper.Confirm(Book.Isbn);
+            if (imageHelper.IsTransitoryState)
+            {
+                imageHelper.Confirm(Book.Isbn);
+            }
+
             PicturePath = imageHelper.CurrentFile;
             App.Model.SaveChanges();
             App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
@@ -277,6 +307,7 @@ namespace prbd_1819_g07
                 return !string.IsNullOrEmpty(Isbn) && !string.IsNullOrEmpty(Title)
                     && !string.IsNullOrEmpty(Author) && !string.IsNullOrEmpty(Editor) && !HasErrors;
             }
+
             var change = (from c in App.Model.ChangeTracker.Entries<Book>()
                           where c.Entity == Book
                           select c).FirstOrDefault();

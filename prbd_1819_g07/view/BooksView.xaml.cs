@@ -43,21 +43,25 @@ namespace prbd_1819_g07
 
             Categories = new ObservableCollection<Category>(model.Categories);
 
-            ClearFilter = new RelayCommand(() => { Filter = "";
-                
+            ClearFilter = new RelayCommand(() =>
+            {
+                Filter = "";
+                FilterCat = null;
             });
 
-            NewBook = new RelayCommand(() => {
+            NewBook = new RelayCommand(() =>
+            {
 
                 App.NotifyColleagues(AppMessages.MSG_NEW_BOOK);
 
             });
 
-            DisplayBookDetails = new RelayCommand<Book>(book => {
+            DisplayBookDetails = new RelayCommand<Book>(book =>
+            {
                 App.NotifyColleagues(AppMessages.MSG_DISPLAY_BOOK, book);
             });
 
-            App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, book => { ApplyFilterAction();});
+            App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, book => { ApplyFilterAction(); });
         }
 
         public ICommand ClearFilter { get; set; }
@@ -79,7 +83,8 @@ namespace prbd_1819_g07
 
             get => categories;
 
-            set => SetProperty<ObservableCollection<Category>>(ref categories, value, () => {
+            set => SetProperty<ObservableCollection<Category>>(ref categories, value, () =>
+            {
             });
 
         }
@@ -101,15 +106,32 @@ namespace prbd_1819_g07
 
         private void ApplyFilterAction()
         {
-            IEnumerable<Book> query = App.Model.Books;
-            if (!string.IsNullOrEmpty(Filter))
-                query = from m in App.Model.Books
-                        let text = m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter)
-                        //let cat = m.Categories.Contains(filterCat)
-                        where text
-                        select m;
+            //IEnumerable<Book> query = App.Model.Books;
 
-            Books = new ObservableCollection<Book>(query);
+            IQueryable<Book> query;
+
+            if (!string.IsNullOrEmpty(Filter))
+            {
+                query = from m in App.Model.Books
+                        where
+                        m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter)
+                        select m;
+            }
+            else
+            {
+                query = App.Model.Books;
+            }
+
+            if (FilterCat != null)
+            {
+                query = from m in query
+                        where (from c in m.Categories where c.CategoryId == filterCat.CategoryId select c).Count() > 0                
+                        select m;
+              
+            }
+            Books = new ObservableCollection<Book>(query.OrderBy(b=> b.Title));
+
+
 
         }
     }

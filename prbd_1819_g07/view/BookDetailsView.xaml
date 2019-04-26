@@ -85,7 +85,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
 
-                    <CheckBox  Content="{Binding Name}" IsChecked="{Binding CheckCategory}"/>
+                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}"/>
                     
                 </DataTemplate>
             </ListBox.ItemTemplate>

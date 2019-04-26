@@ -35,7 +35,7 @@
 
             <ComboBox materialDesign:HintAssist.Hint="{x:Static p:Resources.BookView_CategoryFilter}" 
                 Margin="10,0,0,0" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="660" ItemsSource="{Binding Categories}"
-                       SelectedValue="{Binding FilterCat,UpdateSourceTrigger=PropertyChanged}" />
+                       SelectedItem="{Binding FilterCat,UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
 
