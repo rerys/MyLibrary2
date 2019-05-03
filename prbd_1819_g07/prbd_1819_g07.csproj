@@ -267,5 +267,8 @@
   <ItemGroup>
     <Resource Include="Assets\bookbasket.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="database\prbd_1819_g07.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

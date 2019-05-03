@@ -38,7 +38,7 @@ namespace prbd_1819_g07
         public User SelectedUser
         {
             get => selectedUser;
-            set => SetProperty<User>(ref selectedUser, value);
+            set => SetProperty<User>(ref selectedUser, value, NotifyAllFields);
         }
 
         public override bool Validate()
@@ -71,16 +71,33 @@ namespace prbd_1819_g07
             var model = Model.CreateModel(DbType.MsSQL);
             Users = new ObservableCollection<User>(model.Users);
             SelectedUser = App.Model.Users.Where(u => u.UserName.Contains(App.CurrentUser.UserName)).SingleOrDefault();
+            ConfirmBasket = new RelayCommand(() =>
+            {
+                SelectedUser.ConfirmBasket();
+                App.Model.SaveChanges();
+                NotifyAllFields();
+            });
+
+            ClearBasket = new RelayCommand(() =>
+            {
+
+                SelectedUser.ClearBasket();
+                App.Model.SaveChanges();
+                NotifyAllFields();
+            });
         }
 
         public ObservableCollection<Book> Basket
         {
             get
             {
-                var query = from b in SelectedUser.Basket.Items select b.BookCopy.Book;
-                return new ObservableCollection<Book>(query);
+                if (SelectedUser.Basket != null)
+                {
+                    var query = from b in SelectedUser.Basket.Items select b.BookCopy.Book;
+                    return new ObservableCollection<Book>(query);
+                }
+                return null;
             }
         }
-
     }
 }
