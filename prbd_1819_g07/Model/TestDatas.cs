@@ -178,6 +178,9 @@ namespace prbd_1819_g07
                 explicationAddToBasket();
                 ben.AddToBasket(book1);
                 ben.AddToBasket(book2);
+                admin.AddToBasket(book2);
+                bruno.AddToBasket(book1);
+                bruno.AddToBasket(book2);
                 Console.WriteLine("Appel RentalItem rentalItemBook3 = ben.AddToBasket(book3); On récupère le rentalItem créé");
                 RentalItem rentalItemBook3 = ben.AddToBasket(book3);
                 Console.WriteLine(ben.Basket);
@@ -197,9 +200,11 @@ namespace prbd_1819_g07
                 //ben.AddToBasket(book2);
                 //ben.AddToBasket(book3);
                 //Console.WriteLine(ben.Basket);
-                bruno.AddToBasket(book1);
+                
                 printList("Rental Items du panier de ben", ben.Basket.Items);
-                Console.WriteLine("Vidage du panier de ben - ben.ClearBasket()");
+                printList("Rental items du panier de admin", admin.Basket.Items);
+                printList("Rental items du panier de bruno", bruno.Basket.Items);
+                //Console.WriteLine("Vidage du panier de ben - ben.ClearBasket()");
                 //ben.ClearBasket();
                 Console.WriteLine(ben.Basket);
             });

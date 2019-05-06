@@ -1,0 +1,31 @@
+﻿<f:UserControlBase x:Class="prbd_1819_g07.RentalsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:prbd_1819_g07"
+             xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
+             xmlns:p="clr-namespace:prbd_1819_g07.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding Rentals}" Margin="10,10,66,391" 
+             AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Date}" Binding="{Binding RentalDate, StringFormat=\{0:dd/MM/yyyy HH:mm:ss\}}" SortDirection="Descending"/>
+                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_User}" Binding="{Binding User.UserName}" />
+                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Items}" Binding="{Binding Items}" />
+                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Open}" Binding="{Binding Open}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="dataGrid_Copy" ItemsSource="{Binding RentalItems}" Margin="10,250,66,151" 
+            AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Book}" Binding="{Binding BookCopy.Book.Title}" SortDirection="Descending"/>
+                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_ReturnDate}" Binding="{Binding ReturnDate, StringFormat=\{0:dd/MM/yyyy HH:mm:ss\}}" />
+                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Action}" Binding="{Binding Action}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</f:UserControlBase>

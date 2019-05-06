@@ -24,10 +24,13 @@ namespace prbd_1819_g07
     public partial class MainView : WindowBase
     {
 
-        public string currentUserPseudo { get
+        public string currentUserPseudo
+        {
+            get
             {
                 return App.CurrentUser.UserName;
-            } }
+            }
+        }
 
         public Role currentUserRole
         {
@@ -47,7 +50,7 @@ namespace prbd_1819_g07
             }
         }
 
-        
+
 
         public MainView()
         {
@@ -69,24 +72,27 @@ namespace prbd_1819_g07
                   GridPrincipal.Children.Add(new UsersView());
               });
 
-            App.Register(this, AppMessages.MSG_NEW_BOOK, () => {
+            App.Register(this, AppMessages.MSG_NEW_BOOK, () =>
+            {
 
-                 var book = App.Model.Books.Create();
-                 App.Model.Books.Add(book);
-                 GridPrincipal.Children.Clear();
-                 GridPrincipal.Children.Add(new BookDetailsView(book,true));
+                var book = App.Model.Books.Create();
+                App.Model.Books.Add(book);
+                GridPrincipal.Children.Clear();
+                GridPrincipal.Children.Add(new BookDetailsView(book, true));
 
 
-             });
+            });
 
-            App.Register(this, AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK, () => {
+            App.Register(this, AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK, () =>
+            {
                 GridPrincipal.Children.Clear();
                 GridPrincipal.Children.Add(Books);
 
 
             });
 
-            App.Register<Book>(this, AppMessages.MSG_DISPLAY_BOOK, book => {
+            App.Register<Book>(this, AppMessages.MSG_DISPLAY_BOOK, book =>
+            {
                 if (book != null)
                 {
                     GridPrincipal.Children.Clear();
@@ -129,6 +135,10 @@ namespace prbd_1819_g07
                 case 3:
                     GridPrincipal.Children.Clear();
                     GridPrincipal.Children.Add(new BasketView());
+                    break;
+                case 4:
+                    GridPrincipal.Children.Clear();
+                    GridPrincipal.Children.Add(new RentalsView());
                     break;
                 case 5:
                     GridPrincipal.Children.Clear();

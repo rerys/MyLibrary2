@@ -46,7 +46,7 @@ namespace prbd_1819_g07
             {
                 model.ClearDatabase();
 
-                model.CreateTestData();
+                //model.CreateTestData();
             }
 
             var test = new TestDatas(type);

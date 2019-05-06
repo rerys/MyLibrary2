@@ -511,6 +511,69 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Action.
+        /// </summary>
+        public static string RentalsView_Action {
+            get {
+                return ResourceManager.GetString("RentalsView_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Book.
+        /// </summary>
+        public static string RentalsView_Book {
+            get {
+                return ResourceManager.GetString("RentalsView_Book", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Date.
+        /// </summary>
+        public static string RentalsView_Date {
+            get {
+                return ResourceManager.GetString("RentalsView_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à #Items.
+        /// </summary>
+        public static string RentalsView_Items {
+            get {
+                return ResourceManager.GetString("RentalsView_Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à #Open.
+        /// </summary>
+        public static string RentalsView_Open {
+            get {
+                return ResourceManager.GetString("RentalsView_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Return date.
+        /// </summary>
+        public static string RentalsView_ReturnDate {
+            get {
+                return ResourceManager.GetString("RentalsView_ReturnDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à User.
+        /// </summary>
+        public static string RentalsView_User {
+            get {
+                return ResourceManager.GetString("RentalsView_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à If you  have a login and a password, click.
         /// </summary>
         public static string SignupView_Message_1 {

@@ -294,4 +294,25 @@
   <data name="BasketView_Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="RentalsView_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="RentalsView_Items" xml:space="preserve">
+    <value>#Items</value>
+  </data>
+  <data name="RentalsView_Open" xml:space="preserve">
+    <value>#Open</value>
+  </data>
+  <data name="RentalsView_User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="RentalsView_Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="RentalsView_Book" xml:space="preserve">
+    <value>Book</value>
+  </data>
+  <data name="RentalsView_ReturnDate" xml:space="preserve">
+    <value>Return date</value>
+  </data>
 </root>
