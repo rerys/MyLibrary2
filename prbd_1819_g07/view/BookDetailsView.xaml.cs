@@ -287,6 +287,7 @@ namespace prbd_1819_g07
                 {
                     if (c.IsChecked)
                     {
+                        Console.WriteLine(App.Model.Categories.Find(c.IdCategory));
                         Book.AddCategory(App.Model.Categories.Find(c.IdCategory));
                     }
                     else

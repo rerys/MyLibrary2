@@ -82,7 +82,6 @@ namespace prbd_1819_g07
             set
             {
                 selectedCategory = value;
-                //selectedCategoryName = value.Name;
                 RaisePropertyChanged(nameof(SelectedCategory));
                 RaisePropertyChanged(nameof(SelectedCategoryName));
             }
@@ -140,7 +139,11 @@ namespace prbd_1819_g07
 
         private bool CanAddAction()
         {
-            return SelectedCategory == null && selectedCategoryName != "" && selectedCategoryName != null;
+            var NotExistCategory = (from c in App.Model.Categories
+                             where c.Name == selectedCategoryName
+                             select c).Count() == 0;
+
+            return SelectedCategory == null && selectedCategoryName != "" && selectedCategoryName != null && NotExistCategory; ;
         }
 
         private void AddAction()
@@ -152,19 +155,31 @@ namespace prbd_1819_g07
             }
             App.Model.SaveChanges();
             App.NotifyColleagues(AppMessages.MSG_CATEGORY_CHANGED);
+            CancelAction();
 
         }
 
 
         public bool CanUpdateAction()
         {
-            return SelectedCategory != null && !SelectedCategory.IsUnchanged;
+            var UnicitytCategory = true;
+
+            if(selectedCategory != null)
+            {
+                UnicitytCategory = (from c in App.Model.Categories
+                                    where c.Name == selectedCategoryName && c.CategoryId != SelectedCategory.CategoryId
+                                    select c).Count() == 0;
+
+            }
+
+            return SelectedCategory != null && !SelectedCategory.IsUnchanged && UnicitytCategory;
         }
 
         private void UpdateAction()
         {
             App.Model.SaveChanges();
             App.NotifyColleagues(AppMessages.MSG_CATEGORY_CHANGED);
+            CancelAction();
         }
 
 

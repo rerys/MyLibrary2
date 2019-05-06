@@ -21,7 +21,7 @@ namespace prbd_1819_g07
         {
             get
             {
-                return (from b in Model.Categories where b.CategoryId == CategoryId select b.Books).Count();
+                return Books.Count();
             }
         }
 
