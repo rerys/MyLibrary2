@@ -49,6 +49,7 @@ namespace prbd_1819_g07
         public ICommand LoadImage { get; set; }
         public ICommand ClearImage { get; set; }
         public ICommand Exit { get; set; }
+        public ICommand CategorieChanged { get; set; }
 
 
         public BookDetailsView(Book book, bool isNew)
@@ -72,6 +73,7 @@ namespace prbd_1819_g07
             Delete = new RelayCommand(DeleteAction, () => !IsNew);
             LoadImage = new RelayCommand(LoadImageAction);
             ClearImage = new RelayCommand(ClearImageAction, () => PicturePath != null);
+            CategorieChanged = new RelayCommand(Change);
 
             Exit = new RelayCommand(() =>
             {
@@ -80,6 +82,21 @@ namespace prbd_1819_g07
 
             });
 
+        }
+
+        private bool catChanged = false;
+        public bool CatChanged
+        {
+            get => catChanged; set
+            {
+                catChanged = value;
+                RaisePropertyChanged(nameof(CatChanged));
+            }
+        }
+
+        public void Change()
+        {
+            CatChanged = true;
         }
 
 
@@ -208,7 +225,7 @@ namespace prbd_1819_g07
                 return categories;
             }
         }
-    
+
 
         private void DeleteAction()
         {
@@ -264,6 +281,25 @@ namespace prbd_1819_g07
                 imageHelper.Confirm(Book.Isbn);
             }
 
+            if (CatChanged)
+            {
+                foreach (var c in Categories)
+                {
+                    if (c.IsChecked)
+                    {
+                        Book.AddCategory(App.Model.Categories.Find(c.IdCategory));
+                    }
+                    else
+                    {
+                        Book.RemoveCategory(App.Model.Categories.Find(c.IdCategory));
+                    }
+                }
+
+                CatChanged = false;
+                App.NotifyColleagues(AppMessages.MSG_CATEGORY_CHANGED);
+            }
+
+
             PicturePath = imageHelper.CurrentFile;
             App.Model.SaveChanges();
             App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
@@ -298,6 +334,7 @@ namespace prbd_1819_g07
                     RaisePropertyChanged(nameof(PicturePath));
                 }
             }
+            CatChanged = false;
         }
 
         private bool CanSaveOrCancelAction()
@@ -308,10 +345,7 @@ namespace prbd_1819_g07
                     && !string.IsNullOrEmpty(Author) && !string.IsNullOrEmpty(Editor) && !HasErrors;
             }
 
-            var change = (from c in App.Model.ChangeTracker.Entries<Book>()
-                          where c.Entity == Book
-                          select c).FirstOrDefault();
-            return change != null && change.State != EntityState.Unchanged;
+            return !Book.IsUnchanged || CatChanged;
         }
 
         public override bool Validate()
