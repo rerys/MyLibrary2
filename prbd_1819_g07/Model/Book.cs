@@ -20,11 +20,15 @@ namespace prbd_1819_g07
         public string Editor { get; set; }
         public string PicturePath { get; set; }
         [NotMapped]
-        public int NumAvailableCopies { get {
-                return (from b in Model.BookCopies where b.Book.BookId == BookId select b  ).Count();
-                         
+        public int NumAvailableCopies
+        {
+            get
+            {
+                return (from b in Model.BookCopies where b.Book.BookId == BookId select b).Count();
 
-            } }
+
+            }
+        }
 
         [NotMapped]
 
@@ -61,19 +65,22 @@ namespace prbd_1819_g07
         {
             foreach (var c in cats)
             {
-                AddCategory(c);   
+                AddCategory(c);
             }
         }
 
         public void RemoveCategory(Category category)
         {
-            Categories.Remove(category);
-            Model.SaveChanges();
+            if (Categories.Contains(category))
+            {
+                Categories.Remove(category);
+                Model.SaveChanges();
+            }
         }
 
-        public void AddCopies(int quantity,DateTime date)
+        public void AddCopies(int quantity, DateTime date)
         {
-            for(int i = 0;i < quantity; ++i)
+            for (int i = 0; i < quantity; ++i)
             {
                 Copies.Add(CreateBookCopy(date, this));
             }
@@ -127,14 +134,15 @@ namespace prbd_1819_g07
         public override string ToString()
         {
             var s = "";
-            foreach(var C in Categories){
+            foreach (var C in Categories)
+            {
                 s += C;
             }
 
             return string.Format("-----------------------\n" +
                 "IDBook : {0} \nISBN : {1} \nAuthor : {2} \nTitle : {3} \nEditor : {4} \nCategories : {5}\n" +
                 "-----------------------\n",
-                            BookId, Isbn, Author, Title, Editor,s);
+                            BookId, Isbn, Author, Title, Editor, s);
         }
 
 
