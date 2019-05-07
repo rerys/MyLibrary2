@@ -7,8 +7,6 @@
 [BookDetailView]
 
 -categories: td, ajout du livre dans les catégories sélectionnées (si confirmation) (probleme lors de l'ajout)
-
--Book Copies: actuellement retourne toutes les copies et non celles du livre visualisé (idem pour new book)
 -Book Copies: td, ajout de copies dans la liste de copies d'un livre 
 
 

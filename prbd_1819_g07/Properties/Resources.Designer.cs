@@ -502,6 +502,24 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à You can not be in the future.
+        /// </summary>
+        public static string Max_Date {
+            get {
+                return ResourceManager.GetString("Max_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Min 1 book.
+        /// </summary>
+        public static string Min_Copies {
+            get {
+                return ResourceManager.GetString("Min_Copies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Add a new user : .
         /// </summary>
         public static string NewUserView_Title {

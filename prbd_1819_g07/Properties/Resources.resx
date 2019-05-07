@@ -315,4 +315,10 @@
   <data name="RentalsView_ReturnDate" xml:space="preserve">
     <value>Return date</value>
   </data>
+  <data name="Min_Copies" xml:space="preserve">
+    <value>Min 1 book</value>
+  </data>
+  <data name="Max_Date" xml:space="preserve">
+    <value>You can not be in the future</value>
+  </data>
 </root>

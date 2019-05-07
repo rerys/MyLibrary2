@@ -19,7 +19,7 @@ using static prbd_1819_g07.App;
 using Microsoft.Win32;
 using System.Data.Entity;
 using System.IO;
-
+using System.Text.RegularExpressions;
 
 namespace prbd_1819_g07
 {
@@ -29,6 +29,17 @@ namespace prbd_1819_g07
     public partial class BookDetailsView : UserControlBase
     {
 
+
+
+        /*********************************************************************************************************************************
+         *
+         *   INNER CLASS
+         *
+         *********************************************************************************************************************************/
+
+        /*
+         *Class interne pour la géstion des categories dans les checkbox
+         */
         public class CheckedCategory
         {
             public int IdCategory { get; set; }
@@ -37,20 +48,46 @@ namespace prbd_1819_g07
         }
 
 
+        /*********************************************************************************************************************************
+         *
+         *   ICOMMAND
+         *
+         *********************************************************************************************************************************/
 
-        public Book Book { get; set; }
-        private ImageHelper imageHelper;
-
-
+        // Commande pour l'ajout d'un nouveau livre
         public ICommand Add { get; set; }
+
+        //Commande pour la sauvegarde (modification ou ajout d'un nouveau livre)
         public ICommand Save { get; set; }
+
+        // Commande d'annulation des modifications
         public ICommand Cancel { get; set; }
+
+        // Commande de suppression d'un livre
         public ICommand Delete { get; set; }
+
+        // Commande de chargement d'une nouvelle image
         public ICommand LoadImage { get; set; }
+
+        // Commande de remise de l'image associée au livre
         public ICommand ClearImage { get; set; }
+
+        // Commande de fermeture de la page
         public ICommand Exit { get; set; }
+
+        // Commande pour enregistrer si une categories a été selectioné
         public ICommand CategorieChanged { get; set; }
 
+        // Commande pour l'ajout de copies
+        public ICommand AddCopies { get; set; }
+
+
+
+        /*********************************************************************************************************************************
+         *
+         *   VIEW CONSTRUCTOR
+         *
+         *********************************************************************************************************************************/
 
         public BookDetailsView(Book book, bool isNew)
         {
@@ -65,7 +102,7 @@ namespace prbd_1819_g07
             Book = book;
             IsNew = isNew;
 
-            BookCopies = new ObservableCollection<BookCopy>(model.BookCopies);
+            SetCopies();
             imageHelper = new ImageHelper(App.IMAGE_PATH, Book.PicturePath);
 
             Save = new RelayCommand(SaveAction, CanSaveOrCancelAction);
@@ -74,6 +111,7 @@ namespace prbd_1819_g07
             LoadImage = new RelayCommand(LoadImageAction);
             ClearImage = new RelayCommand(ClearImageAction, () => PicturePath != null);
             CategorieChanged = new RelayCommand(Change);
+            AddCopies = new RelayCommand(AddCopiesAction, CanAddCopies);
 
             Exit = new RelayCommand(() =>
             {
@@ -84,24 +122,47 @@ namespace prbd_1819_g07
 
         }
 
+
+        /*********************************************************************************************************************************
+         *
+         *   PROPERTIES
+         *
+         *********************************************************************************************************************************/
+
+        //Propriété du livre courant 
+        public Book Book { get; set; }
+
+        //Propriété du géstionnaire d'image
+        private ImageHelper imageHelper;
+
+        //Propriété copies a été ajoutées
+        private bool copiesAdded = false;
+        public bool CopiesAdded
+        {
+            get => copiesAdded;
+            set
+            {
+                copiesAdded = value;
+                RaisePropertyChanged(nameof(CopiesAdded));
+            }
+        }
+
+
+        //Propriété categories a été ajouté ou retiré
         private bool catChanged = false;
         public bool CatChanged
         {
-            get => catChanged; set
+            get => catChanged;
+            set
             {
                 catChanged = value;
                 RaisePropertyChanged(nameof(CatChanged));
             }
         }
 
-        public void Change()
-        {
-            CatChanged = true;
-        }
 
-
+        //Propriété de la liste des copies du livre courant 
         private ObservableCollection<BookCopy> bookCopies;
-
         public ObservableCollection<BookCopy> BookCopies
         {
 
@@ -110,6 +171,8 @@ namespace prbd_1819_g07
             set => SetProperty<ObservableCollection<BookCopy>>(ref bookCopies, value);
         }
 
+
+        //Propriété du titre de la vue
         private string viewName;
         public string ViewName
         {
@@ -128,6 +191,7 @@ namespace prbd_1819_g07
             }
         }
 
+        //Propriété si le livre courant est nouvau ou une modification
         private bool isNew;
         public bool IsNew
         {
@@ -140,8 +204,10 @@ namespace prbd_1819_g07
             }
         }
 
+        //Propriété si le livre existe dans la base de données
         public bool IsExisting { get => !isNew; }
 
+        //Propriété ISBN du livre courant
         private string isbn;
         public string Isbn
         {
@@ -154,6 +220,7 @@ namespace prbd_1819_g07
             }
         }
 
+        //Propriété titre du livre courant
         private string title;
         public string Title
         {
@@ -166,6 +233,7 @@ namespace prbd_1819_g07
             }
         }
 
+        //Propriété auteur du livre courant
         private string author;
         public string Author
         {
@@ -178,6 +246,7 @@ namespace prbd_1819_g07
             }
         }
 
+        //Propriété editeur du livre courant
         private string editor;
         public string Editor
         {
@@ -190,18 +259,59 @@ namespace prbd_1819_g07
             }
         }
 
+        //Propriété image du livre courant
         public string PicturePath
         {
             get { return Book.AbsolutePicturePath; }
             set
             {
-                Book.PicturePath = value;
                 RaisePropertyChanged(nameof(PicturePath));
+                Book.PicturePath = value;
             }
         }
 
-        private ObservableCollection<CheckedCategory> categories;
+        //Propriété date d'acquisition des copies à ajouter au livre courant
+        private DateTime dateCopiesToAdd = DateTime.Now;
+        public DateTime DateCopiesToAdd
+        {
+            get { return dateCopiesToAdd; }
+            set
+            {
+                SetProperty<DateTime>(ref dateCopiesToAdd, value, () => Validate());
+                RaisePropertyChanged(nameof(DateCopiesToAdd));
+            }
+        }
 
+        //Propriété de quantité du nombre de copies à ajouter au livre courant
+        private int nbCopiesToAdd = 1;
+        public int NbCopiesToAdd
+        {
+            get { return nbCopiesToAdd; }
+
+            set
+            {
+                SetProperty<int>(ref nbCopiesToAdd, value, () => Validate());
+                RaisePropertyChanged(nameof(NbCopiesToAdd));
+            }
+        }
+
+
+
+        /*
+         * Propriété des categories
+         * 
+         * 
+         * retourne toutes les categories 
+         * 
+         * crées de nouveaux objects avec la class interne de categories pour chaque categories
+         * 
+         * acces en base de données pour savoir si la categorie courante est associer au livre
+         * 
+         * change l'atribut isChecked pour la selection dans la vue 
+         * 
+         */
+
+        private ObservableCollection<CheckedCategory> categories;
         public ObservableCollection<CheckedCategory> Categories
         {
 
@@ -209,52 +319,24 @@ namespace prbd_1819_g07
             {
                 if (categories == null)
                 {
-                    categories = new ObservableCollection<CheckedCategory>(
-
-                        from c in App.Model.Categories
-                        orderby c.Name
-                        select new CheckedCategory
-                        {
-                            IdCategory = c.CategoryId,
-                            Name = c.Name,
-                            IsChecked = (from b in App.Model.Books
-                                         where b.BookId == Book.BookId && b.Categories.Contains(c)
-                                         select b).Count() > 0
-                        });
+                    SetCategories();
                 }
                 return categories;
             }
         }
 
 
-        private void DeleteAction()
-        {
-            this.CancelAction();
-            if (File.Exists(PicturePath))
-            {
-                //File.Delete(PicturePath);
-            }
-            Book.Delete();
-            App.Model.SaveChanges();
-            App.NotifyColleagues(AppMessages.MSG_BOOK_CHANGED, Book);
-            App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
-        }
 
-        private void LoadImageAction()
-        {
-            var fd = new OpenFileDialog();
-            if (fd.ShowDialog() == true)
-            {
-                imageHelper.Load(fd.FileName);
-                PicturePath = imageHelper.CurrentFile;
-            }
-        }
 
-        private void ClearImageAction()
-        {
-            imageHelper.Clear();
-            PicturePath = imageHelper.CurrentFile;
-        }
+
+        /*********************************************************************************************************************************
+         *
+         *   METHODES 
+         *
+         *********************************************************************************************************************************/
+
+
+
 
         public override void Dispose()
         {
@@ -268,6 +350,190 @@ namespace prbd_1819_g07
                 PicturePath = imageHelper.CurrentFile;
             }
         }
+
+        //Méthode de changement d'état si une catégorie a été selectionnée
+        public void Change()
+        {
+            CatChanged = true;
+        }
+
+        //Méthode de changement d'état si des copies ont été ajoutées
+        public void CopiesAddAction()
+        {
+            CopiesAdded = true;
+        }
+
+        //acces base de données, retourne la liste de categories
+        private void SetCategories()
+        {
+            categories = new ObservableCollection<CheckedCategory>(
+
+            from c in App.Model.Categories
+            orderby c.Name
+            select new CheckedCategory
+            {
+                IdCategory = c.CategoryId,
+                Name = c.Name,
+                IsChecked = (from b in App.Model.Books
+                             where b.BookId == Book.BookId && b.Categories.Contains(c)
+                             select b).Count() > 0
+            });
+        }
+
+
+        //remise des données de la base de données dans copies 
+        //efface les données ajoutées et non sauvegardé
+        private void SetCopies()
+        {
+            BookCopies = new ObservableCollection<BookCopy>(from c in App.Model.BookCopies
+                                                            where c.Book.BookId == Book.BookId
+                                                            select c);
+        }
+
+
+        //remise de l'image avant changement
+        private void ResetPicture()
+        {
+            if (imageHelper.IsTransitoryState)
+            {
+                imageHelper.Cancel();
+            }
+        }
+
+        //reset nouveau livre ou livre existant
+        private void ResetBook()
+        {
+            if (IsNew)
+            {
+                ResetNewBook();
+            }
+            else
+            {
+                ResetExistingBook();
+            }
+        }
+
+
+        //remise à zero d'un nouveau livre
+        private void ResetNewBook()
+        {
+            if (IsNew)
+            {
+                Isbn = null;
+                Title = null;
+                Author = null;
+                Editor = null;
+                PicturePath = imageHelper.CurrentFile;
+                RaisePropertyChanged(nameof(Book));
+            }
+        }
+
+        //remise des données avant changement d'un livre
+        private void ResetExistingBook()
+        {
+            if (!Book.IsUnchanged)
+            {
+                Book.Reload();
+                RaisePropertyChanged(nameof(Isbn));
+                RaisePropertyChanged(nameof(Title));
+                RaisePropertyChanged(nameof(Author));
+                RaisePropertyChanged(nameof(Editor));
+                RaisePropertyChanged(nameof(PicturePath));
+            }
+        }
+
+        //remise des données avant changement des categories
+        private void ResetCategories()
+        {
+            if (CatChanged)
+            {
+                SetCategories();
+                CatChanged = false;
+                RaisePropertyChanged(nameof(Categories));
+            }
+        }
+
+        //remise des données avant changement des copies
+        private void ResetCopies()
+        {
+            if (CopiesAdded)
+            {
+                foreach(var c in BookCopies)
+                {
+                    Console.WriteLine(c);
+                    if(c.BookCopyId == 0)
+                    {
+                        Book.Copies.Remove(c);
+                    }
+                }
+                SetCopies();
+                CopiesAdded = false;
+                RaisePropertyChanged(nameof(BookCopies));
+            }
+        }
+
+
+
+        /*********************************************************************************************************************************
+         *
+         *   METHODES D'ACTIVATION DES BOUTONS
+         *
+         *********************************************************************************************************************************/
+
+
+
+
+        /*
+         * Méthode d'activation du bouton d'ajout de copies
+         * 
+         * Est activé si le nombre de copies est égale ou supérieur à 0
+         * et que la date acquisition ne soit pas null et inferieur à la date d'aujourd'hui 
+         */
+        public bool CanAddCopies()
+        {
+            return NbCopiesToAdd > 0 && (DateCopiesToAdd != null && DateCopiesToAdd <= DateTime.Now);
+        }
+
+
+        /*
+         *  Méthode d'activation du bouton save ou cancel 
+         * 
+         * En cas de nouveau livre, tous les champs doivent être remplis et sans erreur
+         * En cas de modification d'un livre existant, l'activation se fait en cas de changement d'une ou plusieurs données et qu'il n'y ait pas d'erreur
+         * si une categorie a changée d'état
+         * et si des copies ont été ajoutées
+         */
+        private bool CanSaveOrCancelAction()
+        {
+            if (IsNew)
+            {
+                return !string.IsNullOrEmpty(Isbn) && !string.IsNullOrEmpty(Title)
+                    && !string.IsNullOrEmpty(Author) && !string.IsNullOrEmpty(Editor) && !HasErrors;
+            }
+
+            return (!Book.IsUnchanged || CatChanged || CopiesAdded) && !HasErrors;
+        }
+
+
+        /********************************************************************************************************************************
+         * 
+         * METHODES D'ACTION
+         * 
+         *********************************************************************************************************************************/
+
+
+
+        /*
+         * Méthode de sauvegarde d'un livre
+         * 
+         * 
+         * En cas de savegarde d'un nouveau livre, on ajoute le livre dans le model (préparation à la sauvegarde)
+         * 
+         * En cas de selection d'une ou plusieurs catégories, parcour de toutes les catégories (ajoute ou supprime d'une catégorie si catégorie selectionée ou non)
+         * 
+         * Gestion de la photo du livre avec imageHelper
+         * 
+         */
 
         private void SaveAction()
         {
@@ -287,7 +553,6 @@ namespace prbd_1819_g07
                 {
                     if (c.IsChecked)
                     {
-                        Console.WriteLine(App.Model.Categories.Find(c.IdCategory));
                         Book.AddCategory(App.Model.Categories.Find(c.IdCategory));
                     }
                     else
@@ -295,68 +560,143 @@ namespace prbd_1819_g07
                         Book.RemoveCategory(App.Model.Categories.Find(c.IdCategory));
                     }
                 }
-
                 CatChanged = false;
+
+            }
+            if (CopiesAdded)
+            {
+               // foreach (var c in BookCopies)
+               // {
+               //     Book.AddCopies(1, c.AcquisitionDate);
+               // }
+
+                CopiesAdded = false;
+                
                 App.NotifyColleagues(AppMessages.MSG_CATEGORY_CHANGED);
             }
-
-
             PicturePath = imageHelper.CurrentFile;
             App.Model.SaveChanges();
             App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
             App.NotifyColleagues(AppMessages.MSG_BOOK_CHANGED, Book);
         }
 
+
+
+        /*
+         * Méthode de suppression d'un livre 
+         */
+
+        private void DeleteAction()
+        {
+            this.CancelAction();
+            if (File.Exists(PicturePath))
+            {
+                //File.Delete(PicturePath);
+            }
+            Book.Delete();
+            App.Model.SaveChanges();
+            App.NotifyColleagues(AppMessages.MSG_BOOK_CHANGED, Book);
+            App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
+        }
+
+
+        /*
+         * Méthode d'annulation des modifications
+         * 
+         * En cas de nouveau livre, remise a null de toutes les valeurs et remise de la photo par default
+         * 
+         * En cas d'un livre existant, rechargement des données du livre  
+         */
         private void CancelAction()
         {
-            if (imageHelper.IsTransitoryState)
-            {
-                imageHelper.Cancel();
-            }
-            if (IsNew)
-            {
-
-                Isbn = null;
-                Title = null;
-                Author = null;
-                Editor = null;
-                PicturePath = imageHelper.CurrentFile;
-                RaisePropertyChanged(nameof(Book));
-            }
-            else
-            {
-                if (!Book.IsUnchanged)
-                {
-                    Book.Reload();
-                    RaisePropertyChanged(nameof(Isbn));
-                    RaisePropertyChanged(nameof(Title));
-                    RaisePropertyChanged(nameof(Author));
-                    RaisePropertyChanged(nameof(Editor));
-                    RaisePropertyChanged(nameof(PicturePath));
-                }
-            }
-            CatChanged = false;
+            ResetPicture();
+            ResetBook();
+            ResetCategories();
+            ResetCopies();
         }
 
-        private bool CanSaveOrCancelAction()
+
+        /*
+         * Méthode de chargement d'une nouvelle image 
+         */
+
+        private void LoadImageAction()
         {
-            if (IsNew)
+            var fd = new OpenFileDialog();
+            if (fd.ShowDialog() == true)
             {
-                return !string.IsNullOrEmpty(Isbn) && !string.IsNullOrEmpty(Title)
-                    && !string.IsNullOrEmpty(Author) && !string.IsNullOrEmpty(Editor) && !HasErrors;
+                imageHelper.Load(fd.FileName);
+                PicturePath = imageHelper.CurrentFile;
+            }
+        }
+
+
+        /*
+         * Méthode de clear image 
+         * 
+         * Remise de l'image par default si nouveau livre
+         * 
+         * Remise de l'image associé au livre avant modification 
+         */
+        private void ClearImageAction()
+        {
+            imageHelper.Clear();
+            PicturePath = imageHelper.CurrentFile;
+        }
+
+        /*
+         * Méthode d'jaout de copies en local 
+         */
+        public void AddCopiesAction()
+        {
+            var copies = BookCopies;
+            for (var i = 0; i < NbCopiesToAdd; ++i)
+            {
+                var copie = Book.CreateBookCopy(DateCopiesToAdd, Book);
+                copies.Add(copie);
             }
 
-            return !Book.IsUnchanged || CatChanged;
+            bookCopies = copies;
+            CopiesAddAction();
+
         }
+
+
+
+
+        /*********************************************************************************************************************************
+         *
+         *   VALIDATION
+         *
+         *********************************************************************************************************************************/
+
+        //Méthode de validation de tous les champs de la vue
 
         public override bool Validate()
         {
+
             ClearErrors();
-            var book = App.Model.Books.Where(u => u.Isbn == Isbn).SingleOrDefault();
+
+            //string pattern = @"^[0-9\_]+$";
+            // var regex = new Regex(pattern);
+
+            var book = App.Model.Books.Where(u => u.Isbn == Isbn && u.BookId != Book.BookId).SingleOrDefault();
             if (string.IsNullOrEmpty(Isbn))
             {
                 AddError("Isbn", Properties.Resources.Error_Required);
             }
+            else if (book != null)
+            {
+                AddError("Isbn", "Isbn existe");
+            }
+            //else if (Isbn.Length < 13)
+            //{
+            //    AddError("Isbn", "length must be 13 caractere");
+            //}
+            //else if (!regex.IsMatch(Isbn))
+            //{
+            //  AddError("Isbn", "Only number and -");
+            //}
             else if (string.IsNullOrEmpty(Title))
             {
                 AddError("Title", Properties.Resources.Error_Required);
@@ -369,7 +709,18 @@ namespace prbd_1819_g07
             {
                 AddError("Editor", Properties.Resources.Error_Required);
             }
-
+            else if (DateCopiesToAdd == null)
+            {
+                AddError("DateCopiesToAdd", Properties.Resources.Error_Required);
+            }
+            else if (DateCopiesToAdd > DateTime.Now)
+            {
+                AddError("DateCopiesToAdd", Properties.Resources.Max_Date);
+            }
+            else if (NbCopiesToAdd < 1)
+            {
+                AddError("NbCopiesToAdd", Properties.Resources.Min_Copies);
+            }
 
             RaiseErrors();
             return !HasErrors;

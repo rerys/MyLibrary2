@@ -102,21 +102,21 @@
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding BookCopyId}" Header="ID" />
                             <GridViewColumn DisplayMemberBinding="{Binding AcquisitionDate}" Header="Aquisition Date"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding RentedBy}" Header="Rented By"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding RentedBy.UserName}" Header="Rented By"/>
 
                         </GridView>
                     </ListView.View>
 
-
+                    
                 </ListView>
 
 
                 <StackPanel Orientation="Horizontal" Width="300" HorizontalAlignment="Center" >
                     <Label Content="Date:" Margin="10,3,0,0" />
-                    <DatePicker VerticalAlignment="Stretch" Width="70" Margin="10,0,0,0"/>
+                    <DatePicker VerticalAlignment="Stretch" Width="70" Margin="10,0,0,0" SelectedDate="{Binding DateCopiesToAdd,UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Qty:" Margin="5,0,0,0"/>
-                    <TextBox Width="50" Margin="5,0,0,0"/>
-                    <Button Content="{x:Static p:Resources.DetailBook_Add}"  Margin="10,0,0,0" FontSize="12" />
+                    <TextBox Width="50" Margin="5,0,0,0" Text="{Binding NbCopiesToAdd,UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="{x:Static p:Resources.DetailBook_Add}" Command="{Binding AddCopies}" Margin="10,0,0,0" FontSize="12" />
 
 
                 </StackPanel>
