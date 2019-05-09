@@ -90,10 +90,6 @@ namespace prbd_1819_g07
             var query = (from r in Model.Rentals
                     where r.User.UserId == UserId && r.RentalDate == null 
                     select r).FirstOrDefault();
-            if(query == null)
-            {
-                CreateBasket();
-            }
             return query;
         }
 

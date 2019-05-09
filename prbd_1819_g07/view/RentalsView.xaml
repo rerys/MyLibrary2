@@ -9,21 +9,35 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <DataGrid x:Name="dataGrid" ItemsSource="{Binding Rentals}" Margin="10,10,66,391" 
-             AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding Rentals}" Margin="115,10,145,299.6" 
+               SelectedItem="{Binding SelectedRental}" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Date}" Binding="{Binding RentalDate, StringFormat=\{0:dd/MM/yyyy HH:mm:ss\}}" SortDirection="Descending"/>
                 <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_User}" Binding="{Binding User.UserName}" />
-                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Items}" Binding="{Binding Items}" />
+                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Items}" Binding="{Binding Items.Count}" />
                 <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Open}" Binding="{Binding Open}" />
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="dataGrid_Copy" ItemsSource="{Binding RentalItems}" Margin="10,250,66,151" 
+        <DataGrid x:Name="dataGrid_Copy" ItemsSource="{Binding RentalItems}"  Visibility="{Binding HasRentalSelected, Converter={StaticResource BoolToVis}}" Margin="115,220,145,44.6" 
             AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Book}" Binding="{Binding BookCopy.Book.Title}" SortDirection="Descending"/>
                 <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_ReturnDate}" Binding="{Binding ReturnDate, StringFormat=\{0:dd/MM/yyyy HH:mm:ss\}}" />
-                <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Action}" Binding="{Binding Action}" />
+                <DataGridTemplateColumn Header="{x:Static p:Resources.RentalsView_Action}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Name="btnReturn" Command="{Binding ReturnBook}">
+                                    <Image Source="/prbd_1819_g07;component/Assets/editRent.png" ></Image>
+                                </Button>
+                                <Button Name="btnGarbage" Command="{Binding DeleteRent}">
+                                    <Image Source="/prbd_1819_g07;component/Assets/garbage.png" ></Image>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
         </DataGrid>
 

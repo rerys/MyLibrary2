@@ -23,6 +23,14 @@ namespace prbd_1819_g07
     /// </summary>
     public partial class BasketView : UserControlBase
     {
+
+        /*********************************************************************************************************************************
+         *
+         *   PROPERTIES
+         *
+         *********************************************************************************************************************************/
+
+        //Propriété de la liste des utilisateurs pour le combobox
         private ObservableCollection<User> users;
         public ObservableCollection<User> Users
         {
@@ -34,6 +42,21 @@ namespace prbd_1819_g07
 
         }
 
+        //Propriété de la liste de book qui sont dans le panier de l'user selectionné. 
+        public ObservableCollection<Book> Basket
+        {
+            get
+            {
+                if (SelectedUser.Basket != null)
+                {
+                    var query = from b in SelectedUser.Basket.Items select b.BookCopy.Book;
+                    return new ObservableCollection<Book>(query);
+                }
+                return null;
+            }
+        }
+
+        //Propriété de l'utilisateur sélectionnée dans le combobox. Par défaut, c'est l'user connecté. 
         User selectedUser;
         public User SelectedUser
         {
@@ -41,6 +64,8 @@ namespace prbd_1819_g07
             set => SetProperty<User>(ref selectedUser, value, NotifyAllFields);
         }
 
+        //Méthode de validation pour la selection de l'user dans le combobox
+        //Lorsqu'on selectionne une user, refresh la liste du panier. 
         public override bool Validate()
         {
             ClearErrors();
@@ -53,14 +78,30 @@ namespace prbd_1819_g07
             return HasErrors;
         }
 
+        //Méthode pour refresh tous les champs lorsqu'il y a changement user selectionée. 
         private void NotifyAllFields()
         {
             RaisePropertyChanged(nameof(Basket));
         }
 
+
+        /*********************************************************************************************************************************
+         *
+         *   ICOMMAND
+         *
+         *********************************************************************************************************************************/
+
+        //Commande pour confirmer le panier
         public ICommand ConfirmBasket { get; set; }
+
+        //Commande pour clear le panier.
         public ICommand ClearBasket { get; set; }
 
+        /*********************************************************************************************************************************
+         *
+         *   VIEW CONSTRUCTOR
+         *
+         *********************************************************************************************************************************/
 
         public BasketView()
         {
@@ -85,19 +126,6 @@ namespace prbd_1819_g07
                 App.Model.SaveChanges();
                 NotifyAllFields();
             });
-        }
-
-        public ObservableCollection<Book> Basket
-        {
-            get
-            {
-                if (SelectedUser.Basket != null)
-                {
-                    var query = from b in SelectedUser.Basket.Items select b.BookCopy.Book;
-                    return new ObservableCollection<Book>(query);
-                }
-                return null;
-            }
         }
     }
 }
