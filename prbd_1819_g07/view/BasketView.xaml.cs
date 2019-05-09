@@ -60,8 +60,14 @@ namespace prbd_1819_g07
         User selectedUser;
         public User SelectedUser
         {
-            get => selectedUser;
-            set => SetProperty<User>(ref selectedUser, value, NotifyAllFields);
+            get { return selectedUser; }
+            set
+            {
+                selectedUser = value;
+                App.SelectedUser = selectedUser;
+                RaisePropertyChanged(nameof(SelectedUser));
+                RaisePropertyChanged(nameof(Basket));
+            }
         }
 
         //Méthode de validation pour la selection de l'user dans le combobox

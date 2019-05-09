@@ -31,6 +31,7 @@ namespace prbd_1819_g07
         }
 
         public static User CurrentUser { get; set; }
+        public static User SelectedUser { get; set; }
 
         public static Model Model { get; private set; } = Model.CreateModel(DbType.MsSQL);
 
