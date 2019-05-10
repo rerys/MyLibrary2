@@ -176,8 +176,6 @@ namespace prbd_1819_g07
                 Console.WriteLine("Création d'un panier pour ben contenant des copies de book1, book2, book3");
                 Console.WriteLine("Appels : ben.AddToBasket(book1); ben.AddToBasket(book2)");
                 explicationAddToBasket();
-                ben.AddToBasket(book1);
-                ben.AddToBasket(book2);
                 admin.AddToBasket(book2);
                 bruno.AddToBasket(book1);
                 bruno.AddToBasket(book2);
@@ -191,16 +189,16 @@ namespace prbd_1819_g07
                 printList("Rental Items du panier de ben", ben.Basket.Items);
                 Console.WriteLine("Confirmation du panier de ben - basket.Confirm()");
                 explicationConfirm();
-                //ben.Basket.Confirm();
-                //Console.WriteLine(ben.Basket);
-                //Console.WriteLine("Re-Création du panier de ben essayant d'ajouter des copies de book1, book2, book3");
-                //Console.WriteLine("");
-                //Console.WriteLine("On constate que ce ne sont pas les mêmes copies (puisque les précédentes sont déjà louées)");
-                //ben.AddToBasket(book1);
-                //ben.AddToBasket(book2);
-                //ben.AddToBasket(book3);
-                //Console.WriteLine(ben.Basket);
-                
+                ben.Basket.Confirm();
+                Console.WriteLine(ben.Basket);
+                Console.WriteLine("Re-Création du panier de ben essayant d'ajouter des copies de book1, book2, book3");
+                Console.WriteLine("");
+                Console.WriteLine("On constate que ce ne sont pas les mêmes copies (puisque les précédentes sont déjà louées)");
+                ben.AddToBasket(book1);
+                ben.AddToBasket(book2);
+                ben.AddToBasket(book3);
+                Console.WriteLine(ben.Basket);
+
                 printList("Rental Items du panier de ben", ben.Basket.Items);
                 printList("Rental items du panier de admin", admin.Basket.Items);
                 printList("Rental items du panier de bruno", bruno.Basket.Items);

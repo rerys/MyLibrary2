@@ -23,44 +23,78 @@ namespace prbd_1819_g07
     public partial class RentalsView : UserControlBase
     {
 
-        private ObservableCollection<Rental> rentals;
-        public ObservableCollection<Rental> Rentals
-        {
-            get { return rentals; }
-            set
-            {
-                rentals = value;
-                RaisePropertyChanged(nameof(Rentals));
-                //RaisePropertyChanged(nameof(UsersListView));
-            }
-        }
 
-        private ObservableCollection<RentalItem> rentalItems;
-        public ObservableCollection<RentalItem> RentalItems
+        /******************************
+         *                            *
+         *   PROPERTIES               * 
+         *                            *
+         *****************************/
+
+        //Propriété de la liste des rentals. 
+        public ObservableCollection<Rental> Rentals{ get; set; }
+
+
+        //Propriété de la liste des rentalitems.
+        public ObservableCollection<RentalItem> RentalItems { get; set; }
+
+        //Propriété du nombre d'items ouvert dans le rental
+        public int Open { get; set; }
+
+        //Propriété du rental selectionné, refresh la liste de rentalItem.
+        private Rental selectedRental;
+        public Rental SelectedRental
         {
-            get { return rentalItems; }
+            get { return selectedRental; }
             set
             {
-                rentalItems = value;
+                selectedRental = value;
+                RentalItems = new ObservableCollection<RentalItem>(selectedRental.Items);
+                RaisePropertyChanged(nameof(SelectedRental));
                 RaisePropertyChanged(nameof(RentalItems));
-                //RaisePropertyChanged(nameof(UsersListView));
+                RaisePropertyChanged(nameof(HasRentalSelected));
             }
         }
 
+        /******************************
+         *                            *
+         *   ICOMMAND                 * 
+         *                            *
+         *****************************/
 
+
+        //Commande pour retourner un book.
+        public ICommand ReturnBook{ get; set; }
+
+        //Commande supprimer un livre loué. 
+        public ICommand DeleteRent { get; set; }
+
+
+        /******************************
+         *                            *
+         *   VIEW CONSTRUCTOR         * 
+         *                            *
+         *****************************/
         public RentalsView()
         {
             InitializeComponent();
             DataContext = this;
-            Rentals = new ObservableCollection<Rental>(App.Model.Rentals);
-            RentalItems = new ObservableCollection<RentalItem>(App.Model.RentalItems);
-            NotifyAllField();
+            Rentals = new ObservableCollection<Rental>(from r in App.Model.Rentals
+                                                       where r.RentalDate != null
+                                                       select r);
+
         }
 
-        private void NotifyAllField()
+        /******************************
+         *                            *
+         *   METHODE                  * 
+         *                            *
+         *****************************/
+
+
+        //Renvoie true si un rental a été selectionné. 
+        public bool HasRentalSelected
         {
-            RaisePropertyChanged(nameof(Rentals));
-            RaisePropertyChanged(nameof(RentalItems));
+            get { return selectedRental != null; }
         }
     }
 }

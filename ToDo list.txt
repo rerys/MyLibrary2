@@ -22,4 +22,8 @@
 -configurer l'ajout de birthdate
 
 [BasketView]
--Toujours GROS SOUCIS avec affichage combobox....
+-Mettre user connecté par défaut dans la CB.
+
+[RentalsView]
+-NumOpenItem : requete linQ, récuperer les open item pour chacune des rentals(Rental_RentalID en DB) 
+-Action : td, returnbook,garbagebook.

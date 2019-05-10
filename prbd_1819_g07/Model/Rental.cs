@@ -14,7 +14,20 @@ namespace prbd_1819_g07
         [Key]
         public int RentalId { get; set; }
         public DateTime? RentalDate { get; set; }
-        public int NumOpenItems { get; }
+        public int NumOpenItems
+        {
+            get
+            {
+                IEnumerable<RentalItem> items = from i in App.Model.RentalItems
+                                                where i.Rental.User.UserId == User.UserId 
+                                                && i.Rental.RentalDate != null
+                                                && i.ReturnDate == null
+                                                //orderby i.Rental.RentalId
+                                                select i;
+                return items.Count();
+            }
+        }
+
         public virtual ICollection<RentalItem> Items { get; set; } = new HashSet<RentalItem>();
         [Required]
         public virtual User User { get; set; }
@@ -31,7 +44,7 @@ namespace prbd_1819_g07
 
         public RentalItem RentCopy(BookCopy copy)
         {
-            var rentalItem = CreateRentalItem(this,copy);
+            var rentalItem = CreateRentalItem(this, copy);
             Items.Add(rentalItem);
             //Model.SaveChanges();
             return rentalItem;
@@ -42,7 +55,7 @@ namespace prbd_1819_g07
         {
 
             var item = (from i in Items where i.BookCopy.BookCopyId == copy.BookCopyId select i).SingleOrDefault();
-            if(item != null)
+            if (item != null)
             {
                 this.RemoveItem(item);
                 Model.SaveChanges();
@@ -79,7 +92,7 @@ namespace prbd_1819_g07
             var s = "";
             foreach (var i in Items)
             {
-                s += " : " +i.RentalItemId + " ";
+                s += " : " + i.RentalItemId + " ";
             }
             return string.Format("-----------------------\n" +
                 "RentalId : {0}\n" +
