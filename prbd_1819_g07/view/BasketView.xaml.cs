@@ -42,15 +42,15 @@ namespace prbd_1819_g07
 
         }
 
-        //Propriété de la liste de book qui sont dans le panier de l'user selectionné. 
-        public ObservableCollection<Book> Basket
+        //Propriété de la liste de rentalItemn qui sont dans le panier de l'user selectionné. 
+        public ObservableCollection<RentalItem> Basket
         {
             get
             {
                 if (SelectedUser.Basket != null)
                 {
-                    var query = from b in SelectedUser.Basket.Items select b.BookCopy.Book;
-                    return new ObservableCollection<Book>(query);
+                    var query = from b in SelectedUser.Basket.Items select b;
+                    return new ObservableCollection<RentalItem>(query);
                 }
                 return null;
             }
@@ -90,7 +90,16 @@ namespace prbd_1819_g07
             RaisePropertyChanged(nameof(Basket));
         }
 
+        //Renvoie true si l'user connecté est admin.
+        public bool IsAdmin
+        {
+            get { return App.CurrentUser.Role == Role.Admin; }
+        }
 
+        public bool NotEmptyBasket
+        {
+            get { return SelectedUser.Basket.Items != null; }
+        }
         /*********************************************************************************************************************************
          *
          *   ICOMMAND
@@ -102,6 +111,8 @@ namespace prbd_1819_g07
 
         //Commande pour clear le panier.
         public ICommand ClearBasket { get; set; }
+
+        public ICommand DeleteFromBasket { get; set; }
 
         /*********************************************************************************************************************************
          *
@@ -130,6 +141,12 @@ namespace prbd_1819_g07
 
                 SelectedUser.ClearBasket();
                 App.Model.SaveChanges();
+                NotifyAllFields();
+            });
+
+            DeleteFromBasket = new RelayCommand<RentalItem>(item =>
+            {
+                SelectedUser.RemoveFromBasket(item);
                 NotifyAllFields();
             });
         }

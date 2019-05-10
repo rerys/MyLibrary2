@@ -62,7 +62,7 @@ namespace prbd_1819_g07
         public static void CancelChanges()
         {
             Model.Dispose();
-            Model = Model.CreateModel(DbType.MsSQL);
+            //Model = Model.CreateModel(DbType.MsSQL);
         }
     }
 }

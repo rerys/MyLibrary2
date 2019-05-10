@@ -97,6 +97,15 @@ namespace prbd_1819_g07.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Delete.
+        /// </summary>
+        public static string BasketView_Delete {
+            get {
+                return ResourceManager.GetString("BasketView_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à This basket is for : .
         /// </summary>
         public static string BasketView_Label {

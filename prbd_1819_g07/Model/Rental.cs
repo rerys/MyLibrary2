@@ -18,13 +18,15 @@ namespace prbd_1819_g07
         {
             get
             {
-                IEnumerable<RentalItem> items = from i in App.Model.RentalItems
-                                                where i.Rental.User.UserId == User.UserId 
-                                                && i.Rental.RentalDate != null
-                                                && i.ReturnDate == null
-                                                //orderby i.Rental.RentalId
-                                                select i;
-                return items.Count();
+                return (from i in Items where i.ReturnDate == null select i).Count();
+
+                //IEnumerable<RentalItem> items = from i in App.Model.RentalItems
+                //                                where i.Rental.User.UserId == User.UserId 
+                //                                && i.Rental.RentalDate != null
+                //                                && i.ReturnDate == null
+                //                               && i.Rental.RentalId == this.RentalId
+                //                                select i;
+                //return items.Count();
             }
         }
 
@@ -66,6 +68,10 @@ namespace prbd_1819_g07
         {
             Model.RentalItems.Remove(item);
             Items.Remove(item);
+            if(Items.Count == 0)
+            {
+                App.Model.Rentals.Remove(this);
+            }
             Model.SaveChanges();
         }
 
