@@ -49,6 +49,8 @@ namespace prbd_1819_g07
             BookCopy.AcquisitionDate = aquisitionDate;
             BookCopy.Book = book;
             Model.BookCopies.Add(BookCopy);
+            Copies.Add(BookCopy);
+            //Model.SaveChanges();
             return BookCopy;
         }
 

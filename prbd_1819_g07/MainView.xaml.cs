@@ -56,7 +56,7 @@ namespace prbd_1819_g07
         {
             DataContext = this;
 
-            var model = Model.CreateModel(DbType.MsSQL);
+            //var model = Model.CreateModel(DbType.MsSQL);
 
 
             App.Register(this, AppMessages.MSG_NEW_USER, () =>

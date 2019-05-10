@@ -97,7 +97,6 @@ namespace prbd_1819_g07
                 return;
 
             DataContext = this;
-            var model = Model.CreateModel(DbType.MsSQL);
 
             Book = book;
             IsNew = isNew;
@@ -115,7 +114,7 @@ namespace prbd_1819_g07
 
             Exit = new RelayCommand(() =>
             {
-
+                CancelAction();
                 App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
 
             });
@@ -457,20 +456,10 @@ namespace prbd_1819_g07
         private void ResetCopies()
         {
             var change = (from c in App.Model.ChangeTracker.Entries<BookCopy>()
-                          where c.Entity.BookCopyId == 0
-                          select c).ToList();
-
-
-            var copiesToDelete = (from b in App.Model.BookCopies
-                                  where b.BookCopyId == 0
-                                  select b).ToList();
-
-            App.Model.BookCopies.RemoveRange(copiesToDelete);
-            foreach(var c in copiesToDelete)
-            {
-                BookCopies.Remove(c);
-            }
-            
+                          where c.Entity.Book.BookId == Book.BookId
+                          where c.State != EntityState.Unchanged
+                          select c.Entity).ToList();
+            App.Model.BookCopies.RemoveRange(change);
 
             SetCopies();
             CopiesAdded = false;
@@ -579,8 +568,10 @@ namespace prbd_1819_g07
             }
             PicturePath = imageHelper.CurrentFile;
 
+            App.Model.Database.Log = Console.Write;
             App.Model.SaveChanges();
- 
+            App.Model.Database.Log = null;
+
             App.NotifyColleagues(AppMessages.MSG_BOOK_CHANGED, Book);
             // App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
         }
@@ -683,8 +674,8 @@ namespace prbd_1819_g07
 
             ClearErrors();
 
-            //string pattern = @"^[0-9\_]+$";
-            // var regex = new Regex(pattern);
+            string pattern = @"^[0-9]+$";
+             var regex = new Regex(pattern);
 
             var book = App.Model.Books.Where(u => u.Isbn == Isbn && u.BookId != Book.BookId).SingleOrDefault();
             if (string.IsNullOrEmpty(Isbn))
@@ -695,14 +686,14 @@ namespace prbd_1819_g07
             {
                 AddError("Isbn", "Isbn existe");
             }
-            //else if (Isbn.Length < 13)
-            //{
-            //    AddError("Isbn", "length must be 13 caractere");
-            //}
-            //else if (!regex.IsMatch(Isbn))
-            //{
-            //  AddError("Isbn", "Only number and -");
-            //}
+            else if (!regex.IsMatch(Isbn))
+            {
+                AddError("Isbn", "Only number");
+            }
+            else if (Isbn.Length != 13)
+            {
+                AddError("Isbn", "length must be 13 caractere");
+            }           
             else if (string.IsNullOrEmpty(Title))
             {
                 AddError("Title", Properties.Resources.Error_Required);
