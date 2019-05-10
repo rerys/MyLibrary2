@@ -456,20 +456,26 @@ namespace prbd_1819_g07
         //remise des données avant changement des copies
         private void ResetCopies()
         {
-            if (CopiesAdded)
+            var change = (from c in App.Model.ChangeTracker.Entries<BookCopy>()
+                          where c.Entity.BookCopyId == 0
+                          select c).ToList();
+
+
+            var copiesToDelete = (from b in App.Model.BookCopies
+                                  where b.BookCopyId == 0
+                                  select b).ToList();
+
+            App.Model.BookCopies.RemoveRange(copiesToDelete);
+            foreach(var c in copiesToDelete)
             {
-                foreach(var c in BookCopies)
-                {
-                    Console.WriteLine(c);
-                    if(c.BookCopyId == 0)
-                    {
-                        Book.Copies.Remove(c);
-                    }
-                }
-                SetCopies();
-                CopiesAdded = false;
-                RaisePropertyChanged(nameof(BookCopies));
+                BookCopies.Remove(c);
             }
+            
+
+            SetCopies();
+            CopiesAdded = false;
+            RaisePropertyChanged(nameof(BookCopies));
+
         }
 
 
@@ -562,22 +568,21 @@ namespace prbd_1819_g07
                 }
                 CatChanged = false;
 
+                App.NotifyColleagues(AppMessages.MSG_CATEGORY_CHANGED);
+
             }
             if (CopiesAdded)
             {
-               // foreach (var c in BookCopies)
-               // {
-               //     Book.AddCopies(1, c.AcquisitionDate);
-               // }
 
                 CopiesAdded = false;
-                
-                App.NotifyColleagues(AppMessages.MSG_CATEGORY_CHANGED);
+
             }
             PicturePath = imageHelper.CurrentFile;
+
             App.Model.SaveChanges();
-            App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
+ 
             App.NotifyColleagues(AppMessages.MSG_BOOK_CHANGED, Book);
+            // App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
         }
 
 
@@ -609,6 +614,7 @@ namespace prbd_1819_g07
          */
         private void CancelAction()
         {
+
             ResetPicture();
             ResetBook();
             ResetCategories();
