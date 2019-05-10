@@ -24,9 +24,12 @@ namespace prbd_1819_g07
         {
             get
             {
-                return (from b in Model.BookCopies where b.Book.BookId == BookId select b).Count();
-
-
+               var res =  (from c in this.Model.BookCopies
+                       where c.Book.BookId == BookId &&
+                       (from i in c.RentalItems where i.ReturnDate == null select i).Count() == 0
+                       select c).Count();
+                Console.WriteLine(res);
+                return res;
             }
         }
 
@@ -94,21 +97,11 @@ namespace prbd_1819_g07
             BookCopy copy;
             if (Attached)
             {
-                //copy = (
-                //    from c in this.Model.BookCopies
-                //    where c.Book.BookId == BookId &&
-                //          (from i in c.RentalItems where i.ReturnDate == null select i).Count() == 0
-                //    select c
-                //).FirstOrDefault();
-
-                // Meilleure version, me semble-t-il, avec un outer join plutôt qu'un sub-query, ...
                 copy = (
-                    from c in Model.BookCopies
-                    where c.Book.BookId == BookId
-                    join i in Model.RentalItems on c.BookCopyId equals i.BookCopy.BookCopyId into ps
-                    from i in ps.DefaultIfEmpty()
-                    where i.ReturnDate == null
-                    select c
+                    from c in this.Model.BookCopies
+                     where c.Book.BookId == BookId &&
+                     (from i in c.RentalItems where i.ReturnDate == null select i).Count() == 0
+                     select c
                 ).FirstOrDefault();
             }
             else

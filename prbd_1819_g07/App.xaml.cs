@@ -45,13 +45,17 @@ namespace prbd_1819_g07
 #endif
             using (var model = Model.CreateModel(type))
             {
-                model.ClearDatabase();
+                //model.ClearDatabase();
 
                 //model.CreateTestData();
             }
-
-            var test = new TestDatas(type);
-            test.Run();
+            if(Model.Users.Count() == 0)
+            {
+                var test = new TestDatas(type);
+                test.Run();
+            }
+            
+            
 
         }
 

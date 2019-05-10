@@ -68,6 +68,9 @@ namespace prbd_1819_g07
             {
                 App.SelectedUser.AddToBasket(book);
 
+                ApplyFilterAction();
+
+
             });
 
             Books = new ObservableCollection<Book>(App.Model.Books);
@@ -203,11 +206,18 @@ namespace prbd_1819_g07
 
             }
             Books = new ObservableCollection<Book>(query.OrderBy(b => b.Title));
-
+            RaisePropertyChanged(nameof(Books));
         }
 
 
+        public bool CanAddBasket()
+        {
+            return false;
+        }
 
+        public void AddToBasketAction()
+        {
 
+        }
     }
 }
