@@ -90,7 +90,16 @@ namespace prbd_1819_g07
             RaisePropertyChanged(nameof(Basket));
         }
 
+        //Renvoie true si l'user connecté est admin.
+        public bool IsAdmin
+        {
+            get { return App.CurrentUser.Role == Role.Admin; }
+        }
 
+        public bool NotEmptyBasket
+        {
+            get { return SelectedUser.Basket.Items != null; }
+        }
         /*********************************************************************************************************************************
          *
          *   ICOMMAND

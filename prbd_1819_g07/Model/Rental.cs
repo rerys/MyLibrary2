@@ -68,6 +68,10 @@ namespace prbd_1819_g07
         {
             Model.RentalItems.Remove(item);
             Items.Remove(item);
+            if(Items.Count == 0)
+            {
+                App.Model.Rentals.Remove(this);
+            }
             Model.SaveChanges();
         }
 

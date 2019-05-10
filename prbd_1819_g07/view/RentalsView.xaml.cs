@@ -31,7 +31,7 @@ namespace prbd_1819_g07
          *****************************/
 
         //Propriété de la liste des rentals. 
-        public ObservableCollection<Rental> Rentals{ get; set; }
+        public ObservableCollection<Rental> Rentals { get; set; }
 
 
         //Propriété de la liste des rentalitems.
@@ -45,7 +45,14 @@ namespace prbd_1819_g07
             set
             {
                 selectedRental = value;
-                RentalItems = new ObservableCollection<RentalItem>(selectedRental.Items);
+                if (selectedRental == null)
+                {
+                    RentalItems = null;
+                }
+                else
+                {
+                    RentalItems = new ObservableCollection<RentalItem>(selectedRental.Items);
+                }
                 RaisePropertyChanged(nameof(SelectedRental));
                 RaisePropertyChanged(nameof(RentalItems));
                 RaisePropertyChanged(nameof(HasRentalSelected));
@@ -58,6 +65,12 @@ namespace prbd_1819_g07
             get { return selectedRental != null; }
         }
 
+        //Renvoie true si l'user connecté est admin.
+        public bool IsAdmin
+        {
+            get { return App.CurrentUser.Role == Role.Admin; }
+        }
+
         /******************************
          *                            *
          *   ICOMMAND                 * 
@@ -66,7 +79,7 @@ namespace prbd_1819_g07
 
 
         //Commande pour retourner un book.
-        public ICommand ReturnBook{ get; set; }
+        public ICommand ReturnBook { get; set; }
 
         //Commande supprimer un livre loué. 
         public ICommand DeleteRent { get; set; }
@@ -81,17 +94,16 @@ namespace prbd_1819_g07
         {
             InitializeComponent();
             DataContext = this;
-            Rentals = new ObservableCollection<Rental>(from r in App.Model.Rentals
-                                                       where r.RentalDate != null
-                                                       select r);
+            NotifyAllFied();
             ReturnBook = new RelayCommand<RentalItem>(rental =>
             {
                 rental.DoReturn();
                 NotifyAllFied();
             });
-            DeleteRent = new RelayCommand<RentalItem>(rental =>
+            DeleteRent = new RelayCommand<RentalItem>(item =>
             {
-               
+                SelectedRental.RemoveItem(item);
+                NotifyAllFied();
             });
         }
 
@@ -103,14 +115,31 @@ namespace prbd_1819_g07
 
         private void NotifyAllFied()
         {
-                RentalItems = new ObservableCollection<RentalItem>(selectedRental.Items);
-                RaisePropertyChanged(nameof(SelectedRental));
-                RaisePropertyChanged(nameof(RentalItems));
-                RaisePropertyChanged(nameof(HasRentalSelected));
-        }
-        public void DeleteAction()
-        {
+            if (App.CurrentUser.Role != Role.Admin)
+            {
+                Rentals = new ObservableCollection<Rental>(from r in App.Model.Rentals
+                                                           where r.RentalDate != null
+                                                           && App.CurrentUser.UserId == r.User.UserId
+                                                           select r);
+            }
+            else
+            {
+                Rentals = new ObservableCollection<Rental>(from r in App.Model.Rentals
+                                                           where r.RentalDate != null
+                                                           select r);
 
+            }
+
+            if (HasRentalSelected)
+            {
+                RentalItems = new ObservableCollection<RentalItem>(selectedRental.Items);
+            }
+
+            RaisePropertyChanged(nameof(SelectedRental));
+            RaisePropertyChanged(nameof(Rentals));
+            RaisePropertyChanged(nameof(RentalItems));
+            RaisePropertyChanged(nameof(HasRentalSelected));
         }
+
     }
 }

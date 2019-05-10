@@ -62,6 +62,7 @@ namespace prbd_1819_g07
             { // si aucune erreurs
                 var user = App.Model.Users.Where(u => u.UserName == Pseudo).SingleOrDefault(); // on recherche le membre 
                 App.CurrentUser = user; // le membre connecté devient le membre courant
+                App.SelectedUser = App.CurrentUser;
                 ShowMainView(); // ouverture de la fenêtre principale
                 Close(); // fermeture de la fenêtre de login
             }
