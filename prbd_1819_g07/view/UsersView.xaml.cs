@@ -43,8 +43,8 @@ namespace prbd_1819_g07
 
         private void ApplyFilterAction()
         {
-            var model = Model.CreateModel(DbType.MsSQL);
-            var query = from u in model.Users
+            //var model = Model.CreateModel(DbType.MsSQL);
+            var query = from u in App.Model.Users
                         let text = u.UserName.Contains(Filter) || u.FullName.Contains(Filter) || u.Email.Contains(Filter)
                         // ||u.Birthdate.Contains(Filter) || u.Role.Contains(Filter) 
                         where text

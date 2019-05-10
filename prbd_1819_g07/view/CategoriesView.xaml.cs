@@ -96,7 +96,11 @@ namespace prbd_1819_g07
 
                 //SetProperty<string>(ref selectedCategoryName, value, () => Validate());
                 selectedCategoryName = value;
-                SelectedCategory.Name = value;
+                if(SelectedCategory != null)
+                {
+                    SelectedCategory.Name = value;
+                }
+                
 
                 RaisePropertyChanged(nameof(SelectedCategoryName));
                 RaisePropertyChanged(nameof(SelectedCategory));

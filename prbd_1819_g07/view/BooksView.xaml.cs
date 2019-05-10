@@ -24,8 +24,35 @@ namespace prbd_1819_g07
     /// </summary>
     public partial class BooksView : UserControlBase
     {
+
+
+
+        /*********************************************************************************************************************************
+         *
+         *   ICOMMAND
+         *
+         *********************************************************************************************************************************/
+
+        //commande de création d'un nouveau livre
         public ICommand NewBook { get; set; }
+
+        //commande d'affichage du livre selectionné
         public ICommand DisplayBookDetails { get; set; }
+
+        //commande d'ajout du livre dans le panier
+        public ICommand AddToBasket { get; set; }
+
+        //commande d'effacement des données dans le filtre
+        public ICommand ClearFilter { get; set; }
+
+
+
+        /*********************************************************************************************************************************
+         *
+         *   VIEW CONSTRUCTOR
+         *
+         *********************************************************************************************************************************/
+
 
         public BooksView()
         {
@@ -37,11 +64,15 @@ namespace prbd_1819_g07
 
             DataContext = this;
 
-            var model = Model.CreateModel(DbType.MsSQL);
+            AddToBasket = new RelayCommand<Book>((book) =>
+            {
+                App.SelectedUser.AddToBasket(book);
 
-            Books = new ObservableCollection<Book>(model.Books);
+            });
 
-            Categories = new ObservableCollection<Category>(model.Categories);
+            Books = new ObservableCollection<Book>(App.Model.Books);
+
+            Categories = new ObservableCollection<Category>(App.Model.Categories);
 
             ClearFilter = new RelayCommand(() =>
             {
@@ -64,7 +95,16 @@ namespace prbd_1819_g07
             App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, book => { ApplyFilterAction(); });
         }
 
-        public ICommand ClearFilter { get; set; }
+
+        /*********************************************************************************************************************************
+         *
+         *   PROPERTIES
+         *
+         *********************************************************************************************************************************/
+
+        /*
+         * Liste des livres en base de données
+         */
 
         private ObservableCollection<Book> books;
 
@@ -75,6 +115,12 @@ namespace prbd_1819_g07
 
             set => SetProperty<ObservableCollection<Book>>(ref books, value);
         }
+
+
+
+        /*
+         * liste de toutes les categories disponible pour le filtre
+         */
 
         private ObservableCollection<Category> categories;
 
@@ -89,6 +135,10 @@ namespace prbd_1819_g07
 
         }
 
+        /*
+         * Proprieté du filtre textuelle
+         */
+
         private string filter;
         public string Filter
         {
@@ -97,6 +147,11 @@ namespace prbd_1819_g07
             set => SetProperty<string>(ref filter, value, ApplyFilterAction);
         }
 
+
+        /*
+         * Proprieté du filtre categorie
+         */
+
         private Category filterCat;
         public Category FilterCat
         {
@@ -104,9 +159,27 @@ namespace prbd_1819_g07
             set => SetProperty<Category>(ref filterCat, value, ApplyFilterAction);
         }
 
+
+        /********************************************************************************************************************************
+         * 
+         * METHODES D'ACTION
+         * 
+         *********************************************************************************************************************************/
+
+
+        /*
+         *Méthode d'application du filtre 
+         * 
+         * si reçoit un filtre text retourne une liste de livres contenant le text
+         * 
+         * si pas de filtre retourne la liste de tous les livres de la base de données
+         * 
+         * si reçoit un filtre categorie, filtre la liste des book precedement recu un des deux retour precedent
+         * 
+         */
+
         private void ApplyFilterAction()
         {
-            //IEnumerable<Book> query = App.Model.Books;
 
             IQueryable<Book> query;
 
@@ -125,14 +198,16 @@ namespace prbd_1819_g07
             if (FilterCat != null)
             {
                 query = from m in query
-                        where (from c in m.Categories where c.CategoryId == filterCat.CategoryId select c).Count() > 0                
+                        where (from c in m.Categories where c.CategoryId == filterCat.CategoryId select c).Count() > 0
                         select m;
-              
+
             }
-            Books = new ObservableCollection<Book>(query.OrderBy(b=> b.Title));
-
-
+            Books = new ObservableCollection<Book>(query.OrderBy(b => b.Title));
 
         }
+
+
+
+
     }
 }

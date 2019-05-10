@@ -117,8 +117,8 @@ namespace prbd_1819_g07
 
             DataContext = this;
 
-            var model = Model.CreateModel(DbType.MsSQL);
-            Users = new ObservableCollection<User>(model.Users);
+            //var model = Model.CreateModel(DbType.MsSQL);
+            Users = new ObservableCollection<User>(App.Model.Users);
             SelectedUser = App.Model.Users.Where(u => u.UserName.Contains(App.CurrentUser.UserName)).SingleOrDefault();
             ConfirmBasket = new RelayCommand(() =>
             {
