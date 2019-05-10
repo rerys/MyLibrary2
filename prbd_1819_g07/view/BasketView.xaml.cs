@@ -42,15 +42,15 @@ namespace prbd_1819_g07
 
         }
 
-        //Propriété de la liste de book qui sont dans le panier de l'user selectionné. 
-        public ObservableCollection<Book> Basket
+        //Propriété de la liste de rentalItemn qui sont dans le panier de l'user selectionné. 
+        public ObservableCollection<RentalItem> Basket
         {
             get
             {
                 if (SelectedUser.Basket != null)
                 {
-                    var query = from b in SelectedUser.Basket.Items select b.BookCopy.Book;
-                    return new ObservableCollection<Book>(query);
+                    var query = from b in SelectedUser.Basket.Items select b;
+                    return new ObservableCollection<RentalItem>(query);
                 }
                 return null;
             }
@@ -103,6 +103,8 @@ namespace prbd_1819_g07
         //Commande pour clear le panier.
         public ICommand ClearBasket { get; set; }
 
+        public ICommand DeleteFromBasket { get; set; }
+
         /*********************************************************************************************************************************
          *
          *   VIEW CONSTRUCTOR
@@ -130,6 +132,12 @@ namespace prbd_1819_g07
 
                 SelectedUser.ClearBasket();
                 App.Model.SaveChanges();
+                NotifyAllFields();
+            });
+
+            DeleteFromBasket = new RelayCommand<RentalItem>(item =>
+            {
+                SelectedUser.RemoveFromBasket(item);
                 NotifyAllFields();
             });
         }

@@ -318,4 +318,7 @@
   <data name="Max_Date" xml:space="preserve">
     <value>Vous ne pouvez être dans le future</value>
   </data>
+  <data name="BasketView_Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
 </root>

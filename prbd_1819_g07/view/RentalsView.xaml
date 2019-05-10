@@ -1,4 +1,5 @@
 ﻿<f:UserControlBase x:Class="prbd_1819_g07.RentalsView"
+                    x:Name="root"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -32,10 +33,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Name="btnReturn" Command="{Binding ReturnBook}">
+                                <Button Name="btnReturn" Command="{Binding ReturnBook,ElementName=root}" CommandParameter="{Binding}">
                                     <Image Source="/prbd_1819_g07;component/Assets/editRent.png" ></Image>
                                 </Button>
-                                <Button Name="btnGarbage" Command="{Binding DeleteRent}">
+                                <Button Name="btnGarbage" Command="{Binding DeleteRent,ElementName=root}" CommandParameter="{Binding}">
                                     <Image Source="/prbd_1819_g07;component/Assets/garbage.png" ></Image>
                                 </Button>
                             </StackPanel>

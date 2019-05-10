@@ -37,9 +37,6 @@ namespace prbd_1819_g07
         //Propriété de la liste des rentalitems.
         public ObservableCollection<RentalItem> RentalItems { get; set; }
 
-        //Propriété du nombre d'items ouvert dans le rental
-        public int Open { get; set; }
-
         //Propriété du rental selectionné, refresh la liste de rentalItem.
         private Rental selectedRental;
         public Rental SelectedRental
@@ -53,6 +50,12 @@ namespace prbd_1819_g07
                 RaisePropertyChanged(nameof(RentalItems));
                 RaisePropertyChanged(nameof(HasRentalSelected));
             }
+        }
+
+        //Renvoie true si un rental a été selectionné. 
+        public bool HasRentalSelected
+        {
+            get { return selectedRental != null; }
         }
 
         /******************************
@@ -81,20 +84,33 @@ namespace prbd_1819_g07
             Rentals = new ObservableCollection<Rental>(from r in App.Model.Rentals
                                                        where r.RentalDate != null
                                                        select r);
-
+            ReturnBook = new RelayCommand<RentalItem>(rental =>
+            {
+                rental.DoReturn();
+                NotifyAllFied();
+            });
+            DeleteRent = new RelayCommand<RentalItem>(rental =>
+            {
+               
+            });
         }
 
         /******************************
          *                            *
-         *   METHODE                  * 
+         *   METHODE ACTION           * 
          *                            *
          *****************************/
 
-
-        //Renvoie true si un rental a été selectionné. 
-        public bool HasRentalSelected
+        private void NotifyAllFied()
         {
-            get { return selectedRental != null; }
+                RentalItems = new ObservableCollection<RentalItem>(selectedRental.Items);
+                RaisePropertyChanged(nameof(SelectedRental));
+                RaisePropertyChanged(nameof(RentalItems));
+                RaisePropertyChanged(nameof(HasRentalSelected));
+        }
+        public void DeleteAction()
+        {
+
         }
     }
 }
