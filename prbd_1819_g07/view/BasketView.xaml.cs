@@ -98,7 +98,7 @@ namespace prbd_1819_g07
 
         public bool NotEmptyBasket
         {
-            get { return SelectedUser.Basket.Items != null; }
+            get { return SelectedUser.Basket != null; }
         }
         /*********************************************************************************************************************************
          *

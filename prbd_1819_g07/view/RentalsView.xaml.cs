@@ -30,6 +30,11 @@ namespace prbd_1819_g07
          *                            *
          *****************************/
 
+        public bool Test
+        {
+            get { return false; }
+        }
+
         //Propriété de la liste des rentals. 
         public ObservableCollection<Rental> Rentals { get; set; }
 

@@ -33,7 +33,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Name="btnReturn" Command="{Binding ReturnBook,ElementName=root}" CommandParameter="{Binding}">
+                                <Button Name="btnReturn" Command="{Binding ReturnBook,ElementName=root}" Visibility="{Binding Test, Converter={StaticResource BoolToVis}}" CommandParameter="{Binding}">
                                     <Image Source="/prbd_1819_g07;component/Assets/editRent.png" ></Image>
                                 </Button>
                                 <Button Name="btnGarbage" Command="{Binding DeleteRent,ElementName=root}" CommandParameter="{Binding}">
