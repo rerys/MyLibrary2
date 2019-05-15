@@ -37,20 +37,15 @@ namespace prbd_1819_g07
             get { return App.CurrentUser.Role; }
         }
 
-        private BooksView books;
-        public BooksView Books
-        {
-            get
-            {
-                if (books == null)
-                {
-                    books = new BooksView();
-                }
-                return books;
-            }
-        }
+        private BooksView books = new BooksView();
 
+        private BasketView basket = new BasketView();
 
+        private RentalsView rentals = new RentalsView();
+
+        private UsersView users = new UsersView();
+
+        private CategoriesView categories = new CategoriesView();
 
         public MainView()
         {
@@ -86,7 +81,7 @@ namespace prbd_1819_g07
             App.Register(this, AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK, () =>
             {
                 GridPrincipal.Children.Clear();
-                GridPrincipal.Children.Add(Books);
+                GridPrincipal.Children.Add(books);
 
 
             });
@@ -99,7 +94,6 @@ namespace prbd_1819_g07
                     GridPrincipal.Children.Add(new BookDetailsView(book, false));
                 }
             });
-
             InitializeComponent();
         }
 
@@ -126,23 +120,23 @@ namespace prbd_1819_g07
                     break;
                 case 1:
                     GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(Books);
+                    GridPrincipal.Children.Add(books);
                     break;
                 case 2:
                     GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new CategoriesView());
+                    GridPrincipal.Children.Add(categories);
                     break;
                 case 3:
                     GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new BasketView());
+                    GridPrincipal.Children.Add(basket);
                     break;
                 case 4:
                     GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new RentalsView());
+                    GridPrincipal.Children.Add(rentals);
                     break;
                 case 5:
                     GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new UsersView());
+                    GridPrincipal.Children.Add(users);
                     break;
                 default:
                     break;

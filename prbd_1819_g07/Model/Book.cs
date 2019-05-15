@@ -28,7 +28,6 @@ namespace prbd_1819_g07
                        where c.Book.BookId == BookId &&
                        (from i in c.RentalItems where i.ReturnDate == null select i).Count() == 0
                        select c).Count();
-                Console.WriteLine(res);
                 return res;
             }
         }

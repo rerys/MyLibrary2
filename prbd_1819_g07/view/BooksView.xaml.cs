@@ -67,15 +67,14 @@ namespace prbd_1819_g07
             AddToBasket = new RelayCommand<Book>((book) =>
             {
                 App.SelectedUser.AddToBasket(book);
-
                 ApplyFilterAction();
+                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
 
 
             });
 
             Books = new ObservableCollection<Book>(App.Model.Books);
-
-            Categories = new ObservableCollection<Category>(App.Model.Categories);
+            
 
             ClearFilter = new RelayCommand(() =>
             {
@@ -96,6 +95,8 @@ namespace prbd_1819_g07
             });
 
             App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, book => { ApplyFilterAction(); });
+            App.Register(this, AppMessages.MSG_CATEGORY_CHANGED, () => { RaisePropertyChanged(nameof(Categories)); });
+            App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { ApplyFilterAction(); });
         }
 
 
@@ -125,18 +126,7 @@ namespace prbd_1819_g07
          * liste de toutes les categories disponible pour le filtre
          */
 
-        private ObservableCollection<Category> categories;
-
-        public ObservableCollection<Category> Categories
-        {
-
-            get => categories;
-
-            set => SetProperty<ObservableCollection<Category>>(ref categories, value, () =>
-            {
-            });
-
-        }
+        public ObservableCollection<Category> Categories { get=> new ObservableCollection<Category>(App.Model.Categories); }
 
         /*
          * Proprieté du filtre textuelle
@@ -161,6 +151,7 @@ namespace prbd_1819_g07
             get => filterCat;
             set => SetProperty<Category>(ref filterCat, value, ApplyFilterAction);
         }
+
 
 
         /********************************************************************************************************************************
@@ -219,5 +210,6 @@ namespace prbd_1819_g07
         {
 
         }
+
     }
 }

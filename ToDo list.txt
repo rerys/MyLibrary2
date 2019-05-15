@@ -1,17 +1,27 @@
 [BookView]
-
--liste des livres: td, ajouter livre dans le panier 
 -liste des livres: td, ajouter à la fiche des livres les liens hyperText des categories
+-IsEnabled  add basket admin.
+-IsEnabled NouveauLivre admim
+-Category All
+
+[CategoryView]
+-IsEnable modif category. 
+
+[BasketView]
+-IsEnable bouton confirm et clear. 
+
+[RentalsView]
+-Visibility pour column Action isAdmin. 
+-Boutton change selon date return.
 
 
-[BookDetailView]
-
--categories: td, ajout du livre dans les catégories sélectionnées (si confirmation) (probleme lors de l'ajout)
--Book Copies: td, ajout de copies dans la liste de copies d'un livre 
 
 
+
+
+
+***OPTION***
 [UsersView]
-
 -update, ajout fonction pour gerer modif d'un user et du role. 
 -filtre birthdate: pas pris en compte pour l'instant, modifier ApplyFilterAction()
 -affichage birthdate et role lors de selecteduser, (ajout Enum.Parse<Role>.)
@@ -21,9 +31,4 @@
 -Affichage combobox roles
 -configurer l'ajout de birthdate
 
-[BasketView]
--Mettre user connecté par défaut dans la CB.
 
-[RentalsView]
--NumOpenItem : requete linQ, récuperer les open item pour chacune des rentals(Rental_RentalID en DB) 
--Action : td, returnbook,garbagebook.

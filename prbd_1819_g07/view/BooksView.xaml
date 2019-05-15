@@ -74,8 +74,8 @@
                                     <Image Source="{Binding AbsolutePicturePath, TargetNullValue={StaticResource UnknownBook}}" Width="200" Height="150" Stretch="UniformToFill" />
                                     <TextBlock FontSize="13" FontWeight="Bold" Width="80" TextAlignment="Center" Text="{Binding Title}" TextWrapping="Wrap" LineHeight="20" />
                                     <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Author}" />
-                                    <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Editor, StringFormat='( \{0\} )' }" />
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Editor, StringFormat='( \{0\} )' }" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                         <TextBlock Text="{Binding NumAvailableCopies, StringFormat= '\{0\} copies available'}" TextWrapping="Wrap"  VerticalAlignment="Center" Margin="10" FontSize="10" FontFamily="Champagne &amp; Limousines"/>
                                     <Button Width="100" Content="Add to Basket" Command="{Binding AddToBasket,ElementName=root}" CommandParameter="{Binding}" FontFamily="Champagne &amp; Limousines" Margin="10" FontSize="10"/>
                                     </StackPanel>

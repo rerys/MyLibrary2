@@ -27,7 +27,8 @@ namespace prbd_1819_g07
             MSG_BOOK_CHANGED,
             MSG_CLOSE_BOOKVIEW,
             MSG_DISPLAY_BOOK,
-            MSG_CATEGORY_CHANGED
+            MSG_CATEGORY_CHANGED,
+            MSG_RENTAL_CHANGED
         }
 
         public static User CurrentUser { get; set; }

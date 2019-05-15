@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static prbd_1819_g07.App;
 
 namespace prbd_1819_g07
 {
@@ -98,7 +99,14 @@ namespace prbd_1819_g07
 
         public bool NotEmptyBasket
         {
-            get { return SelectedUser.Basket != null; }
+            get
+            {
+                if (SelectedUser.Basket != null)
+                {
+                    return SelectedUser.Basket.Items != null;
+                }
+                return true;
+            }
         }
         /*********************************************************************************************************************************
          *
@@ -134,6 +142,7 @@ namespace prbd_1819_g07
                 SelectedUser.ConfirmBasket();
                 App.Model.SaveChanges();
                 NotifyAllFields();
+                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
             });
 
             ClearBasket = new RelayCommand(() =>
@@ -142,13 +151,18 @@ namespace prbd_1819_g07
                 SelectedUser.ClearBasket();
                 App.Model.SaveChanges();
                 NotifyAllFields();
+                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
+
             });
 
             DeleteFromBasket = new RelayCommand<RentalItem>(item =>
             {
                 SelectedUser.RemoveFromBasket(item);
                 NotifyAllFields();
+                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
             });
+
+            App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { RaisePropertyChanged(nameof(Basket)); });
         }
     }
 }

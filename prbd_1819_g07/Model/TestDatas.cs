@@ -95,22 +95,22 @@ namespace prbd_1819_g07
 
             book1 = model.CreateBook(
                 isbn: "223",
-                title: "Java for Dummies",
-                author: "Duchmol",
-                editor: "EPFC",
+                title: "Oreo is good",
+                author: "Mondelez International",
+                editor: "Les comités du gras",
                 numCopies: 1);
             book1.PicturePath = "123.jpg";
             book2 = model.CreateBook(
                 isbn: "356",
-                title: "Le Seigneur des Anneaux",
-                author: "Tolkien",
-                editor: "Bourgeois",
+                title: "FiliTubz",
+                author: "Lutti",
+                editor: "Bonbon",
                 numCopies: 1);
             book2.PicturePath = "456.jpg";
             book3 = model.CreateBook(
                 isbn: "689",
-                title: "Les misérables",
-                author: "Victor Hugo",
+                title: "Les minables",
+                author: "Koko",
                 editor: "XO",
                 numCopies: 1);
             book3.PicturePath = "789.jpg";

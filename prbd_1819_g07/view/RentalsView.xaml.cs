@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static prbd_1819_g07.App;
 
 namespace prbd_1819_g07
 {
@@ -58,6 +59,7 @@ namespace prbd_1819_g07
                 {
                     RentalItems = new ObservableCollection<RentalItem>(selectedRental.Items);
                 }
+                RaisePropertyChanged(nameof(IsAdmin));
                 RaisePropertyChanged(nameof(SelectedRental));
                 RaisePropertyChanged(nameof(RentalItems));
                 RaisePropertyChanged(nameof(HasRentalSelected));
@@ -71,10 +73,7 @@ namespace prbd_1819_g07
         }
 
         //Renvoie true si l'user connecté est admin.
-        public bool IsAdmin
-        {
-            get { return App.CurrentUser.Role == Role.Admin; }
-        }
+        public bool IsAdmin { get =>  App.CurrentUser.Role == Role.Admin;  }
 
         /******************************
          *                            *
@@ -104,12 +103,16 @@ namespace prbd_1819_g07
             {
                 rental.DoReturn();
                 NotifyAllFied();
+                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
             });
             DeleteRent = new RelayCommand<RentalItem>(item =>
             {
                 SelectedRental.RemoveItem(item);
                 NotifyAllFied();
+                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
             });
+
+            App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { NotifyAllFied(); });
         }
 
         /******************************
@@ -139,7 +142,6 @@ namespace prbd_1819_g07
             {
                 RentalItems = new ObservableCollection<RentalItem>(selectedRental.Items);
             }
-
             RaisePropertyChanged(nameof(SelectedRental));
             RaisePropertyChanged(nameof(Rentals));
             RaisePropertyChanged(nameof(RentalItems));

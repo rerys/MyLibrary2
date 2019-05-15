@@ -52,7 +52,6 @@ namespace prbd_1819_g07
             if(copy != null)
             {
                 var rental = basket.RentCopy(copy);
-                Console.WriteLine("coucou");
                 Model.SaveChanges();
                 return rental;
             }

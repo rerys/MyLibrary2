@@ -567,8 +567,6 @@ namespace prbd_1819_g07
 
             }
             PicturePath = imageHelper.CurrentFile;
-
-            App.Model.Database.Log = Console.Write;
             App.Model.SaveChanges();
             App.Model.Database.Log = null;
 
