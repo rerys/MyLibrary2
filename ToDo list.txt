@@ -7,16 +7,6 @@
 [CategoryView]
 -IsEnable modif category. 
 
-[BasketView]
--IsEnable bouton confirm et clear. 
-
-[RentalsView]
--Visibility pour column Action isAdmin. 
--Boutton change selon date return.
-
-
-
-
 
 
 

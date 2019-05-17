@@ -66,8 +66,8 @@ namespace prbd_1819_g07
             }
         }
 
-        private Nullable<DateTime> birthDate;
-        public Nullable<DateTime> BirthDate
+        private DateTime? birthDate;
+        public DateTime? Birthdate
         {
             get { return birthDate; }
             set

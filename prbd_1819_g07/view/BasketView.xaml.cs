@@ -25,11 +25,11 @@ namespace prbd_1819_g07
     public partial class BasketView : UserControlBase
     {
 
-        /*********************************************************************************************************************************
-         *
-         *   PROPERTIES
-         *
-         *********************************************************************************************************************************/
+        /******************************
+         *                            *
+         *   PROPERTIES               * 
+         *                            *
+         *****************************/
 
         //Propriété de la liste des utilisateurs pour le combobox
         private ObservableCollection<User> users;
@@ -58,7 +58,7 @@ namespace prbd_1819_g07
         }
 
         //Propriété de l'utilisateur sélectionnée dans le combobox. Par défaut, c'est l'user connecté. 
-        User selectedUser;
+        private User selectedUser;
         public User SelectedUser
         {
             get { return selectedUser; }
@@ -97,22 +97,13 @@ namespace prbd_1819_g07
             get { return App.CurrentUser.Role == Role.Admin; }
         }
 
-        public bool NotEmptyBasket
-        {
-            get
-            {
-                if (SelectedUser.Basket != null)
-                {
-                    return SelectedUser.Basket.Items != null;
-                }
-                return true;
-            }
-        }
-        /*********************************************************************************************************************************
-         *
-         *   ICOMMAND
-         *
-         *********************************************************************************************************************************/
+
+        /******************************
+         *                            *
+         *   ICOMMAND                 * 
+         *                            *
+         *****************************/
+
 
         //Commande pour confirmer le panier
         public ICommand ConfirmBasket { get; set; }
@@ -122,12 +113,12 @@ namespace prbd_1819_g07
 
         public ICommand DeleteFromBasket { get; set; }
 
-        /*********************************************************************************************************************************
-         *
-         *   VIEW CONSTRUCTOR
-         *
-         *********************************************************************************************************************************/
 
+        /******************************
+         *                            *
+         *   VIEW CONSTRUCTOR         * 
+         *                            *
+         *****************************/
         public BasketView()
         {
             InitializeComponent();
@@ -137,32 +128,65 @@ namespace prbd_1819_g07
             //var model = Model.CreateModel(DbType.MsSQL);
             Users = new ObservableCollection<User>(App.Model.Users);
             SelectedUser = App.Model.Users.Where(u => u.UserName.Contains(App.CurrentUser.UserName)).SingleOrDefault();
-            ConfirmBasket = new RelayCommand(() =>
-            {
-                SelectedUser.ConfirmBasket();
-                App.Model.SaveChanges();
-                NotifyAllFields();
-                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
-            });
-
-            ClearBasket = new RelayCommand(() =>
-            {
-
-                SelectedUser.ClearBasket();
-                App.Model.SaveChanges();
-                NotifyAllFields();
-                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
-
-            });
-
-            DeleteFromBasket = new RelayCommand<RentalItem>(item =>
-            {
-                SelectedUser.RemoveFromBasket(item);
-                NotifyAllFields();
-                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
-            });
+            ConfirmBasket = new RelayCommand(ConfirmBasketAction, () => NotEmptyBasket());
+            ClearBasket = new RelayCommand(ClearAllBasket, () => NotEmptyBasket());
+            DeleteFromBasket = new RelayCommand<RentalItem>(item => { DeleteFromBasketAction(item); });
 
             App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { RaisePropertyChanged(nameof(Basket)); });
         }
+
+
+
+        /*************************************************
+         *                                               *
+         *   METHODE D'ACTIVATION DES BOUTONS            * 
+         *                                               *
+         *************************************************/
+
+
+        //Renvoie si true le panier n'est pas vide false s'il est vide. 
+        private bool NotEmptyBasket()
+        {
+            if (SelectedUser.Basket != null)
+            {
+                return SelectedUser.Basket.Items != null;
+            }
+            return false;
+        }
+
+        /******************************
+         *                            *
+         *   METHODE ACTION           * 
+         *                            *
+         *****************************/
+
+        private void DeleteFromBasketAction(RentalItem item)
+        {
+            SelectedUser.RemoveFromBasket(item);
+            NotifyAllFields();
+            App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
+
+        }
+
+        //Méthode d'action pour le bouton ConfirmBasket
+        private void ConfirmBasketAction()
+        {
+            SelectedUser.ConfirmBasket();
+            App.Model.SaveChanges();
+            NotifyAllFields();
+            App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
+
+        }
+
+        //Méthode d'action pour le bouton ClearBasket
+        private void ClearAllBasket()
+        {
+            SelectedUser.ClearBasket();
+            App.Model.SaveChanges();
+            NotifyAllFields();
+            App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
+        }
+
     }
 }
+
