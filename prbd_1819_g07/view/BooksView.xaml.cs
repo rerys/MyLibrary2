@@ -71,9 +71,10 @@ namespace prbd_1819_g07
                 App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
 
 
-            });
-
+            }, (book) => CanAddBasket(book));
+            //,(book) => CanAddBasket(book)
             Books = new ObservableCollection<Book>(App.Model.Books);
+
             
 
             ClearFilter = new RelayCommand(() =>
@@ -88,12 +89,12 @@ namespace prbd_1819_g07
                 App.NotifyColleagues(AppMessages.MSG_NEW_BOOK);
 
             });
-
+            //,()=> CanCreatNewBook()
             DisplayBookDetails = new RelayCommand<Book>(book =>
             {
                 App.NotifyColleagues(AppMessages.MSG_DISPLAY_BOOK, book);
             });
-
+            FilterCat = CategoryAll;
             App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, book => { ApplyFilterAction(); });
             App.Register(this, AppMessages.MSG_CATEGORY_CHANGED, () => { RaisePropertyChanged(nameof(Categories)); });
             App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { ApplyFilterAction(); });
@@ -126,7 +127,13 @@ namespace prbd_1819_g07
          * liste de toutes les categories disponible pour le filtre
          */
 
-        public ObservableCollection<Category> Categories { get=> new ObservableCollection<Category>(App.Model.Categories); }
+        public ObservableCollection<Category> Categories { get {
+               
+                var ls = new ObservableCollection<Category>(App.Model.Categories);
+                ls.Insert(0, CategoryAll);
+                return ls;
+            } }
+
 
         /*
          * Proprieté du filtre textuelle
@@ -152,6 +159,23 @@ namespace prbd_1819_g07
             set => SetProperty<Category>(ref filterCat, value, ApplyFilterAction);
         }
 
+        /*
+         * fake category All
+         */
+        private Category catAll;
+        private Category CategoryAll {
+            get
+            {
+                if (catAll == null)
+                {
+                    catAll = App.Model.Categories.Create();
+                    catAll.Name = "All Categories";
+                    catAll.CategoryId = -1;
+                }
+                return catAll;
+            }
+        }
+        
 
 
         /********************************************************************************************************************************
@@ -189,7 +213,7 @@ namespace prbd_1819_g07
                 query = App.Model.Books;
             }
 
-            if (FilterCat != null)
+            if (FilterCat != null && FilterCat.CategoryId != -1 )
             {
                 query = from m in query
                         where (from c in m.Categories where c.CategoryId == filterCat.CategoryId select c).Count() > 0
@@ -201,14 +225,16 @@ namespace prbd_1819_g07
         }
 
 
-        public bool CanAddBasket()
+        public bool CanAddBasket(Book b)
         {
-            return false;
+            if (b == null) return false;
+            return b.NumAvailableCopies != 0;
         }
 
-        public void AddToBasketAction()
-        {
 
+        public bool CanCreatNewBook
+        {
+            get{ return App.CurrentUser.Role == Role.Admin; }
         }
 
     }

@@ -13,7 +13,8 @@
              >
     <UserControl.Resources>
 
-        <BitmapImage x:Key="UnknownBook" UriSource="/images/unknown-user.jpg"/>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <BitmapImage x:Key="UnknownBook" UriSource="/images/unknown-user.jpg"/>
 
     </UserControl.Resources>
     <Grid>
@@ -77,7 +78,7 @@
                                 <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Editor, StringFormat='( \{0\} )' }" />
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                         <TextBlock Text="{Binding NumAvailableCopies, StringFormat= '\{0\} copies available'}" TextWrapping="Wrap"  VerticalAlignment="Center" Margin="10" FontSize="10" FontFamily="Champagne &amp; Limousines"/>
-                                    <Button Width="100" Content="Add to Basket" Command="{Binding AddToBasket,ElementName=root}" CommandParameter="{Binding}" FontFamily="Champagne &amp; Limousines" Margin="10" FontSize="10"/>
+                                    <Button Width="100" Content="Add to Basket" Command="{Binding AddToBasket,ElementName=root}" CommandParameter="{Binding}"  FontFamily="Champagne &amp; Limousines" Margin="10" FontSize="10"/>
                                     </StackPanel>
                                 </StackPanel>
 
@@ -98,7 +99,7 @@
         </materialDesign:TransitioningContent>
 
 
-        <Button Content="{x:Static p:Resources.BookView_NewBook}" Command="{Binding NewBook}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Grid.Row="2" FontSize="12"/>
+        <Button Content="{x:Static p:Resources.BookView_NewBook}" Visibility="{Binding CanCreatNewBook, Converter={StaticResource BoolToVis}}" Command="{Binding NewBook}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Grid.Row="2" FontSize="12"/>
 
     </Grid>
 </f:UserControlBase>

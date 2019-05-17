@@ -1,18 +1,11 @@
 [BookView]
 -liste des livres: td, ajouter à la fiche des livres les liens hyperText des categories
--IsEnabled  add basket admin.
--IsEnabled NouveauLivre admim
--Category All
+
 
 [CategoryView]
 -IsEnable modif category. 
 
-[BasketView]
--IsEnable bouton confirm et clear. 
 
-[RentalsView]
--Visibility pour column Action isAdmin. 
--Boutton change selon date return.
 
 
 
