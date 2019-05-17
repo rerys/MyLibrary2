@@ -29,7 +29,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="{x:Static p:Resources.BasketView_Confirm}" Command="{Binding ConfirmBasket}" IsEnabled="{Binding NotEmptyBasket}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" FontSize="12" Margin="269,0,0,27.6"/>
-        <Button Content="{x:Static p:Resources.BasketView_Clear}" Command="{Binding ClearBasket}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" FontSize="12" Margin="370,0,0,27.6"/>
+        <Button Content="{x:Static p:Resources.BasketView_Confirm}" Command="{Binding ConfirmBasket}"  HorizontalAlignment="Left"  VerticalAlignment="Bottom" FontSize="12" Margin="269,0,0,27.6"/>
+        <Button Content="{x:Static p:Resources.BasketView_Clear}" Command="{Binding ClearBasket}"  HorizontalAlignment="Left"  VerticalAlignment="Bottom" FontSize="12" Margin="370,0,0,27.6"/>
     </Grid>
 </f:UserControlBase>

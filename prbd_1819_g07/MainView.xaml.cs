@@ -149,8 +149,5 @@ namespace prbd_1819_g07
             GridCursor.Margin = new Thickness(0, (190 + (60 * index)), 0, 0);
         }
 
-
-
-
     }
 }

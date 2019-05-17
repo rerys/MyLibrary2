@@ -32,14 +32,17 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_Book}" Binding="{Binding BookCopy.Book.Title}" SortDirection="Descending"/>
                 <DataGridTextColumn Header="{x:Static p:Resources.RentalsView_ReturnDate}" Binding="{Binding ReturnDate, StringFormat=\{0:dd/MM/yyyy HH:mm:ss\}}" />
-                <DataGridTemplateColumn Header="{x:Static p:Resources.RentalsView_Action}">
+                <DataGridTemplateColumn Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}" Header="{x:Static p:Resources.RentalsView_Action}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}" Orientation="Horizontal" >
-                                <Button Name="btnReturn" IsEnabled="{Binding IsAdmin}" Command="{Binding ReturnBook,ElementName=root}" CommandParameter="{Binding}">
+                            <StackPanel Orientation="Horizontal" >
+                                <Button Name="btnReturn" Visibility="{Binding ReturnDate,Converter={f:NullToVisibleConverter}}" Command="{Binding ReturnBook,ElementName=root}" CommandParameter="{Binding}">
                                     <Image Source="/prbd_1819_g07;component/Assets/editRent.png" ></Image>
                                 </Button>
-                                <Button Name="btnGarbage" IsEnabled="{Binding IsAdmin}" Command="{Binding DeleteRent,ElementName=root}" CommandParameter="{Binding}">
+                                <Button Name="btnReturn2" Visibility="{Binding ReturnDate,Converter={f:NullToCollapseConverter}}" Command="{Binding CancelReturnBook,ElementName=root}" CommandParameter="{Binding}">
+                                    <Image Source="/prbd_1819_g07;component/Assets/editRent2.png" ></Image>
+                                </Button>
+                                <Button Name="btnGarbage" Command="{Binding DeleteRent,ElementName=root}" CommandParameter="{Binding}">
                                     <Image Source="/prbd_1819_g07;component/Assets/garbage.png" ></Image>
                                 </Button>
                             </StackPanel>

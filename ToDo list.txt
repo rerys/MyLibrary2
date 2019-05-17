@@ -5,11 +5,14 @@
 [CategoryView]
 -IsEnable modif category. 
 
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> 3836c858f4a02c2475acec4a294154e14ff46134
 
 
 

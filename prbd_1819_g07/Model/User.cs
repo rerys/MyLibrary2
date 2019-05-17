@@ -26,6 +26,13 @@ namespace prbd_1819_g07
         public virtual ICollection<Rental> Rentals { get; set; } = new HashSet<Rental>();
 
 
+
+        //Renvoie true si l'user connecté est admin.
+        public bool IsAdmin
+        {
+            get { return this.Role == Role.Admin; }
+        }
+
         public Rental CreateRental()
         {
             var rental = Model.Rentals.Create();

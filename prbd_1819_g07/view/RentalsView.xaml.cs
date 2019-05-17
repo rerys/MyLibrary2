@@ -31,10 +31,6 @@ namespace prbd_1819_g07
          *                            *
          *****************************/
 
-        public bool Test
-        {
-            get { return false; }
-        }
 
         //Propriété de la liste des rentals. 
         public ObservableCollection<Rental> Rentals { get; set; }
@@ -59,7 +55,6 @@ namespace prbd_1819_g07
                 {
                     RentalItems = new ObservableCollection<RentalItem>(selectedRental.Items);
                 }
-                RaisePropertyChanged(nameof(IsAdmin));
                 RaisePropertyChanged(nameof(SelectedRental));
                 RaisePropertyChanged(nameof(RentalItems));
                 RaisePropertyChanged(nameof(HasRentalSelected));
@@ -71,9 +66,6 @@ namespace prbd_1819_g07
         {
             get { return selectedRental != null; }
         }
-
-        //Renvoie true si l'user connecté est admin.
-        public bool IsAdmin { get =>  App.CurrentUser.Role == Role.Admin;  }
 
         /******************************
          *                            *
@@ -88,32 +80,35 @@ namespace prbd_1819_g07
         //Commande supprimer un livre loué. 
         public ICommand DeleteRent { get; set; }
 
+        public ICommand CancelReturnBook { get; set; }
+
 
         /******************************
          *                            *
          *   VIEW CONSTRUCTOR         * 
          *                            *
          *****************************/
+
         public RentalsView()
         {
             InitializeComponent();
             DataContext = this;
             NotifyAllFied();
-            ReturnBook = new RelayCommand<RentalItem>(rental =>
-            {
-                rental.DoReturn();
-                NotifyAllFied();
-                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
-            });
-            DeleteRent = new RelayCommand<RentalItem>(item =>
-            {
-                SelectedRental.RemoveItem(item);
-                NotifyAllFied();
-                App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
-            });
+            ReturnBook = new RelayCommand<RentalItem>(rental => { ReturnBookAction(rental); });//Un peu débile mais pas eu le choix.
+            CancelReturnBook = new RelayCommand<RentalItem>(rental => { CancelReturnBookAction(rental); });
+            DeleteRent = new RelayCommand<RentalItem>(item => { DeleteRentAction(item); });
 
             App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { NotifyAllFied(); });
         }
+
+
+
+        /*************************************************
+         *                                               *
+         *   METHODE D'ACTIVATION DES BOUTONS            * 
+         *                                               *
+         *************************************************/
+
 
         /******************************
          *                            *
@@ -121,6 +116,32 @@ namespace prbd_1819_g07
          *                            *
          *****************************/
 
+        private void CancelReturnBookAction(RentalItem rental)
+        {
+            rental.CancelReturn();
+            NotifyAllFied();
+            App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
+        }
+
+        //Méthode d'action pour le bouton returnbook
+        private void ReturnBookAction(RentalItem rental)
+        {
+
+            rental.DoReturn();
+            NotifyAllFied();
+            App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
+
+        }
+
+        //Méthode d'action pour le bouton deleterent
+        private void DeleteRentAction(RentalItem item)
+        {
+            SelectedRental.RemoveItem(item);
+            NotifyAllFied();
+            App.NotifyColleagues(AppMessages.MSG_RENTAL_CHANGED);
+        }
+
+        //Méthode qui notitife tous les champs et met à jours liste. 
         private void NotifyAllFied()
         {
             if (App.CurrentUser.Role != Role.Admin)
