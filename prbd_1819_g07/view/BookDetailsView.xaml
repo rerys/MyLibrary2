@@ -12,7 +12,7 @@
              mc:Ignorable="d" 
              >
     <UserControl.Resources>
-
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <BitmapImage x:Key="UnknownBook" UriSource="/images/unknown-user.jpg"/>
 
     </UserControl.Resources>
@@ -45,26 +45,30 @@
             <StackPanel>
                 <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_ISBN}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="10" Width="330"
-                              Text="{Binding Isbn,UpdateSourceTrigger=PropertyChanged}" />
+                              Text="{Binding Isbn,UpdateSourceTrigger=PropertyChanged}"
+                              IsReadOnly="{Binding Path=CurrentUser.IsNotAdmin,Source={x:Static Application.Current}}"/>
 
                 <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_Title}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="12" Width="330"
-                              Text="{Binding Title,UpdateSourceTrigger=PropertyChanged}" />
+                              Text="{Binding Title,UpdateSourceTrigger=PropertyChanged}" 
+                               IsReadOnly="{Binding Path=CurrentUser.IsNotAdmin, Source={x:Static Application.Current}}"  />
 
                 <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_Author}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="12" Width="330"
-                              Text="{Binding Author,UpdateSourceTrigger=PropertyChanged}" />
+                              Text="{Binding Author,UpdateSourceTrigger=PropertyChanged}" 
+                               IsReadOnly="{Binding Path=CurrentUser.IsNotAdmin, Source={x:Static Application.Current}}"  />
 
                 <TextBox Margin="10,10,10,0" materialDesign:HintAssist.Hint="{x:Static p:Resources.DetailBook_Editor}"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="12" Width="330"
-                              Text="{Binding Editor,UpdateSourceTrigger=PropertyChanged}" />
+                              Text="{Binding Editor,UpdateSourceTrigger=PropertyChanged}" 
+                               IsReadOnly="{Binding Path=CurrentUser.IsNotAdmin, Source={x:Static Application.Current}}"  />
 
                
             </StackPanel>
 
             <StackPanel  Grid.Column="1" Margin="130,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Image Source="{Binding PicturePath, Converter={f:UriToCachedImageConverter}, FallbackValue={StaticResource UnknownBook}, TargetNullValue={StaticResource UnknownBook}}"  Height="150" Width="150"/>
-                <StackPanel HorizontalAlignment="center" Orientation="Horizontal" Margin="0,15,0,0">
+                <StackPanel HorizontalAlignment="center" Orientation="Horizontal" Margin="0,15,0,0" Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}">
                     <Button Content="{x:Static p:Resources.DetailBook_Load}" Command="{Binding LoadImage}"   FontSize="12" Margin="10,0,5,0"/>
                     <Button Content="{x:Static p:Resources.DetailBook_Clear}" Command="{Binding ClearImage}"  FontSize="12" Margin="5,0,0,0"/>
                 </StackPanel>
@@ -83,10 +87,11 @@
 
             </ListBox.ItemsPanel>
 
-            <ListBox.ItemTemplate>
+            <ListBox.ItemTemplate >
                 <DataTemplate>
 
-                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}" Command="{Binding CategorieChanged,ElementName=root}"/>
+                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}" Command="{Binding CategorieChanged,ElementName=root}"
+                              IsEnabled ="{Binding Path=CurrentUser.IsAdmin, Source={x:Static Application.Current}}"/>
                     
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -111,7 +116,7 @@
                 </ListView>
 
 
-                <StackPanel Orientation="Horizontal" Width="300" HorizontalAlignment="Center" >
+                <StackPanel Orientation="Horizontal" Width="300" HorizontalAlignment="Center" Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}">
                     <Label Content="Date:" Margin="10,3,0,0" />
                     <DatePicker VerticalAlignment="Stretch" Width="70" Margin="10,0,0,0" SelectedDate="{Binding DateCopiesToAdd,UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Qty:" Margin="5,0,0,0"/>
@@ -127,7 +132,7 @@
 
 
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="4">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="4" Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}">
             <Button Content="Annuler" Command="{Binding Cancel}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
             <Button Content="{x:Static p:Resources.DetailBook_Save}" Command="{Binding Save}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,5,0" FontSize="12"/>
             <Button Content="{x:Static p:Resources.DetailBook_Delete}" Command="{Binding Delete}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="5,5,0,0" FontSize="12" />

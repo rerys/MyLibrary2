@@ -33,6 +33,12 @@ namespace prbd_1819_g07
             get { return this.Role == Role.Admin; }
         }
 
+        //Renvoie true si l'user connecté n'est pas admin.
+        public bool IsNotAdmin
+        {
+            get { return this.Role != Role.Admin; }
+        }
+
         public Rental CreateRental()
         {
             var rental = Model.Rentals.Create();

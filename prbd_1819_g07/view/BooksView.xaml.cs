@@ -45,6 +45,8 @@ namespace prbd_1819_g07
         //commande d'effacement des données dans le filtre
         public ICommand ClearFilter { get; set; }
 
+        //commande de selection d'une categorie d'un livre
+        public ICommand SelectedCategory { get; set; }
 
 
         /*********************************************************************************************************************************
@@ -89,15 +91,25 @@ namespace prbd_1819_g07
                 App.NotifyColleagues(AppMessages.MSG_NEW_BOOK);
 
             });
-            //,()=> CanCreatNewBook()
+
             DisplayBookDetails = new RelayCommand<Book>(book =>
             {
                 App.NotifyColleagues(AppMessages.MSG_DISPLAY_BOOK, book);
             });
+
+            SelectedCategory = new RelayCommand<Category>(c =>
+            {
+                FilterCat = c;
+            });
+
+
             FilterCat = CategoryAll;
             App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, book => { ApplyFilterAction(); });
-            App.Register(this, AppMessages.MSG_CATEGORY_CHANGED, () => { RaisePropertyChanged(nameof(Categories)); });
+            App.Register(this, AppMessages.MSG_CATEGORY_CHANGED, () => { RaisePropertyChanged(nameof(Categories));
+                ApplyFilterAction(); 
+            });
             App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { ApplyFilterAction(); });
+
         }
 
 
@@ -220,7 +232,7 @@ namespace prbd_1819_g07
                         select m;
 
             }
-            Books = new ObservableCollection<Book>(query.OrderBy(b => b.Title));
+            Books = new ObservableCollection<Book>(query.OrderBy(b => b.Isbn));
             RaisePropertyChanged(nameof(Books));
         }
 
@@ -229,12 +241,6 @@ namespace prbd_1819_g07
         {
             if (b == null) return false;
             return b.NumAvailableCopies != 0;
-        }
-
-
-        public bool CanCreatNewBook
-        {
-            get{ return App.CurrentUser.Role == Role.Admin; }
         }
 
     }

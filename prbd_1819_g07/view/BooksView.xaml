@@ -13,8 +13,8 @@
              >
     <UserControl.Resources>
 
-            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-            <BitmapImage x:Key="UnknownBook" UriSource="/images/unknown-user.jpg"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <BitmapImage x:Key="UnknownBook" UriSource="/images/unknown-user.jpg"/>
 
     </UserControl.Resources>
     <Grid>
@@ -51,55 +51,80 @@
                                    CommandParameter="{Binding ElementName=listView, Path=SelectedItem}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                
-                
+
+
                 <ListView.ItemsPanel >
 
-                        <ItemsPanelTemplate>
+                    <ItemsPanelTemplate>
 
-                            <WrapPanel/>
+                        <WrapPanel/>
 
-                        </ItemsPanelTemplate>
+                    </ItemsPanelTemplate>
 
-                    </ListView.ItemsPanel>
+                </ListView.ItemsPanel>
 
-                    <ListView.ItemTemplate>
+                <ListView.ItemTemplate>
 
 
-                        <DataTemplate>
+                    <DataTemplate>
 
-                            <Border CornerRadius="3" BorderBrush="Gray"  BorderThickness="1" DockPanel.Dock="Top">
+                        <Border CornerRadius="3" BorderBrush="Gray"  BorderThickness="1" DockPanel.Dock="Top">
 
-                                <StackPanel Width="200">
-                                    <TextBlock Margin="10" FontFamily="Showcard Gothic" FontSize="12" Text="{Binding Isbn}" Foreground="#FFC00000"/>
-                                    <Image Source="{Binding AbsolutePicturePath, TargetNullValue={StaticResource UnknownBook}}" Width="200" Height="150" Stretch="UniformToFill" />
-                                    <TextBlock FontSize="13" FontWeight="Bold" Width="80" TextAlignment="Center" Text="{Binding Title}" TextWrapping="Wrap" LineHeight="20" />
-                                    <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Author}" />
+                            <StackPanel Width="200">
+                                <TextBlock Margin="10" FontFamily="Showcard Gothic" FontSize="12" Text="{Binding Isbn}" Foreground="#FFC00000"/>
+                                <Image Source="{Binding AbsolutePicturePath, TargetNullValue={StaticResource UnknownBook}}" Width="200" Height="150" Stretch="UniformToFill" />
+                                <TextBlock FontSize="13" FontWeight="Bold" Width="80" TextAlignment="Center" Text="{Binding Title}" TextWrapping="Wrap" LineHeight="20" />
+                                <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Author}" />
                                 <TextBlock FontSize="12"  Width="100" TextAlignment="Center" Text="{Binding Editor, StringFormat='( \{0\} )' }" />
+
+
+                                <ListView ItemsSource="{Binding Categories}" >
+                                    <ListView.ItemsPanel >
+
+                                        <ItemsPanelTemplate>
+
+                                            <WrapPanel/>
+
+                                        </ItemsPanelTemplate>
+
+                                    </ListView.ItemsPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                            <Hyperlink Command="{Binding SelectedCategory,ElementName=root }" CommandParameter="{Binding}">
+                                                <Run Text="{Binding Name}"/>
+                                            </Hyperlink>    
+                                            </TextBlock>
+                                            
+                                        </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    
+                                </ListView>
+
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <TextBlock Text="{Binding NumAvailableCopies, StringFormat= '\{0\} copies available'}" TextWrapping="Wrap"  VerticalAlignment="Center" Margin="10" FontSize="10" FontFamily="Champagne &amp; Limousines"/>
+                                    <TextBlock Text="{Binding NumAvailableCopies, StringFormat= '\{0\} copies available'}" TextWrapping="Wrap"  VerticalAlignment="Center" Margin="10" FontSize="10" FontFamily="Champagne &amp; Limousines"/>
                                     <Button Width="100" Content="Add to Basket" Command="{Binding AddToBasket,ElementName=root}" CommandParameter="{Binding}"  FontFamily="Champagne &amp; Limousines" Margin="10" FontSize="10"/>
-                                    </StackPanel>
                                 </StackPanel>
+                            </StackPanel>
 
 
-                            </Border>
+                        </Border>
 
-                        </DataTemplate>
+                    </DataTemplate>
 
-                    </ListView.ItemTemplate>
-                </ListView>
-
-
-        
+                </ListView.ItemTemplate>
+            </ListView>
 
 
 
-            
+
+
+
+
         </materialDesign:TransitioningContent>
 
 
-        <Button Content="{x:Static p:Resources.BookView_NewBook}" Visibility="{Binding CanCreatNewBook, Converter={StaticResource BoolToVis}}" Command="{Binding NewBook}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Grid.Row="2" FontSize="12"/>
+        <Button Content="{x:Static p:Resources.BookView_NewBook}" Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}" Command="{Binding NewBook}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Grid.Row="2" FontSize="12"/>
 
     </Grid>
 </f:UserControlBase>

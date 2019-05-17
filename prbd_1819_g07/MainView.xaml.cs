@@ -24,6 +24,10 @@ namespace prbd_1819_g07
     public partial class MainView : WindowBase
     {
 
+        public ICommand CloseWindow { get; set; }
+
+        public ICommand MouseDownCmd { get; set; }
+
         public string currentUserPseudo
         {
             get
@@ -51,9 +55,10 @@ namespace prbd_1819_g07
         {
             DataContext = this;
 
-            //var model = Model.CreateModel(DbType.MsSQL);
 
+            CloseWindow = new RelayCommand(() => Application.Current.Shutdown());
 
+            MouseDownCmd = new RelayCommand(() => DragMove());
             App.Register(this, AppMessages.MSG_NEW_USER, () =>
             {
                 var user = App.Model.Users.Create();
@@ -95,53 +100,53 @@ namespace prbd_1819_g07
                 }
             });
             InitializeComponent();
+
+            SelectedIndex = 0;
         }
 
-        private void ButtonFechar_Click(object sender, RoutedEventArgs e)
+        private int selectedIndex;
+        public int SelectedIndex
         {
-            Application.Current.Shutdown();
-        }
-
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
-
-        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int index = ListViewMenu.SelectedIndex;
-            MoveCursorMenu(index);
-
-            switch (index)
+            get => selectedIndex;
+            set
             {
-                case 0:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(new HomeView());
-                    break;
-                case 1:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(books);
-                    break;
-                case 2:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(categories);
-                    break;
-                case 3:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(basket);
-                    break;
-                case 4:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(rentals);
-                    break;
-                case 5:
-                    GridPrincipal.Children.Clear();
-                    GridPrincipal.Children.Add(users);
-                    break;
-                default:
-                    break;
+                selectedIndex = value;
+                int index = value;
+                MoveCursorMenu(index);
+
+                switch (index)
+                {
+                    case 0:
+                        GridPrincipal.Children.Clear();
+                        GridPrincipal.Children.Add(new HomeView());
+                        break;
+                    case 1:
+                        GridPrincipal.Children.Clear();
+                        GridPrincipal.Children.Add(books);
+                        break;
+                    case 2:
+                        GridPrincipal.Children.Clear();
+                        GridPrincipal.Children.Add(categories);
+                        break;
+                    case 3:
+                        GridPrincipal.Children.Clear();
+                        GridPrincipal.Children.Add(basket);
+                        break;
+                    case 4:
+                        GridPrincipal.Children.Clear();
+                        GridPrincipal.Children.Add(rentals);
+                        break;
+                    case 5:
+                        GridPrincipal.Children.Clear();
+                        GridPrincipal.Children.Add(users);
+                        break;
+                    default:
+                        break;
+                }
+                RaisePropertyChanged(nameof(SelectedIndex));
             }
         }
+
 
         private void MoveCursorMenu(int index)
         {

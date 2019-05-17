@@ -8,16 +8,22 @@
         xmlns:local="clr-namespace:prbd_1819_g07"
         xmlns:f="clr-namespace:PRBD_Framework;assembly=PRBD_Framework"
         xmlns:p="clr-namespace:prbd_1819_g07.Properties"
+              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="EPFC Library"
               ResizeMode="NoResize" WindowStyle="None" Height="600" Width="1024" WindowStartupLocation="CenterScreen">
-    <Grid Background="#FFEEEEEE" MouseDown="Grid_MouseDown">
+    <Grid Background="#FFEEEEEE" >
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDown" >
+                <i:InvokeCommandAction Command="{Binding MouseDownCmd}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <StackPanel VerticalAlignment="Top">
             <Grid Background="#FF0069C0" Height="10"/>
             <Grid Margin="5">
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0">
-                    <Button x:Name="ButtonFechar" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray" Click="ButtonFechar_Click">
+                    <Button x:Name="ButtonFechar" Command="{Binding CloseWindow}" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
                         <materialDesign:PackIcon Kind="Power"/>
                     </Button>
                 </StackPanel>
@@ -41,14 +47,16 @@
 
                 <Grid x:Name="GridCursor" Margin="0,190,0,0" Background="#FF0069C0" Width="10" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top"/>
             </materialDesign:TransitioningContent>
-            <ListView x:Name="ListViewMenu" Margin="0,190,0,10" Foreground="LightGray" FontFamily="Champagne &amp; Limousines" FontSize="18" SelectionChanged="ListViewMenu_SelectionChanged" SelectedIndex="0">
+           
+            <ListView x:Name="ListViewMenu" SelectedIndex="{Binding SelectedIndex}" Margin="0,190,0,10" Foreground="LightGray" FontFamily="Champagne &amp; Limousines" FontSize="18"  >
+
                 <ListViewItem Height="60">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Home" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text="{x:Static p:Resources.MainView_Home}" FontSize="17" VerticalAlignment="Center" Margin="20 0"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem Height="60">
+                <ListViewItem Height="60" >
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="BookOpenPageVariant" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text="{x:Static p:Resources.MainView_Books}" FontSize="17" VerticalAlignment="Center" Margin="20 0"/>

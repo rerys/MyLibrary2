@@ -1,21 +1,3 @@
-[BookView]
--liste des livres: td, ajouter à la fiche des livres les liens hyperText des categories
-
-
-[CategoryView]
--IsEnable modif category. 
-
-<<<<<<< HEAD
-
-
-
-
-
-=======
->>>>>>> 3836c858f4a02c2475acec4a294154e14ff46134
-
-
-
 ***OPTION***
 [UsersView]
 -update, ajout fonction pour gerer modif d'un user et du role. 
