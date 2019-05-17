@@ -1,20 +1,7 @@
 ﻿using PRBD_Framework;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using static prbd_1819_g07.App;
 
 namespace prbd_1819_g07
@@ -66,6 +53,7 @@ namespace prbd_1819_g07
             {
                 selectedUser = value;
                 App.SelectedUser = selectedUser;
+                selectedUser.Validate();
                 RaisePropertyChanged(nameof(SelectedUser));
                 RaisePropertyChanged(nameof(Basket));
             }
@@ -89,12 +77,6 @@ namespace prbd_1819_g07
         private void NotifyAllFields()
         {
             RaisePropertyChanged(nameof(Basket));
-        }
-
-        //Renvoie true si l'user connecté est admin.
-        public bool IsAdmin
-        {
-            get { return App.CurrentUser.Role == Role.Admin; }
         }
 
 

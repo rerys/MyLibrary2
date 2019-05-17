@@ -28,9 +28,6 @@ namespace prbd_1819_g07
         public ICommand Save { get; set; }
         public ICommand Cancel { get; set; }
         public ICommand CancelApp { get; set; }
-        //public ICommand ClearImage { get; set; }
-        //public ICommand Delete { get; set; }
-        //public ICommand LoadImage { get; set; }
 
 
         public SignUp()
@@ -40,9 +37,6 @@ namespace prbd_1819_g07
             Save = new RelayCommand(SaveAction, CanSaveOrCancelAction);
             Cancel = new RelayCommand(CancelAction);
             CancelApp = new RelayCommand(() => Close());
-            //ClearImage = new RelayCommand(ClearImageAction);
-            //Delete = new RelayCommand(DeleteAction);
-            //LoadImage = new RelayCommand(LoadImageAction);
         }
         private bool CanSaveOrCancelAction()
         {
@@ -169,6 +163,18 @@ namespace prbd_1819_g07
                 {
                     AddError("UserName", Properties.Resources.Error_LengthGreaterEqual3);
                 }
+            }
+            if (member != null)
+            {
+                if (UserName == member.UserName)
+                {
+                    AddError("UserName", Properties.Resources.Error_NotAvailable);
+                }
+                if (Email == member.Email)
+                {
+                    AddError("Email", Properties.Resources.Error_NotAvailable);
+                }
+
             }
 
             if (string.IsNullOrEmpty(Password))
