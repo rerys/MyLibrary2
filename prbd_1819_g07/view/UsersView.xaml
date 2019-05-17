@@ -33,10 +33,9 @@
                 <DataGridTextColumn Header="{x:Static p:Resources.UsersView_Role}" Binding="{Binding Path=Role}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Delete" Margin="0,0,108.2,3" VerticalAlignment="Bottom" Command="{Binding DeleteUser}" HorizontalAlignment="Right" Width="75"/>
-        <Button Content="Reload" Margin="0,0,10.2,3" VerticalAlignment="Bottom" Command="{Binding RefreshCommand}" HorizontalAlignment="Right" Width="75"/>
-        <Button Content="Nouvel utilisateur" Command="{Binding NewUser}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" FontSize="12" Margin="420,0,0,3" Width="129"/>
-        <Grid Height="174" Margin="10,20.8,0,0" VerticalAlignment="Top" IsEnabled="{Binding SelectedUser, Converter={f:NullToBoolValueConverter}}" HorizontalAlignment="Left" Width="424" Grid.Row="1">
+        <Button Content="Delete" Margin="0,0,108.2,3" VerticalAlignment="Bottom" Command="{Binding DeleteUser}" HorizontalAlignment="Right" Width="75" Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}"/>
+        <Button Content="Nouvel utilisateur" Command="{Binding NewUser}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" FontSize="12" Margin="420,0,0,3" Width="129" Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}"/>
+        <Grid Height="174" Margin="10,20.8,0,0" VerticalAlignment="Top" Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}" IsEnabled="{Binding SelectedUser, Converter={f:NullToBoolValueConverter}}" HorizontalAlignment="Left" Width="424" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30*"/>
                 <RowDefinition Height="30*"/>
@@ -61,15 +60,17 @@
                 <TextBox Text="{Binding Email}"/>
             </f:ValidatedField>
             <Label Content="Birthdate :" VerticalAlignment="Center" Grid.Row="3" />
-            <f:ValidatedField Grid.Row="3" Grid.Column="1" Margin="5,4.2,5,5">
-                <TextBox Text="{Binding Birhtdate}"  />
-            </f:ValidatedField>
+            <DatePicker  Grid.Row="3" Grid.Column="1" Margin="5,4.2,5,5"
+                    VerticalAlignment="Center"
+                    SelectedDate="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}"
+                    materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_birthdate}"
+              />
             <Label Content="Role :" VerticalAlignment="Center" Grid.Row="4" />
             <f:ValidatedField  Grid.Column="1" HorizontalAlignment="Left" Margin="10,3.2,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120">
                 <ComboBox ItemsSource="{Binding Roles}" SelectedItem="{Binding Role}"/>
             </f:ValidatedField>
         </Grid>
-        <Button Content="Save" Margin="0,0,195.2,171.8" VerticalAlignment="Bottom" Command="{Binding SaveOneCommand}" HorizontalAlignment="Right" Width="75" Grid.Row="1"/>
-        <Button Content="Cancel" Margin="0,0,195.2,124.8" VerticalAlignment="Bottom" Command="{Binding CancelCommand}" HorizontalAlignment="Right" Width="75" Grid.Row="1"/>
+        <Button Content="Save" Margin="0,0,195.2,171.8" VerticalAlignment="Bottom" Command="{Binding SaveOneCommand}" HorizontalAlignment="Right" Width="75" Grid.Row="1" Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}"/>
+        <Button Content="Cancel" Margin="0,0,195.2,124.8" VerticalAlignment="Bottom" Command="{Binding CancelCommand}" HorizontalAlignment="Right" Width="75" Grid.Row="1" Visibility="{Binding Path=CurrentUser.IsAdmin, Converter={StaticResource BoolToVis}, Source={x:Static Application.Current}}"/>
     </Grid>
 </f:UserControlBase>

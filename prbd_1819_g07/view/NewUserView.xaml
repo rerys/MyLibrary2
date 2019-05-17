@@ -29,7 +29,7 @@
                              Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
             <DatePicker 
                     VerticalAlignment="Center"
-                    Text="{Binding Birthdate, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedDate="{Binding Birthdate, UpdateSourceTrigger=PropertyChanged}"
                     materialDesign:HintAssist.Hint="{x:Static p:Resources.LoginView_birthdate}"
               Margin="0,0,60.2,0" Height="33"
               />

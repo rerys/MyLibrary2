@@ -46,7 +46,6 @@ namespace prbd_1819_g07
             }
         }
 
-
         private string fullName;
         public string FullName
         {
@@ -102,6 +101,18 @@ namespace prbd_1819_g07
                     AddError("UserName", Properties.Resources.Error_LengthGreaterEqual3);
                 }
             }
+            if (member != null)
+            {
+                if (UserName == member.UserName)
+                {
+                    AddError("UserName", Properties.Resources.Error_NotAvailable);
+                }
+                if(Email == member.Email)
+                {
+                    AddError("Email", Properties.Resources.Error_NotAvailable);
+                }
+
+            }
             if (string.IsNullOrEmpty(FullName))
             {
                 AddError("FullName", Properties.Resources.Error_Required);
@@ -140,7 +151,6 @@ namespace prbd_1819_g07
                 App.Model.Users.Add(user1);
                 App.Model.SaveChanges();
                 var member = App.Model.Users.Where(u => u.UserName == UserName).SingleOrDefault();
-                App.CurrentUser = member;
                 App.Model.SaveChanges();
                 App.NotifyColleagues(AppMessages.MSG_CANCEL_NEWUSER);
                 App.NotifyColleagues(AppMessages.MSG_USER_CHANGED, user1);

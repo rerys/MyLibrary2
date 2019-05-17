@@ -25,6 +25,15 @@ namespace prbd_1819_g07
     /// </summary>
     public partial class UsersView : UserControlBase
     {
+
+
+
+        /******************************
+         *                            *
+         *   PROPERTIES               * 
+         *                            *
+         *****************************/
+
         private ObservableCollection<User> users;
         public ObservableCollection<User> Users
         {
@@ -41,17 +50,6 @@ namespace prbd_1819_g07
         private string filter;
         public string Filter { get => filter; set => SetProperty<string>(ref filter, value, ApplyFilterAction); }
 
-        private void ApplyFilterAction()
-        {
-            //var model = Model.CreateModel(DbType.MsSQL);
-            var query = from u in App.Model.Users
-                        let text = u.UserName.Contains(Filter) || u.FullName.Contains(Filter) || u.Email.Contains(Filter)
-                        // ||u.Birthdate.Contains(Filter) || u.Role.Contains(Filter) 
-                        where text
-                        select u;
-
-            Users = new ObservableCollection<User>(query);
-        }
 
 
         User selectedUser;
@@ -62,20 +60,16 @@ namespace prbd_1819_g07
             {
                 selectedUser = value;
                 RaisePropertyChanged(nameof(SelectedUser));
+                if (HasUserSelected)
+                {
+                    birthDate = selectedUser.BirthDate;
+                    role = selectedUser.Role;
+                }
                 NotifyAllFields();
                 Console.WriteLine(selectedUser);
             }
         }
 
-
-        private void NotifyAllFields()
-        {
-            RaisePropertyChanged(nameof(Email));
-            RaisePropertyChanged(nameof(UserName));
-            RaisePropertyChanged(nameof(FullName));
-            RaisePropertyChanged(nameof(Birthdate));
-            //  RaisePropertyChanged(nameof(Role));
-        }
 
 
         private bool editMode = false;
@@ -131,28 +125,31 @@ namespace prbd_1819_g07
             }
         }
 
-        public DateTime? Birthdate
+        private DateTime? birthDate;
+        public DateTime? BirthDate
         {
-            get { return SelectedUser?.BirthDate; }
+            get { return birthDate; }
             set
             {
-                SelectedUser.BirthDate = value ?? System.DateTime.Now;
+                SetProperty<DateTime?>(ref birthDate, value, () => Validate());
                 EditMode = true;
-                RaisePropertyChanged(nameof(Birthdate));
-                Validate();
+                RaisePropertyChanged(nameof(BirthDate));
             }
         }
 
-        //public IList<Role> Roles
-        //{
-        //    get
-        //    {
-        //        // Will result in a list like {"Tester", "Engineer"}
-        //        return Enum.GetValues(typeof(Role)).Cast<Role>().ToList<Role>();
-        //    }
-        //}
+        private Role role;
+        public Role Role
+        {
+            get { return role; }
+            set
+            {
+                SetProperty<Role>(ref role, value, () => Validate());
+                EditMode = true;
+                RaisePropertyChanged(nameof(Role));
+            }
+        }
 
-        private Role[] roles;
+       // private Role[] roles;
         public Role[] Roles
         {
             get
@@ -164,36 +161,6 @@ namespace prbd_1819_g07
             {
                 RaisePropertyChanged(nameof(Roles));
             }
-        }
-
-        //private Role? role;
-        //public Role? RoleUser
-        //{
-        //    get
-        //    {
-        //        return SelectedUser?.Role;
-
-        //    }
-        //    set
-        //    {
-        //       // SelectedUser.Role = role;
-        //        EditMode = true;
-        //        RaisePropertyChanged(nameof(RoleUser));
-        //        Validate();
-        //    }
-        //}
-
-        // Validations métier sur le message en cours d'édition (SelectedUser)
-        public override bool Validate()
-        {
-            ClearErrors();
-            if (SelectedUser != null)
-            {
-                SelectedUser.Validate();
-                this.errors.SetErrors(selectedUser.GetErrors());
-            }
-            NotifyAllFields();
-            return HasErrors;
         }
 
         private CollectionView usersView = null;
@@ -208,12 +175,34 @@ namespace prbd_1819_g07
             }
         }
 
+        //Renvoie true si un rental a été selectionné. 
+        public bool HasUserSelected
+        {
+            get { return selectedUser != null; }
+        }
+
+
+        /******************************
+         *                            *
+         *   ICOMMAND                 * 
+         *                            *
+         *****************************/
+
+
         public ICommand NewUser { get; set; }
         public ICommand ClearFilter { get; set; }
         public ICommand DeleteUser { get; set; }
         public ICommand SaveOneCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+
+
+
+        /******************************
+         *                            *
+         *   VIEW CONSTRUCTOR         * 
+         *                            *
+         *****************************/
 
 
         public UsersView()
@@ -232,43 +221,54 @@ namespace prbd_1819_g07
 
             });
             ClearFilter = new RelayCommand(() => Filter = "");
-            DeleteUser = new RelayCommand(() =>
-            {
-                App.Model.Users.Remove(SelectedUser);
-                Users.Remove(SelectedUser);
-                App.Model.SaveChanges();
-                SelectedUser = null;
-            },
-          () => { return ReadMode && SelectedUser != null; });
-            SaveOneCommand = new RelayCommand(() =>
-            {
-                var UserID = selectedUser.UserId;
-                App.Model.SaveChanges();
-                RaisePropertyChanged(nameof(UsersListView));
-                RefreshGrid();
-                EditMode = false;
-                SelectedUser = (from u in Users where u.UserId == UserID select u).SingleOrDefault();
-            },
-            () => { return EditMode && !HasErrors; });
-            RefreshCommand = new RelayCommand(() =>
-            {
-                App.CancelChanges();
-                RefreshGrid();
-                Users = new ObservableCollection<User>(App.Model.Users);
-            },
-            () => { return ReadMode; });
-            CancelCommand = new RelayCommand(() =>
-            {
-                var UserID = SelectedUser.UserId;
-                App.CancelChanges();
-                RaisePropertyChanged(nameof(UsersListView));
-                RefreshGrid();
-                EditMode = false;
-                Users = new ObservableCollection<User>(App.Model.Users);
-                SelectedUser = (from u in Users where u.UserId == UserID select u).SingleOrDefault();
-                Validate();
-            },
-            () => { return EditMode; });
+            DeleteUser = new RelayCommand(DeleteAction, () => ReadMode && SelectedUser != null);
+            SaveOneCommand = new RelayCommand(SaveAction, () => EditMode && !HasErrors);
+            RefreshCommand = new RelayCommand(RefreshAction, () => ReadMode);
+            CancelCommand = new RelayCommand(CancelAction, () => EditMode);
+        }
+
+
+        /******************************
+         *                            *
+         *   METHODE ACTION           * 
+         *                            *
+         *****************************/
+
+        private void DeleteAction()
+        {
+            App.Model.Users.Remove(SelectedUser);
+            Users.Remove(SelectedUser);
+            App.Model.SaveChanges();
+            SelectedUser = null;
+        }
+
+        private void SaveAction()
+        {
+            var UserID = selectedUser.UserId;
+            App.Model.SaveChanges();
+            RaisePropertyChanged(nameof(UsersListView));
+            RefreshGrid();
+            EditMode = false;
+            SelectedUser = (from u in Users where u.UserId == UserID select u).SingleOrDefault();
+        }
+
+        private void RefreshAction()
+        {
+            App.CancelChanges();
+            RefreshGrid();
+            Users = new ObservableCollection<User>(App.Model.Users);
+        }
+
+        private void CancelAction()
+        {
+            var UserID = SelectedUser.UserId;
+            App.CancelChanges();
+            RaisePropertyChanged(nameof(UsersListView));
+            RefreshGrid();
+            EditMode = false;
+            Users = new ObservableCollection<User>(App.Model.Users);
+            SelectedUser = (from u in Users where u.UserId == UserID select u).SingleOrDefault();
+            Validate();
         }
 
         private void RefreshGrid()
@@ -280,6 +280,39 @@ namespace prbd_1819_g07
             if (SelectedUser != null)
                 SelectedUser = (from m in Users where m.UserId == UserID select m).FirstOrDefault();
             RaisePropertyChanged(nameof(UsersListView));
+        }
+
+
+        private void ApplyFilterAction()
+        {
+            var query = from u in App.Model.Users
+                        let text = u.UserName.Contains(Filter) || u.FullName.Contains(Filter) || u.Email.Contains(Filter)
+                        // ||u.Birthdate.Contains(Filter) || u.Role.Contains(Filter) 
+                        where text
+                        select u;
+
+            Users = new ObservableCollection<User>(query);
+        }
+
+        public override bool Validate()
+        {
+            ClearErrors();
+            if (SelectedUser != null)
+            {
+                SelectedUser.Validate();
+                this.errors.SetErrors(selectedUser.GetErrors());
+            }
+            NotifyAllFields();
+            return HasErrors;
+        }
+
+        private void NotifyAllFields()
+        {
+            RaisePropertyChanged(nameof(Email));
+            RaisePropertyChanged(nameof(UserName));
+            RaisePropertyChanged(nameof(FullName));
+            RaisePropertyChanged(nameof(BirthDate));
+            //  RaisePropertyChanged(nameof(Role));
         }
     }
 }
