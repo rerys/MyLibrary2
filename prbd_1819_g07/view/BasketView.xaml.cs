@@ -115,6 +115,7 @@ namespace prbd_1819_g07
             DeleteFromBasket = new RelayCommand<RentalItem>(item => { DeleteFromBasketAction(item); });
 
             App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { RaisePropertyChanged(nameof(Basket)); });
+            App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, (b) => { RaisePropertyChanged(nameof(Basket)); });
         }
 
 

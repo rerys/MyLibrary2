@@ -42,7 +42,7 @@ namespace prbd_1819_g07
                 return;
 
             DataContext = this;
-            Categories = new ObservableCollection<Category>(App.Model.Categories);
+            Categories = new ObservableCollection<Category>(App.Model.Categories.OrderBy(b => b.Name));
 
             DisplayCategory = new RelayCommand<Category>(cat =>
             {

@@ -34,16 +34,14 @@ namespace prbd_1819_g07
         public static User CurrentUser { get; set; }
         public static User SelectedUser { get; set; }
 
-        public static Model Model { get; private set; } = Model.CreateModel(DbType.MsSQL);
+       // public static Model Model { get; private set; } = Model.CreateModel(DbType.MsSQL);
+        public static Model Model { get; private set; } = Model.CreateModel(TestDbType());
 
         public static readonly string IMAGE_PATH = Path.GetFullPath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/../../images");
         public App()
         {
-#if MSSQL
-            var type = DbType.MsSQL;
-#else
-            var type = DbType.MySQL;
-#endif
+
+            var type = TestDbType();
             using (var model = Model.CreateModel(type))
             {
                 //model.ClearDatabase();
@@ -58,6 +56,15 @@ namespace prbd_1819_g07
             
             
 
+        }
+
+        private static DbType TestDbType()
+        {
+#if MSSQL
+            return DbType.MsSQL;
+#else
+            return DbType.MySQL;
+#endif
         }
 
         public static void CancelChanges()

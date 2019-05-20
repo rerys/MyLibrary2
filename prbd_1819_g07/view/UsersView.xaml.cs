@@ -66,7 +66,6 @@ namespace prbd_1819_g07
                     role = selectedUser.Role;
                 }
                 NotifyAllFields();
-                Console.WriteLine(selectedUser);
             }
         }
 

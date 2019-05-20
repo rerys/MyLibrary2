@@ -87,6 +87,7 @@ namespace prbd_1819_g07
             DeleteRent = new RelayCommand<RentalItem>(item => { DeleteRentAction(item); });
 
             App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { NotifyAllFied(); });
+            App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, (b) => { NotifyAllFied(); });
         }
 
         /******************************

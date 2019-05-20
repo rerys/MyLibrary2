@@ -568,7 +568,7 @@ namespace prbd_1819_g07
             }
             PicturePath = imageHelper.CurrentFile;
             App.Model.SaveChanges();
-            App.Model.Database.Log = null;
+          //  App.Model.Database.Log = null;
 
             App.NotifyColleagues(AppMessages.MSG_BOOK_CHANGED, Book);
             // App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
@@ -623,6 +623,7 @@ namespace prbd_1819_g07
                 imageHelper.Load(fd.FileName);
                 PicturePath = imageHelper.CurrentFile;
             }
+            RaisePropertyChanged(nameof(PicturePath));
         }
 
 
@@ -637,6 +638,7 @@ namespace prbd_1819_g07
         {
             imageHelper.Clear();
             PicturePath = imageHelper.CurrentFile;
+            RaisePropertyChanged(nameof(PicturePath));
         }
 
         /*

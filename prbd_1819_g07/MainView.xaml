@@ -23,6 +23,9 @@
             <Grid Margin="5">
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0">
+                    <Button x:Name="logOut" Command="{Binding LogOut}" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
+                        <materialDesign:PackIcon Kind="LogoutVariant"/>
+                    </Button>
                     <Button x:Name="ButtonFechar" Command="{Binding CloseWindow}" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="Gray">
                         <materialDesign:PackIcon Kind="Power"/>
                     </Button>

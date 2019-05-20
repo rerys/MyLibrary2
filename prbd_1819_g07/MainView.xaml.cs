@@ -28,6 +28,8 @@ namespace prbd_1819_g07
 
         public ICommand MouseDownCmd { get; set; }
 
+        public ICommand LogOut { get; set; }
+
         public string currentUserPseudo
         {
             get
@@ -59,6 +61,17 @@ namespace prbd_1819_g07
             CloseWindow = new RelayCommand(() => Application.Current.Shutdown());
 
             MouseDownCmd = new RelayCommand(() => DragMove());
+
+            LogOut = new RelayCommand(() =>
+            {
+                App.CurrentUser = null;
+
+                ShowLogIn();
+
+                Close();
+
+            });
+
             App.Register(this, AppMessages.MSG_NEW_USER, () =>
             {
                 var user = App.Model.Users.Create();
@@ -152,6 +165,13 @@ namespace prbd_1819_g07
         {
             TrainsitionigContentSlide.OnApplyTemplate();
             GridCursor.Margin = new Thickness(0, (190 + (60 * index)), 0, 0);
+        }
+
+        private void ShowLogIn()
+        {
+            var loginview = new LoginView();
+            loginview.Show();
+            Application.Current.MainWindow = loginview;
         }
 
     }

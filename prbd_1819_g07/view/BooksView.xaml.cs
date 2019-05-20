@@ -217,7 +217,7 @@ namespace prbd_1819_g07
             {
                 query = from m in App.Model.Books
                         where
-                        m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter)
+                        m.Title.Contains(Filter) || m.Author.Contains(Filter) || m.Editor.Contains(Filter) || m.Isbn.Contains(Filter)
                         select m;
             }
             else
