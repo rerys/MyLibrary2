@@ -14,13 +14,13 @@ namespace prbd_1819_g07
 
         private Model model;
 
-        private User admin, ben, bruno;
+        private User admin, manager, member;
         private List<User> users = new List<User>();
 
         private Category catInformatique, catScienceFiction, catRoman, catLitterature, catEssai;
         private List<Category> categories = new List<Category>();
 
-        private Book book1, book2, book3;
+        private Book book1, book2, book3, book4, book5, book6;
         private List<Book> books = new List<Book>();
 
         public TestDatas(DbType dbType)
@@ -52,10 +52,11 @@ namespace prbd_1819_g07
 
         private void CreateUsers()
         {
-            admin = model.CreateUser("admin", "admin", "Administrator", "admin@test.com", role: Role.Admin);
-            ben = model.CreateUser("ben", "ben", "Benoît Penelle", "ben@test.com", new DateTime(1968, 10, 1), role: Role.Manager);
-            bruno = model.CreateUser("bruno", "bruno", "Bruno Lacroix", "bruno@test.com");
-            users.AddRange(new User[] { admin, ben, bruno });
+            admin = model.CreateUser("admin", "admin", "Roger the Administrator ", "admin@test.com", role: Role.Admin);
+            manager = model.CreateUser("manager", "manager", "The Manager", "manager@test.com", new DateTime(1968, 10, 1), role: Role.Manager);
+            member = model.CreateUser("member", "member", "Paul Member", "paul@test.com");
+
+            users.AddRange(new User[] { admin, manager, member });
         }
 
         private void CreateCategories()
@@ -72,54 +73,55 @@ namespace prbd_1819_g07
         {
             book1 = model.CreateBook(
                             isbn: "123",
-                            title: "Java for Dummies",
-                            author: "Duchmol",
-                            editor: "EPFC",
+                            title: "Le Petit Prince",
+                            author: "Saint-Exupéry",
+                            editor: "GALLIMARD",
                             numCopies: 1);
             book1.PicturePath = "123.jpg";
             book2 = model.CreateBook(
                 isbn: "456",
                 title: "Le Seigneur des Anneaux",
                 author: "Tolkien",
-                editor: "Bourgeois",
-                numCopies: 1);
+                editor: "POCKET",
+                numCopies: 3);
             book2.PicturePath = "456.jpg";
             book3 = model.CreateBook(
                 isbn: "789",
-                title: "Les misérables",
-                author: "Victor Hugo",
-                editor: "XO",
-                numCopies: 1);
+                title: "Vingt mille lieues sous les mers",
+                author: "Jules Verne",
+                editor: "MAGNARD",
+                numCopies: 4);
             book3.PicturePath = "789.jpg";
             books.AddRange(new Book[] { book1, book2, book3 });
 
-            book1 = model.CreateBook(
+            book4 = model.CreateBook(
                 isbn: "223",
-                title: "Oreo is good",
-                author: "Mondelez International",
-                editor: "Les comités du gras",
-                numCopies: 1);
-            book1.PicturePath = "123.jpg";
-            book2 = model.CreateBook(
+                title: "Fables de Jean de la Fontaine",
+                author: "Jean de La Fontaine",
+                editor: "MAGNARD",
+                numCopies: 2);
+            book4.PicturePath = "223.jpg";
+            book5 = model.CreateBook(
                 isbn: "356",
-                title: "FiliTubz",
-                author: "Lutti",
-                editor: "Bonbon",
+                title: "Le Fléau : Intégrale",
+                author: "Stephen King",
+                editor: "J.-C. LATTES",
                 numCopies: 1);
-            book2.PicturePath = "456.jpg";
-            book3 = model.CreateBook(
+            book5.PicturePath = "356.jpg";
+            book6 = model.CreateBook(
                 isbn: "689",
-                title: "Les minables",
-                author: "Koko",
-                editor: "XO",
-                numCopies: 1);
-            book3.PicturePath = "789.jpg";
-            books.AddRange(new Book[] { book1, book2, book3 });
+                title: "La Bible de Jérusalem",
+                author: "Jésus",
+                editor: "POCKET",
+                numCopies: 2);
+            book6.PicturePath = "689.jpg";
+            books.AddRange(new Book[] { book4, book5, book6 });
         }
 
         private void testBooks()
         {
-            runTest("Test livres", () => {
+            runTest("Test livres", () =>
+            {
                 book1.AddCategories(new Category[] { catInformatique });
                 book2.AddCategories(new Category[] { catRoman, catScienceFiction });
                 book3.AddCategories(new Category[] { catRoman, catLitterature });
@@ -139,14 +141,14 @@ namespace prbd_1819_g07
             Console.WriteLine($"Ajout de 3 copies à book3");
             book3.AddCopies(3, new DateTime(2018, 12, 31, 17, 30, 0));
             printList<BookCopy>("book3.Copies", book3.Copies);
-            Debug.Assert(book3.NumAvailableCopies == 4);
+            Debug.Assert(book3.NumAvailableCopies == 7);
             Console.WriteLine("obtention d'une copie du book3 - BookCopy bookCopy = book3.GetAvailableCopy()");
             explicationGetAvailableCopy();
             BookCopy bookCopy = book3.GetAvailableCopy();
             Console.WriteLine($"bookCopy : {bookCopy}");
             Console.WriteLine($"suppression de bookCopy - book3.DeleteCopy(bookCopy)");
             book3.DeleteCopy(bookCopy);
-            Debug.Assert(book3.NumAvailableCopies == 3);
+            Debug.Assert(book3.NumAvailableCopies == 6);
             printList<BookCopy>("book3.Copies", book3.Copies);
         }
 
@@ -157,7 +159,8 @@ namespace prbd_1819_g07
 
         private void testCategory()
         {
-            runTest("Test Category", () => {
+            runTest("Test Category", () =>
+            {
                 printList("catEssai.Books", catEssai.Books);
                 Console.WriteLine("catEssai.HasBook(book1) : " + catEssai.HasBook(book1));
                 Console.WriteLine("catEssai.AddBook(book1)");
@@ -177,34 +180,38 @@ namespace prbd_1819_g07
                 Console.WriteLine("Appels : ben.AddToBasket(book1); ben.AddToBasket(book2)");
                 explicationAddToBasket();
                 admin.AddToBasket(book2);
-                bruno.AddToBasket(book1);
-                bruno.AddToBasket(book2);
+                member.AddToBasket(book1);
+                member.AddToBasket(book2);
                 Console.WriteLine("Appel RentalItem rentalItemBook3 = ben.AddToBasket(book3); On récupère le rentalItem créé");
-                RentalItem rentalItemBook3 = ben.AddToBasket(book3);
-                Console.WriteLine(ben.Basket);
-                printList("Rental Items du panier de ben", ben.Basket.Items);
+                RentalItem rentalItemBook3 = manager.AddToBasket(book3);
+                Console.WriteLine(manager.Basket);
+                printList("Rental Items du panier de ben", manager.Basket.Items);
                 Console.WriteLine("Suppression d'un élément du panier de ben - ben.RemoveFromBasket(rentalItemBook3)");
                 explicationRemoveFromBasket();
                 //ben.RemoveFromBasket(rentalItemBook3);
-                printList("Rental Items du panier de ben", ben.Basket.Items);
+                printList("Rental Items du panier de ben", manager.Basket.Items);
                 Console.WriteLine("Confirmation du panier de ben - basket.Confirm()");
                 explicationConfirm();
-                ben.Basket.Confirm();
-                Console.WriteLine(ben.Basket);
+                manager.Basket.Confirm();
+                Console.WriteLine(manager.Basket);
                 Console.WriteLine("Re-Création du panier de ben essayant d'ajouter des copies de book1, book2, book3");
                 Console.WriteLine("");
                 Console.WriteLine("On constate que ce ne sont pas les mêmes copies (puisque les précédentes sont déjà louées)");
-                ben.AddToBasket(book1);
-                ben.AddToBasket(book2);
-                ben.AddToBasket(book3);
-                Console.WriteLine(ben.Basket);
+                manager.AddToBasket(book1);
+                manager.AddToBasket(book2);
+                manager.AddToBasket(book3);
+                Console.WriteLine(manager.Basket);
 
-                printList("Rental Items du panier de ben", ben.Basket.Items);
-                printList("Rental items du panier de admin", admin.Basket.Items);
-                printList("Rental items du panier de bruno", bruno.Basket.Items);
+                printList("Rental Items du panier de admin", admin.Basket.Items);
+                printList("Rental items du panier de manager", manager.Basket.Items);
+                printList("Rental items du panier de member", member.Basket.Items);
                 //Console.WriteLine("Vidage du panier de ben - ben.ClearBasket()");
                 //ben.ClearBasket();
-                Console.WriteLine(ben.Basket);
+                Console.WriteLine(manager.Basket);
+                admin.AddToBasket(book5);
+                admin.AddToBasket(book6);
+                manager.AddToBasket(book4);
+                member.AddToBasket(book3);
             });
         }
 
@@ -247,7 +254,8 @@ namespace prbd_1819_g07
 
         private void testModel()
         {
-            runTest("Test Model", () => {
+            runTest("Test Model", () =>
+            {
                 List<Book> search = model.FindBooksByText("Tolkien");
                 printList("model.FindBooksByText(\"Tolkien\")", search);
                 explicationFindBooksByText();

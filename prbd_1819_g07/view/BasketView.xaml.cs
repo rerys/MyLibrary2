@@ -109,7 +109,7 @@ namespace prbd_1819_g07
 
             //var model = Model.CreateModel(DbType.MsSQL);
             Users = new ObservableCollection<User>(App.Model.Users);
-            SelectedUser = App.Model.Users.Where(u => u.UserName.Contains(App.CurrentUser.UserName)).SingleOrDefault();
+            SelectedUser = App.Model.Users.Where(u => u.UserName.Contains(App.CurrentUser.UserName)).FirstOrDefault();
             ConfirmBasket = new RelayCommand(ConfirmBasketAction, () => NotEmptyBasket());
             ClearBasket = new RelayCommand(ClearAllBasket, () => NotEmptyBasket());
             DeleteFromBasket = new RelayCommand<RentalItem>(item => { DeleteFromBasketAction(item); });
