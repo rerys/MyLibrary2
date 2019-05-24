@@ -122,6 +122,7 @@ namespace prbd_1819_g07
         public void Delete()
         {
             Model.Books.Remove(this);
+          //  Model.BookCopies.Remove(this.Copies);
             Model.SaveChanges();
         }
 

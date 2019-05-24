@@ -82,7 +82,7 @@ namespace prbd_1819_g07
             ClearFilter = new RelayCommand(() =>
             {
                 Filter = "";
-                FilterCat = null;
+                FilterCat = CategoryAll;
             });
 
             NewBook = new RelayCommand(() =>

@@ -590,6 +590,7 @@ namespace prbd_1819_g07
             Book.Delete();
             App.Model.SaveChanges();
             App.NotifyColleagues(AppMessages.MSG_BOOK_CHANGED, Book);
+            App.NotifyColleagues(AppMessages.MSG_CATEGORY_CHANGED);
             App.NotifyColleagues(AppMessages.MSG_CANCEL_VIEWDETAIL_BOOK);
         }
 

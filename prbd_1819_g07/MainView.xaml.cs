@@ -24,11 +24,54 @@ namespace prbd_1819_g07
     public partial class MainView : WindowBase
     {
 
+
+
+        /*********************************************************************************************************************************
+         *
+         *   ICOMMAND
+         *
+         *********************************************************************************************************************************/
+
+        //commande pour fermer l'application
         public ICommand CloseWindow { get; set; }
 
-        public ICommand MouseDownCmd { get; set; }
-
+        //commande pour fermer le session en cour
         public ICommand LogOut { get; set; }
+
+
+
+        /*********************************************************************************************************************************
+         *
+         *   Initilisation des usersControl
+         *
+         *********************************************************************************************************************************/
+
+        //usercontrol liste des livres
+        private BooksView books = new BooksView();
+
+        //usercontrol basket
+        private BasketView basket = new BasketView();
+
+        //usercontrol locations
+        private RentalsView rentals = new RentalsView();
+
+        //usercontrol liste des utilisateurs
+        private UsersView users = new UsersView();
+
+        //usercontrol des categories
+        private CategoriesView categories = new CategoriesView();
+
+
+        /*********************************************************************************************************************************
+         *
+         *   PROPERTIES
+         *
+         *********************************************************************************************************************************/
+
+
+        /*
+         * retourne le pseudo du l'utilisateur connecté
+         */
 
         public string currentUserPseudo
         {
@@ -38,20 +81,22 @@ namespace prbd_1819_g07
             }
         }
 
+        /*
+         * retourne le role du l'utilisateur connecté
+         */
+
         public Role currentUserRole
         {
             get { return App.CurrentUser.Role; }
         }
 
-        private BooksView books = new BooksView();
 
-        private BasketView basket = new BasketView();
 
-        private RentalsView rentals = new RentalsView();
-
-        private UsersView users = new UsersView();
-
-        private CategoriesView categories = new CategoriesView();
+        /*********************************************************************************************************************************
+         *
+         *   VIEW CONSTRUCTOR
+         *
+         *********************************************************************************************************************************/
 
         public MainView()
         {
@@ -60,7 +105,6 @@ namespace prbd_1819_g07
 
             CloseWindow = new RelayCommand(() => Application.Current.Shutdown());
 
-            MouseDownCmd = new RelayCommand(() => DragMove());
 
             LogOut = new RelayCommand(() =>
             {
@@ -117,6 +161,20 @@ namespace prbd_1819_g07
             SelectedIndex = 0;
         }
 
+
+
+
+
+        /********************************************************************************************************************************
+         * 
+         * METHODES
+         * 
+         *********************************************************************************************************************************/
+
+        /*
+         * methode pour la gestion des onglets et affichage de users controles dans le listeView
+         */
+
         private int selectedIndex;
         public int SelectedIndex
         {
@@ -166,6 +224,12 @@ namespace prbd_1819_g07
             TrainsitionigContentSlide.OnApplyTemplate();
             GridCursor.Margin = new Thickness(0, (190 + (60 * index)), 0, 0);
         }
+
+
+
+        /*
+         * Methode pour le login 
+         */
 
         private void ShowLogIn()
         {

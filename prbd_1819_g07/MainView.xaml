@@ -13,11 +13,7 @@
         Title="EPFC Library"
               ResizeMode="NoResize" WindowStyle="None" Height="600" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid Background="#FFEEEEEE" >
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseDown" >
-                <i:InvokeCommandAction Command="{Binding MouseDownCmd}" />
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
+
         <StackPanel VerticalAlignment="Top">
             <Grid Background="#FF0069C0" Height="10"/>
             <Grid Margin="5">

@@ -87,7 +87,10 @@ namespace prbd_1819_g07
             DeleteRent = new RelayCommand<RentalItem>(item => { DeleteRentAction(item); });
 
             App.Register(this, AppMessages.MSG_RENTAL_CHANGED, () => { NotifyAllFied(); });
-            App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, (b) => { NotifyAllFied(); });
+            App.Register<Book>(this, AppMessages.MSG_BOOK_CHANGED, (b) =>
+            {
+                RefreshField();
+            });
         }
 
         /******************************
@@ -124,6 +127,7 @@ namespace prbd_1819_g07
         //Méthode qui notitife tous les champs et met à jours liste. 
         private void NotifyAllFied()
         {
+
             if (App.CurrentUser.Role != Role.Admin)
             {
                 Rentals = new ObservableCollection<Rental>(from r in App.Model.Rentals
@@ -136,7 +140,6 @@ namespace prbd_1819_g07
                 Rentals = new ObservableCollection<Rental>(from r in App.Model.Rentals
                                                            where r.RentalDate != null
                                                            select r);
-
             }
 
             if (HasRentalSelected)
@@ -147,6 +150,20 @@ namespace prbd_1819_g07
             RaisePropertyChanged(nameof(Rentals));
             RaisePropertyChanged(nameof(RentalItems));
             RaisePropertyChanged(nameof(HasRentalSelected));
+        }
+
+        //Methode qui supprime un rental vide si un book a été supprimé.
+        private void RefreshField()
+        {
+            foreach (var r in Rentals)
+            {
+                if (r.Items.Count() == 0)
+                {
+                    App.Model.Rentals.Remove(r);
+                    App.Model.SaveChanges();
+                }
+            }
+            NotifyAllFied();
         }
 
     }

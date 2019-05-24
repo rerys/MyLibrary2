@@ -19,14 +19,6 @@ namespace prbd_1819_g07
             get
             {
                 return (from i in Items where i.ReturnDate == null select i).Count();
-
-                //IEnumerable<RentalItem> items = from i in App.Model.RentalItems
-                //                                where i.Rental.User.UserId == User.UserId 
-                //                                && i.Rental.RentalDate != null
-                //                                && i.ReturnDate == null
-                //                               && i.Rental.RentalId == this.RentalId
-                //                                select i;
-                //return items.Count();
             }
         }
 

@@ -72,21 +72,21 @@ namespace prbd_1819_g07
         private void CreateBooks()
         {
             book1 = model.CreateBook(
-                            isbn: "123",
+                            isbn: "1234567891234",
                             title: "Le Petit Prince",
                             author: "Saint-Exupéry",
                             editor: "GALLIMARD",
                             numCopies: 1);
             book1.PicturePath = "123.jpg";
             book2 = model.CreateBook(
-                isbn: "456",
+                isbn: "4564567891234",
                 title: "Le Seigneur des Anneaux",
                 author: "Tolkien",
                 editor: "POCKET",
                 numCopies: 3);
             book2.PicturePath = "456.jpg";
             book3 = model.CreateBook(
-                isbn: "789",
+                isbn: "7894567891234",
                 title: "Vingt mille lieues sous les mers",
                 author: "Jules Verne",
                 editor: "MAGNARD",
@@ -95,21 +95,21 @@ namespace prbd_1819_g07
             books.AddRange(new Book[] { book1, book2, book3 });
 
             book4 = model.CreateBook(
-                isbn: "223",
+                isbn: "2234567891234",
                 title: "Fables de Jean de la Fontaine",
                 author: "Jean de La Fontaine",
                 editor: "MAGNARD",
                 numCopies: 2);
             book4.PicturePath = "223.jpg";
             book5 = model.CreateBook(
-                isbn: "356",
+                isbn: "3564567891234",
                 title: "Le Fléau : Intégrale",
                 author: "Stephen King",
                 editor: "J.-C. LATTES",
                 numCopies: 1);
             book5.PicturePath = "356.jpg";
             book6 = model.CreateBook(
-                isbn: "689",
+                isbn: "6894567891234",
                 title: "La Bible de Jérusalem",
                 author: "Jésus",
                 editor: "POCKET",
